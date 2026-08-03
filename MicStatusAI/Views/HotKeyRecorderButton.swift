@@ -13,16 +13,16 @@ final class HotKeyRecorderButton: NSButton {
     func show(_ configuration: HotKeyConfiguration) {
         currentConfiguration = configuration
         title = configuration.displayName
-        toolTip = String(localized: L10n.shortcutToolTip)
-        setAccessibilityLabel(String(localized: L10n.shortcutAccessibilityLabel))
+        toolTip = L10n.hotkeyTooltip
+        setAccessibilityLabel(L10n.hotkeyAccessibility)
         setAccessibilityValue(configuration.displayName)
     }
 
     func beginRecording() {
         isRecording = true
-        title = String(localized: L10n.pressShortcut)
-        toolTip = String(localized: L10n.pressEscapeToCancel)
-        setAccessibilityValue(String(localized: L10n.recordingAccessibilityValue))
+        title = L10n.hotkeyPrompt
+        toolTip = L10n.hotkeyCancel
+        setAccessibilityValue(L10n.hotkeyRecording)
     }
 
     func finishRecording(with configuration: HotKeyConfiguration) {

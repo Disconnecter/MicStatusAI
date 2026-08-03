@@ -27,7 +27,8 @@ Automated releases are currently unsigned. macOS Gatekeeper may request confirma
 Install project tools and generate Xcode project:
 
 ```sh
-brew install xcodegen swiftlint
+brew install xcodegen swiftlint disconnecter/l10n/l10n_xcstrings
+Scripts/generate-l10n.sh
 xcodegen generate
 ```
 
@@ -37,7 +38,7 @@ Open `MicStatusAI.xcodeproj` in Xcode and run the `MicStatusAI` scheme. SwiftLin
 
 ## Localization
 
-User-facing strings live in `MicStatusAI/Models/L10n.swift` as `LocalizedStringResource` values. Add translations through `MicStatusAI/Resources/Localizable.xcstrings`.
+Add short keys and translations to `MicStatusAI/Resources/Localizable.xcstrings`, then run `Scripts/generate-l10n.sh`. [L10nXcstrings](https://github.com/Disconnecter/L10nXcstrings) generates `MicStatusAI/Generated/L10n.swift`; never edit generated code manually.
 
 ## Contributing
 

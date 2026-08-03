@@ -52,21 +52,21 @@ enum MicrophoneStatus: Equatable {
         return configuredImage
     }
 
-    var menuTitle: LocalizedStringResource {
+    var menuTitle: String {
         switch self {
         case let .active(volume):
-            L10n.microphoneOn(percentage: Int((volume * 100).rounded()))
+            L10n.statusOn(Int((volume * 100).rounded()))
         case .muted:
-            L10n.microphoneMuted
+            L10n.statusMuted
         case .stopped:
             L10n.monitoringOff
         case .unavailable:
-            L10n.microphoneUnavailable
+            L10n.statusUnavailable
         }
     }
 
     var accessibilityLabel: String {
-        String(localized: menuTitle)
+        menuTitle
     }
 
     var errorMessage: String? {

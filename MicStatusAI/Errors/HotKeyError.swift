@@ -8,9 +8,9 @@ enum HotKeyError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .twoModifiersRequired:
-            String(localized: L10n.shortcutNeedsTwoModifiers)
+            L10n.errorInvalidHotkey
         case let .registrationFailed(status):
-            String(localized: L10n.hotKeyRegistrationFailed(status: status))
+            L10n.errorHotkeyRegistration(Int(status))
         }
     }
 }

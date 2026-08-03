@@ -35,7 +35,11 @@ jobs:
           echo "asset=MicStatusAI-$version.zip" >> "$GITHUB_OUTPUT"
 
       - name: Install build tools
-        run: brew install xcodegen swiftlint
+        run: |
+          brew install \
+            xcodegen \
+            swiftlint \
+            disconnecter/l10n/l10n_xcstrings
 
       - name: Generate Xcode project
         run: xcodegen generate

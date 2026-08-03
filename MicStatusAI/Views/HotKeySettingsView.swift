@@ -7,13 +7,13 @@ struct HotKeySettingsView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             Label {
-                Text(L10n.muteUnmuteHotKey)
+                Text(L10n.hotkeyTitle)
             } icon: {
                 Image(systemName: "keyboard")
             }
             .font(.title2.bold())
 
-            Text(L10n.shortcutInstructions)
+            Text(L10n.hotkeyInstructions)
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 
@@ -26,7 +26,7 @@ struct HotKeySettingsView: View {
                     )
                     .frame(width: 170, height: 28)
                 } label: {
-                    Text(L10n.keyboardShortcut)
+                    Text(L10n.hotkeyLabel)
                 }
                 .padding(.vertical, 4)
             }
@@ -37,7 +37,7 @@ struct HotKeySettingsView: View {
                     .foregroundStyle(.orange)
             } else {
                 Label {
-                    Text(L10n.hotKeyActive(displayName: model.hotKey.displayName))
+                    Text(L10n.hotkeyActive(model.hotKey.displayName))
                 } icon: {
                     Image(systemName: "checkmark.circle.fill")
                 }
@@ -48,7 +48,7 @@ struct HotKeySettingsView: View {
             Divider()
 
             HStack {
-                Text(L10n.pressEscapeWhileRecording)
+                Text(L10n.hotkeyCancelHelp)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
@@ -56,7 +56,7 @@ struct HotKeySettingsView: View {
                     recordingError = nil
                     model.restoreDefaultHotKey()
                 } label: {
-                    Text(L10n.restoreDefault)
+                    Text(L10n.actionRestoreHotkey)
                 }
             }
         }
