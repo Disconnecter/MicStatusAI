@@ -80,3 +80,10 @@ line_length:
   error: 160
   ignores_comments: true
   ignores_urls: true
+
+custom_rules:
+  nonisolated_unsafe:
+    name: Unsafe Nonisolated State
+    message: Use actor isolation or a concurrency-safe resource owner.
+    regex: 'nonisolated\(unsafe\)'
+    severity: error

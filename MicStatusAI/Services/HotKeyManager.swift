@@ -4,8 +4,7 @@ import Carbon.HIToolbox
 final class HotKeyManager: HotKeyManaging {
     var onPressed: (() -> Void)?
 
-    nonisolated(unsafe) private var hotKeyReference: EventHotKeyRef?
-    nonisolated(unsafe) private var eventHandlerReference: EventHandlerRef?
+    private let registration = CarbonHotKeyRegistration()
     private let hotKeyID = EventHotKeyID(signature: OSType(0x4D53_4149), id: 1)
 
     init() {
@@ -13,14 +12,15 @@ final class HotKeyManager: HotKeyManaging {
             eventClass: OSType(kEventClassKeyboard),
             eventKind: UInt32(kEventHotKeyPressed)
         )
+        var eventHandlerReference: EventHandlerRef?
 
         let context = Unmanaged.passUnretained(self).toOpaque()
-        InstallEventHandler(
+        let status = InstallEventHandler(
             GetApplicationEventTarget(),
             { _, _, context in
                 guard let context else { return OSStatus(eventNotHandledErr) }
                 let manager = Unmanaged<HotKeyManager>.fromOpaque(context).takeUnretainedValue()
-                MainActor.assumeIsolated {
+                Task { @MainActor in
                     manager.onPressed?()
                 }
                 return noErr
@@ -30,22 +30,14 @@ final class HotKeyManager: HotKeyManaging {
             context,
             &eventHandlerReference
         )
-    }
 
-    deinit {
-        if let hotKeyReference {
-            UnregisterEventHotKey(hotKeyReference)
-        }
-        if let eventHandlerReference {
-            RemoveEventHandler(eventHandlerReference)
+        if status == noErr, let eventHandlerReference {
+            registration.storeEventHandler(eventHandlerReference)
         }
     }
 
     func register(_ configuration: HotKeyConfiguration) throws {
-        if let hotKeyReference {
-            UnregisterEventHotKey(hotKeyReference)
-            self.hotKeyReference = nil
-        }
+        registration.clearHotKey()
 
         guard configuration.modifierCount >= 2 else {
             throw HotKeyError.twoModifiersRequired
@@ -63,6 +55,6 @@ final class HotKeyManager: HotKeyManaging {
         guard status == noErr, let newReference else {
             throw HotKeyError.registrationFailed(status)
         }
-        hotKeyReference = newReference
+        registration.replaceHotKey(with: newReference)
     }
 }
