@@ -4,8 +4,8 @@ import Carbon.HIToolbox
 final class HotKeyManager: HotKeyManaging {
     var onPressed: (() -> Void)?
 
-    private nonisolated(unsafe) var hotKeyReference: EventHotKeyRef?
-    private nonisolated(unsafe) var eventHandlerReference: EventHandlerRef?
+    nonisolated(unsafe) private var hotKeyReference: EventHotKeyRef?
+    nonisolated(unsafe) private var eventHandlerReference: EventHandlerRef?
     private let hotKeyID = EventHotKeyID(signature: OSType(0x4D53_4149), id: 1)
 
     init() {

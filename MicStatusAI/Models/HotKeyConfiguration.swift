@@ -7,7 +7,7 @@ struct HotKeyConfiguration: Codable, Equatable {
     var usesCommand: Bool
     var usesShift: Bool
 
-    static let defaultValue = HotKeyConfiguration(
+    static let defaultValue = Self(
         keyCode: UInt32(kVK_ANSI_M),
         usesControl: true,
         usesOption: true,
@@ -16,7 +16,7 @@ struct HotKeyConfiguration: Codable, Equatable {
     )
 
     var modifierCount: Int {
-        [usesControl, usesOption, usesCommand, usesShift].filter { $0 }.count
+        [usesControl, usesOption, usesCommand, usesShift].filter(\.self).count
     }
 
     var carbonModifiers: UInt32 {
@@ -42,9 +42,9 @@ struct HotKeyConfiguration: Codable, Equatable {
             usesOption ? "⌥" : nil,
             usesShift ? "⇧" : nil,
             usesCommand ? "⌘" : nil,
-        ].compactMap { $0 }.joined(separator: " ")
+        ].compactMap(\.self).joined(separator: " ")
 
-        let keyName = KeyChoice.all.first(where: { $0.code == keyCode })?.name ?? "?"
+        let keyName = KeyChoice.all.first { $0.code == keyCode }?.name ?? "?"
         return "\(modifiers) \(keyName)"
     }
 }

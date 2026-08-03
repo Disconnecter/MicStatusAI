@@ -9,7 +9,8 @@ final class HotKeyRecorderCoordinator: NSObject {
         self.parent = parent
     }
 
-    @objc func beginRecording(_ button: HotKeyRecorderButton) {
+    @objc
+    func beginRecording(_ button: HotKeyRecorderButton) {
         parent.onValidationError(nil)
         button.beginRecording()
         button.window?.makeFirstResponder(button)
