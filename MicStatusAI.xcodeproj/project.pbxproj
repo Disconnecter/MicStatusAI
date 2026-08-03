@@ -13,6 +13,16 @@
 		A10000000000000000000004 /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* HotKeyManager.swift */; };
 		A10000000000000000000005 /* HotKeySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005 /* HotKeySettingsView.swift */; };
 		A10000000000000000000008 /* HotKeyRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* HotKeyRecorderView.swift */; };
+		A10000000000000000000009 /* HotKeyConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000011 /* HotKeyConfiguration.swift */; };
+		A10000000000000000000010 /* KeyChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000012 /* KeyChoice.swift */; };
+		A10000000000000000000011 /* HotKeyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000013 /* HotKeyError.swift */; };
+		A10000000000000000000012 /* MicrophoneError.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000014 /* MicrophoneError.swift */; };
+		A10000000000000000000013 /* MicrophoneVolumeControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000015 /* MicrophoneVolumeControlling.swift */; };
+		A10000000000000000000014 /* HotKeyManaging.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000016 /* HotKeyManaging.swift */; };
+		A10000000000000000000015 /* MicrophoneStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000017 /* MicrophoneStatus.swift */; };
+		A10000000000000000000016 /* StatusPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000018 /* StatusPanel.swift */; };
+		A10000000000000000000017 /* HotKeyRecorderButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000019 /* HotKeyRecorderButton.swift */; };
+		A10000000000000000000018 /* HotKeyRecorderCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000020 /* HotKeyRecorderCoordinator.swift */; };
 		A10000000000000000000006 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* CoreAudio.framework */; };
 		A10000000000000000000007 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* Carbon.framework */; };
 /* End PBXBuildFile section */
@@ -24,6 +34,16 @@
 		A20000000000000000000004 /* HotKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyManager.swift; sourceTree = "<group>"; };
 		A20000000000000000000005 /* HotKeySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeySettingsView.swift; sourceTree = "<group>"; };
 		A20000000000000000000010 /* HotKeyRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyRecorderView.swift; sourceTree = "<group>"; };
+		A20000000000000000000011 /* HotKeyConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyConfiguration.swift; sourceTree = "<group>"; };
+		A20000000000000000000012 /* KeyChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyChoice.swift; sourceTree = "<group>"; };
+		A20000000000000000000013 /* HotKeyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyError.swift; sourceTree = "<group>"; };
+		A20000000000000000000014 /* MicrophoneError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrophoneError.swift; sourceTree = "<group>"; };
+		A20000000000000000000015 /* MicrophoneVolumeControlling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrophoneVolumeControlling.swift; sourceTree = "<group>"; };
+		A20000000000000000000016 /* HotKeyManaging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyManaging.swift; sourceTree = "<group>"; };
+		A20000000000000000000017 /* MicrophoneStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrophoneStatus.swift; sourceTree = "<group>"; };
+		A20000000000000000000018 /* StatusPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusPanel.swift; sourceTree = "<group>"; };
+		A20000000000000000000019 /* HotKeyRecorderButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyRecorderButton.swift; sourceTree = "<group>"; };
+		A20000000000000000000020 /* HotKeyRecorderCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyRecorderCoordinator.swift; sourceTree = "<group>"; };
 		A20000000000000000000006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A20000000000000000000007 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		A20000000000000000000008 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -61,6 +81,16 @@
 				A20000000000000000000004 /* HotKeyManager.swift */,
 				A20000000000000000000005 /* HotKeySettingsView.swift */,
 				A20000000000000000000010 /* HotKeyRecorderView.swift */,
+				A20000000000000000000011 /* HotKeyConfiguration.swift */,
+				A20000000000000000000012 /* KeyChoice.swift */,
+				A20000000000000000000013 /* HotKeyError.swift */,
+				A20000000000000000000014 /* MicrophoneError.swift */,
+				A20000000000000000000015 /* MicrophoneVolumeControlling.swift */,
+				A20000000000000000000016 /* HotKeyManaging.swift */,
+				A20000000000000000000017 /* MicrophoneStatus.swift */,
+				A20000000000000000000018 /* StatusPanel.swift */,
+				A20000000000000000000019 /* HotKeyRecorderButton.swift */,
+				A20000000000000000000020 /* HotKeyRecorderCoordinator.swift */,
 				A20000000000000000000006 /* Info.plist */,
 			);
 			path = MicStatusAI;
@@ -177,6 +207,16 @@
 				A10000000000000000000004 /* HotKeyManager.swift in Sources */,
 				A10000000000000000000005 /* HotKeySettingsView.swift in Sources */,
 				A10000000000000000000008 /* HotKeyRecorderView.swift in Sources */,
+				A10000000000000000000009 /* HotKeyConfiguration.swift in Sources */,
+				A10000000000000000000010 /* KeyChoice.swift in Sources */,
+				A10000000000000000000011 /* HotKeyError.swift in Sources */,
+				A10000000000000000000012 /* MicrophoneError.swift in Sources */,
+				A10000000000000000000013 /* MicrophoneVolumeControlling.swift in Sources */,
+				A10000000000000000000014 /* HotKeyManaging.swift in Sources */,
+				A10000000000000000000015 /* MicrophoneStatus.swift in Sources */,
+				A10000000000000000000016 /* StatusPanel.swift in Sources */,
+				A10000000000000000000017 /* HotKeyRecorderButton.swift in Sources */,
+				A10000000000000000000018 /* HotKeyRecorderCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

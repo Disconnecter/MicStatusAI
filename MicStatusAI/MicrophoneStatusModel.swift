@@ -1,5 +1,5 @@
+import Foundation
 import Observation
-import SwiftUI
 
 @MainActor
 @Observable
@@ -35,15 +35,21 @@ final class MicrophoneStatusModel {
         }
     }
 
-    @ObservationIgnored private let microphone = CoreAudioMicrophone()
-    @ObservationIgnored private let hotKeyManager = HotKeyManager()
+    @ObservationIgnored private let microphone: any MicrophoneVolumeControlling
+    @ObservationIgnored private let hotKeyManager: any HotKeyManaging
     @ObservationIgnored private var pollingTimer: Timer?
     @ObservationIgnored private var lastNonzeroVolume: Float32
 
     private static let hotKeyDefaultsKey = "muteHotKey"
     private static let lastVolumeDefaultsKey = "lastNonzeroInputVolume"
 
-    init() {
+    init(
+        microphone: any MicrophoneVolumeControlling = CoreAudioMicrophone(),
+        hotKeyManager: any HotKeyManaging = HotKeyManager()
+    ) {
+        self.microphone = microphone
+        self.hotKeyManager = hotKeyManager
+
         let savedHotKey = UserDefaults.standard.data(forKey: Self.hotKeyDefaultsKey).flatMap {
             try? JSONDecoder().decode(HotKeyConfiguration.self, from: $0)
         }
@@ -57,7 +63,7 @@ final class MicrophoneStatusModel {
         lastNonzeroVolume = savedVolume > 0 ? Float32(savedVolume) : 0.5
         inputLevel = savedVolume > 0 ? savedVolume : Double(lastNonzeroVolume)
 
-        hotKeyManager.onPressed = { [weak self] in
+        self.hotKeyManager.onPressed = { [weak self] in
             self?.toggleMute()
         }
 
@@ -165,79 +171,5 @@ final class MicrophoneStatusModel {
         } catch {
             hotKeyRegistrationError = error.localizedDescription
         }
-    }
-}
-
-enum MicrophoneStatus: Equatable {
-    case active(Float32)
-    case muted
-    case stopped
-    case unavailable(String)
-
-    var symbolName: String {
-        switch self {
-        case .active:
-            "mic.fill"
-        case .muted:
-            "mic.slash.fill"
-        case .stopped, .unavailable:
-            "mic.slash.fill"
-        }
-    }
-
-    var color: Color {
-        switch self {
-        case .active:
-            .green
-        case .muted:
-            .red
-        case .stopped:
-            .secondary
-        case .unavailable:
-            .orange
-        }
-    }
-
-    var statusBarImage: NSImage {
-        let image = NSImage(
-            systemSymbolName: symbolName,
-            accessibilityDescription: accessibilityLabel
-        ) ?? NSImage()
-        let symbolColor: NSColor = switch self {
-        case .active:
-            .systemGreen
-        case .muted:
-            .systemRed
-        case .stopped:
-            .secondaryLabelColor
-        case .unavailable:
-            .systemOrange
-        }
-        let configuration = NSImage.SymbolConfiguration(paletteColors: [symbolColor])
-        let configuredImage = image.withSymbolConfiguration(configuration) ?? image
-        configuredImage.isTemplate = false
-        return configuredImage
-    }
-
-    var menuTitle: String {
-        switch self {
-        case let .active(volume):
-            "Microphone On · \(Int((volume * 100).rounded()))%"
-        case .muted:
-            "Microphone Muted"
-        case .stopped:
-            "Monitoring Off"
-        case .unavailable:
-            "Microphone Unavailable"
-        }
-    }
-
-    var accessibilityLabel: String {
-        menuTitle
-    }
-
-    var errorMessage: String? {
-        guard case let .unavailable(message) = self else { return nil }
-        return message
     }
 }

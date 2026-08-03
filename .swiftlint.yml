@@ -9,6 +9,9 @@ excluded:
 strict: true
 reporter: xcode
 
+trailing_comma:
+  mandatory_comma: true
+
 line_length:
   warning: 120
   error: 160

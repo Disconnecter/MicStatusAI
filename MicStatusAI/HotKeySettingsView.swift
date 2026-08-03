@@ -13,8 +13,8 @@ struct HotKeySettingsView: View {
                 "Click shortcut field, then press new combination. "
                     + "Shortcut must contain at least two modifier keys and one letter or number."
             )
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
+            .foregroundStyle(.secondary)
+            .fixedSize(horizontal: false, vertical: true)
 
             GroupBox {
                 LabeledContent("Keyboard Shortcut") {

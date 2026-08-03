@@ -1,7 +1,7 @@
 import CoreAudio
 import Foundation
 
-struct CoreAudioMicrophone {
+struct CoreAudioMicrophone: MicrophoneVolumeControlling {
     func inputVolume() throws -> Float32 {
         let deviceID = try defaultInputDeviceID()
         let addresses = volumeAddresses(for: deviceID)
@@ -119,22 +119,5 @@ struct CoreAudioMicrophone {
             throw MicrophoneError.coreAudio(status)
         }
         return volume
-    }
-}
-
-enum MicrophoneError: LocalizedError {
-    case noDefaultInputDevice
-    case volumeControlUnavailable
-    case coreAudio(OSStatus)
-
-    var errorDescription: String? {
-        switch self {
-        case .noDefaultInputDevice:
-            "No default microphone found."
-        case .volumeControlUnavailable:
-            "Default microphone does not expose input volume control."
-        case let .coreAudio(status):
-            "CoreAudio error \(status)."
-        }
     }
 }
