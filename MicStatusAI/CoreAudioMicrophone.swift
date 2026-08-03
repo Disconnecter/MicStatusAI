@@ -69,7 +69,7 @@ struct CoreAudioMicrophone {
             return [masterAddress]
         }
 
-        return (1...32).compactMap { channel in
+        return (1 ... 32).compactMap { channel in
             let address = makeVolumeAddress(element: AudioObjectPropertyElement(channel))
             return hasProperty(deviceID: deviceID, address: address) ? address : nil
         }

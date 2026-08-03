@@ -18,10 +18,18 @@ struct HotKeyConfiguration: Codable, Equatable {
 
     var carbonModifiers: UInt32 {
         var modifiers = 0
-        if usesControl { modifiers |= controlKey }
-        if usesOption { modifiers |= optionKey }
-        if usesCommand { modifiers |= cmdKey }
-        if usesShift { modifiers |= shiftKey }
+        if usesControl {
+            modifiers |= controlKey
+        }
+        if usesOption {
+            modifiers |= optionKey
+        }
+        if usesCommand {
+            modifiers |= cmdKey
+        }
+        if usesShift {
+            modifiers |= shiftKey
+        }
         return UInt32(modifiers)
     }
 
@@ -30,7 +38,7 @@ struct HotKeyConfiguration: Codable, Equatable {
             usesControl ? "⌃" : nil,
             usesOption ? "⌥" : nil,
             usesShift ? "⇧" : nil,
-            usesCommand ? "⌘" : nil
+            usesCommand ? "⌘" : nil,
         ].compactMap { $0 }.joined()
 
         let keyName = KeyChoice.all.first(where: { $0.code == keyCode })?.name ?? "?"
@@ -42,7 +50,9 @@ struct KeyChoice: Identifiable, Hashable {
     let name: String
     let code: UInt32
 
-    var id: UInt32 { code }
+    var id: UInt32 {
+        code
+    }
 
     static let all: [KeyChoice] = [
         KeyChoice(name: "A", code: UInt32(kVK_ANSI_A)),
@@ -70,7 +80,7 @@ struct KeyChoice: Identifiable, Hashable {
         KeyChoice(name: "W", code: UInt32(kVK_ANSI_W)),
         KeyChoice(name: "X", code: UInt32(kVK_ANSI_X)),
         KeyChoice(name: "Y", code: UInt32(kVK_ANSI_Y)),
-        KeyChoice(name: "Z", code: UInt32(kVK_ANSI_Z))
+        KeyChoice(name: "Z", code: UInt32(kVK_ANSI_Z)),
     ]
 }
 
@@ -78,9 +88,9 @@ struct KeyChoice: Identifiable, Hashable {
 final class HotKeyManager {
     var onPressed: (() -> Void)?
 
-    nonisolated(unsafe) private var hotKeyReference: EventHotKeyRef?
-    nonisolated(unsafe) private var eventHandlerReference: EventHandlerRef?
-    private let hotKeyID = EventHotKeyID(signature: OSType(0x4D_53_41_49), id: 1)
+    private nonisolated(unsafe) var hotKeyReference: EventHotKeyRef?
+    private nonisolated(unsafe) var eventHandlerReference: EventHandlerRef?
+    private let hotKeyID = EventHotKeyID(signature: OSType(0x4D53_4149), id: 1)
 
     init() {
         var eventType = EventTypeSpec(

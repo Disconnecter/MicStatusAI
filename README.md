@@ -2,8 +2,8 @@
 
 Native macOS 15+ menu-bar utility showing default microphone input-volume state.
 
-- **Red mic:** input volume is greater than zero
-- **Green muted mic:** input volume is zero
+- **Green mic:** input volume is greater than zero
+- **Red muted mic:** input volume is zero
 - **Gray off mic:** monitoring is stopped
 - **Global hotkey:** Control-Option-M by default; configurable in Settings
 

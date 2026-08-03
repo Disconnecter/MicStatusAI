@@ -35,7 +35,8 @@ final class MicrophoneStatusModel {
 
     init() {
         if let data = UserDefaults.standard.data(forKey: Self.hotKeyDefaultsKey),
-           let savedHotKey = try? JSONDecoder().decode(HotKeyConfiguration.self, from: data) {
+           let savedHotKey = try? JSONDecoder().decode(HotKeyConfiguration.self, from: data)
+        {
             hotKey = savedHotKey
         } else {
             hotKey = .defaultValue
@@ -154,9 +155,9 @@ enum MicrophoneStatus: Equatable {
     var color: Color {
         switch self {
         case .active:
-            .red
-        case .muted:
             .green
+        case .muted:
+            .red
         case .stopped:
             .secondary
         case .unavailable:
@@ -171,9 +172,9 @@ enum MicrophoneStatus: Equatable {
         ) ?? NSImage()
         let symbolColor: NSColor = switch self {
         case .active:
-            .systemRed
-        case .muted:
             .systemGreen
+        case .muted:
+            .systemRed
         case .stopped:
             .secondaryLabelColor
         case .unavailable:
