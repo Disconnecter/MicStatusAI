@@ -1,101 +1,357 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "%@ active system-wide": {
-      "comment": "Global hotkey status. Argument is the configured keyboard shortcut."
+    "action.mute": {
+      "comment": "Button that sets microphone input volume to zero.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mute"
+          }
+        }
+      }
     },
-    "Click shortcut field, then press new combination. Shortcut must contain at least two modifier keys and one letter or number.": {
-      "comment": "Instructions for configuring the global hotkey."
+    "action.quit": {
+      "comment": "Button that quits the application.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quit"
+          }
+        }
+      }
     },
-    "Click, then press a new shortcut": {
-      "comment": "Tooltip for the global hotkey recorder."
+    "action.restoreHotkey": {
+      "comment": "Button that restores the default global hotkey.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restore Default"
+          }
+        }
+      }
     },
-    "CoreAudio error %d.": {
-      "comment": "Microphone error. Argument is a CoreAudio status code."
+    "action.start": {
+      "comment": "Button that starts microphone input monitoring.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start Monitoring"
+          }
+        }
+      }
     },
-    "Could not register hotkey (error %d). Another app may use it.": {
-      "comment": "Global hotkey error. Argument is a Carbon status code."
+    "action.stop": {
+      "comment": "Button that stops microphone input monitoring.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Stop Monitoring"
+          }
+        }
+      }
     },
-    "Default microphone does not expose input volume control.": {
-      "comment": "Error shown when the default microphone has no software volume control."
+    "action.unmute": {
+      "comment": "Button that restores microphone input volume.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unmute"
+          }
+        }
+      }
     },
-    "Hotkey Settings…": {
-      "comment": "Button that opens global hotkey settings."
+    "error.coreAudio": {
+      "comment": "Microphone error. Argument is a CoreAudio status code.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CoreAudio error %d."
+          }
+        }
+      }
     },
-    "Input Level": {
-      "comment": "Heading for microphone input volume controls."
+    "error.hotkeyRegistration": {
+      "comment": "Global hotkey error. Argument is a Carbon status code.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not register hotkey (error %d). Another app may use it."
+          }
+        }
+      }
     },
-    "Keyboard Shortcut": {
-      "comment": "Label for the configured global hotkey."
+    "error.invalidHotkey": {
+      "comment": "Error shown when a global hotkey does not have enough modifier keys.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shortcut needs at least two modifier keys and one letter or number."
+          }
+        }
+      }
     },
-    "Microphone input level": {
-      "comment": "Accessibility label for the microphone input volume slider."
+    "error.noMicrophone": {
+      "comment": "Error shown when macOS has no default microphone.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No default microphone found."
+          }
+        }
+      }
     },
-    "Microphone Muted": {
-      "comment": "Primary status shown when microphone input volume is zero."
+    "error.volumeUnavailable": {
+      "comment": "Error shown when the default microphone has no software volume control.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Default microphone does not expose input volume control."
+          }
+        }
+      }
     },
-    "Microphone On · %lld%%": {
-      "comment": "Primary microphone status. Argument is the current input volume percentage."
+    "hotkey.accessibility": {
+      "comment": "Accessibility label for the global hotkey recorder.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mute and unmute shortcut"
+          }
+        }
+      }
     },
-    "Microphone Unavailable": {
-      "comment": "Primary status shown when microphone input cannot be accessed."
+    "hotkey.active": {
+      "comment": "Global hotkey status. Argument is the configured keyboard shortcut.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ active system-wide"
+          }
+        }
+      }
     },
-    "Monitoring default microphone": {
-      "comment": "Status shown while monitoring the default microphone."
+    "hotkey.cancel": {
+      "comment": "Tooltip shown while recording a global hotkey.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press Escape to cancel"
+          }
+        }
+      }
     },
-    "Monitoring Off": {
-      "comment": "Primary status shown when microphone monitoring is disabled."
+    "hotkey.cancelHelp": {
+      "comment": "Help text below the global hotkey recorder.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press Escape while recording to cancel."
+          }
+        }
+      }
     },
-    "Monitoring paused": {
-      "comment": "Status shown when microphone monitoring is paused."
+    "hotkey.instructions": {
+      "comment": "Instructions for configuring the global hotkey.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click shortcut field, then press new combination. Shortcut must contain at least two modifier keys and one letter or number."
+          }
+        }
+      }
     },
-    "Mute": {
-      "comment": "Button that sets microphone input volume to zero."
+    "hotkey.label": {
+      "comment": "Label for the configured global hotkey.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keyboard Shortcut"
+          }
+        }
+      }
     },
-    "Mute / Unmute Hotkey": {
-      "comment": "Heading for global hotkey settings."
+    "hotkey.prompt": {
+      "comment": "Global hotkey recorder title while waiting for keyboard input.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press shortcut…"
+          }
+        }
+      }
     },
-    "Mute and unmute shortcut": {
-      "comment": "Accessibility label for the global hotkey recorder."
+    "hotkey.recording": {
+      "comment": "Accessibility value announced while recording a global hotkey.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recording. Press at least two modifiers and one letter or number."
+          }
+        }
+      }
     },
-    "No default microphone found.": {
-      "comment": "Error shown when macOS has no default microphone."
+    "hotkey.settings": {
+      "comment": "Button that opens global hotkey settings.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hotkey Settings…"
+          }
+        }
+      }
     },
-    "Press at least two modifier keys plus one letter or number.": {
-      "comment": "Validation error shown while recording an incomplete global hotkey."
+    "hotkey.title": {
+      "comment": "Heading for global hotkey settings.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mute / Unmute Hotkey"
+          }
+        }
+      }
     },
-    "Press Escape to cancel": {
-      "comment": "Tooltip shown while recording a global hotkey."
+    "hotkey.tooltip": {
+      "comment": "Tooltip for the global hotkey recorder.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click, then press a new shortcut"
+          }
+        }
+      }
     },
-    "Press Escape while recording to cancel.": {
-      "comment": "Help text below the global hotkey recorder."
+    "input.accessibility": {
+      "comment": "Accessibility label for the microphone input volume slider.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone input level"
+          }
+        }
+      }
     },
-    "Press shortcut…": {
-      "comment": "Global hotkey recorder title while waiting for keyboard input."
+    "input.title": {
+      "comment": "Heading for microphone input volume controls.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Input Level"
+          }
+        }
+      }
     },
-    "Quit": {
-      "comment": "Button that quits the application."
+    "monitoring.active": {
+      "comment": "Status shown while monitoring the default microphone.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monitoring default microphone"
+          }
+        }
+      }
     },
-    "Recording. Press at least two modifiers and one letter or number.": {
-      "comment": "Accessibility value announced while recording a global hotkey."
+    "monitoring.off": {
+      "comment": "Primary status shown when microphone monitoring is disabled.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monitoring Off"
+          }
+        }
+      }
     },
-    "Restore Default": {
-      "comment": "Button that restores the default global hotkey."
+    "monitoring.paused": {
+      "comment": "Status shown when microphone monitoring is paused.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Monitoring paused"
+          }
+        }
+      }
     },
-    "Shortcut needs at least two modifier keys and one letter or number.": {
-      "comment": "Error shown when a global hotkey does not have enough modifier keys."
+    "status.muted": {
+      "comment": "Primary status shown when microphone input volume is zero.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone Muted"
+          }
+        }
+      }
     },
-    "Start Monitoring": {
-      "comment": "Button that starts microphone input monitoring."
+    "status.on": {
+      "comment": "Primary microphone status. Argument is the current input volume percentage.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone On · %d%%"
+          }
+        }
+      }
     },
-    "Stop Monitoring": {
-      "comment": "Button that stops microphone input monitoring."
+    "status.unavailable": {
+      "comment": "Primary status shown when microphone input cannot be accessed.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Microphone Unavailable"
+          }
+        }
+      }
     },
-    "Unmute": {
-      "comment": "Button that restores microphone input volume."
+    "validation.key": {
+      "comment": "Validation error shown when a global hotkey uses an unsupported key.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Use a letter or number as shortcut key."
+          }
+        }
+      }
     },
-    "Use a letter or number as shortcut key.": {
-      "comment": "Validation error shown when a global hotkey uses an unsupported key."
+    "validation.modifiers": {
+      "comment": "Validation error shown while recording an incomplete global hotkey.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Press at least two modifier keys plus one letter or number."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

@@ -49,6 +49,12 @@ targets:
         SWIFT_EMIT_LOC_STRINGS: "YES"
         SWIFT_STRICT_CONCURRENCY: complete
     preBuildScripts:
+      - name: Generate L10n
+        basedOnDependencyAnalysis: false
+        showEnvVars: false
+        script: |
+          export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+          "$SRCROOT/Scripts/generate-l10n.sh"
       - name: SwiftLint
         basedOnDependencyAnalysis: false
         showEnvVars: false
@@ -65,6 +71,7 @@ fileGroups:
   - .swiftlint.yml
   - LICENSE
   - README.md
+  - Scripts/generate-l10n.sh
   - project.yml
 
 schemes:

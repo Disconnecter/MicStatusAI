@@ -17,11 +17,11 @@ struct StatusPanel: View {
                         .font(.headline)
                     Text(
                         model.isMonitoring
-                            ? L10n.monitoringDefaultMicrophone
+                            ? L10n.monitoringActive
                             : L10n.monitoringPaused
                     )
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
                 }
             }
             .accessibilityElement(children: .combine)
@@ -45,7 +45,7 @@ struct StatusPanel: View {
                         ),
                         in: 0 ... 1
                     ) {
-                        Text(L10n.microphoneInputLevel)
+                        Text(L10n.inputAccessibility)
                     }
                     .tint(model.inputLevel > 0 ? .green : .red)
                     .disabled(!model.canAdjustInputLevel)
@@ -59,14 +59,14 @@ struct StatusPanel: View {
                 }
                 .padding(.vertical, 4)
             } label: {
-                Text(L10n.inputLevel)
+                Text(L10n.inputTitle)
             }
 
             HStack {
                 Button {
                     model.toggleMonitoring()
                 } label: {
-                    Text(model.isMonitoring ? L10n.stopMonitoring : L10n.startMonitoring)
+                    Text(model.isMonitoring ? L10n.actionStop : L10n.actionStart)
                 }
 
                 Spacer()
@@ -74,7 +74,7 @@ struct StatusPanel: View {
                 Button {
                     model.toggleMute()
                 } label: {
-                    Text(model.isMuted ? L10n.unmute : L10n.mute)
+                    Text(model.isMuted ? L10n.actionUnmute : L10n.actionMute)
                 }
                 .disabled(model.status.errorMessage != nil)
             }
@@ -84,7 +84,7 @@ struct StatusPanel: View {
             HStack {
                 SettingsLink {
                     Label {
-                        Text(L10n.hotKeySettings)
+                        Text(L10n.hotkeySettings)
                     } icon: {
                         Image(systemName: "keyboard")
                     }
@@ -95,7 +95,7 @@ struct StatusPanel: View {
                 Button {
                     NSApplication.shared.terminate(nil)
                 } label: {
-                    Text(L10n.quit)
+                    Text(L10n.actionQuit)
                 }
                 .keyboardShortcut("q")
             }

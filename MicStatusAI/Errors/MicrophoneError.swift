@@ -9,11 +9,11 @@ enum MicrophoneError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noDefaultInputDevice:
-            String(localized: L10n.noDefaultMicrophone)
+            L10n.errorNoMicrophone
         case .volumeControlUnavailable:
-            String(localized: L10n.volumeControlUnavailable)
+            L10n.errorVolumeUnavailable
         case let .coreAudio(status):
-            String(localized: L10n.coreAudioError(status: status))
+            L10n.errorCoreAudio(Int(status))
         }
     }
 }

@@ -5,6 +5,7 @@ included:
 excluded:
   - build
   - DerivedData
+  - MicStatusAI/Generated
 
 strict: true
 reporter: xcode

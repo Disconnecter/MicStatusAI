@@ -35,12 +35,12 @@ final class HotKeyRecorderCoordinator: NSObject {
         )
 
         guard configuration.modifierCount >= 2 else {
-            parent.onValidationError(String(localized: L10n.pressTwoModifiers))
+            parent.onValidationError(L10n.validationModifiers)
             return
         }
 
         guard KeyChoice.all.contains(where: { $0.code == configuration.keyCode }) else {
-            parent.onValidationError(String(localized: L10n.useLetterOrNumber))
+            parent.onValidationError(L10n.validationKey)
             return
         }
 
