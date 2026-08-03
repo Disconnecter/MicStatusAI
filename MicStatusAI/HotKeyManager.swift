@@ -42,7 +42,7 @@ struct HotKeyConfiguration: Codable, Equatable {
             usesControl ? "⌃" : nil,
             usesOption ? "⌥" : nil,
             usesShift ? "⇧" : nil,
-            usesCommand ? "⌘" : nil,
+            usesCommand ? "⌘" : nil
         ].compactMap { $0 }.joined(separator: " ")
 
         let keyName = KeyChoice.all.first(where: { $0.code == keyCode })?.name ?? "?"
@@ -94,7 +94,7 @@ struct KeyChoice: Identifiable, Hashable {
         KeyChoice(name: "6", code: UInt32(kVK_ANSI_6)),
         KeyChoice(name: "7", code: UInt32(kVK_ANSI_7)),
         KeyChoice(name: "8", code: UInt32(kVK_ANSI_8)),
-        KeyChoice(name: "9", code: UInt32(kVK_ANSI_9)),
+        KeyChoice(name: "9", code: UInt32(kVK_ANSI_9))
     ]
 }
 

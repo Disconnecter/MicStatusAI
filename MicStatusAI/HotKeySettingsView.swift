@@ -9,7 +9,10 @@ struct HotKeySettingsView: View {
             Label("Mute / Unmute Hotkey", systemImage: "keyboard")
                 .font(.title2.bold())
 
-            Text("Click shortcut field, then press new combination. Shortcut must contain at least two modifier keys and one letter or number.")
+            Text(
+                "Click shortcut field, then press new combination. "
+                    + "Shortcut must contain at least two modifier keys and one letter or number."
+            )
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 

@@ -1,0 +1,16 @@
+---
+included:
+  - MicStatusAI
+
+excluded:
+  - build
+  - DerivedData
+
+strict: true
+reporter: xcode
+
+line_length:
+  warning: 120
+  error: 160
+  ignores_comments: true
+  ignores_urls: true

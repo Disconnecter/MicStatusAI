@@ -90,6 +90,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A90000000000000000000002 /* Build configuration list for PBXNativeTarget "MicStatusAI" */;
 			buildPhases = (
+				A30000000000000000000004 /* SwiftLint */,
 				A30000000000000000000002 /* Sources */,
 				A30000000000000000000001 /* Frameworks */,
 				A30000000000000000000003 /* Resources */,
@@ -146,6 +147,25 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		A30000000000000000000004 /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"/opt/homebrew/bin:/usr/local/bin:$PATH\"\nif ! command -v swiftlint >/dev/null 2>&1; then\n  echo \"error: SwiftLint not installed. Run: brew install swiftlint\"\n  exit 1\nfi\nswiftlint lint --config \"$SRCROOT/.swiftlint.yml\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A30000000000000000000002 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -194,6 +214,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = MicStatusAI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -212,6 +233,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = MicStatusAI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

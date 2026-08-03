@@ -11,6 +11,12 @@ MicStatusAI reads and changes CoreAudio input-volume properties. It does not cap
 
 ## Build
 
-Open `MicStatusAI.xcodeproj` in Xcode and run the `MicStatusAI` scheme.
+Install SwiftLint before building:
+
+```sh
+brew install swiftlint
+```
+
+Open `MicStatusAI.xcodeproj` in Xcode and run the `MicStatusAI` scheme. SwiftLint runs automatically during builds.
 
 Some microphones, including certain digital or virtual devices, do not expose software input-volume controls. MicStatusAI reports those devices as unavailable.

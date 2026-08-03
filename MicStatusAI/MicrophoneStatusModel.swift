@@ -44,10 +44,10 @@ final class MicrophoneStatusModel {
     private static let lastVolumeDefaultsKey = "lastNonzeroInputVolume"
 
     init() {
-        if let data = UserDefaults.standard.data(forKey: Self.hotKeyDefaultsKey),
-           let savedHotKey = try? JSONDecoder().decode(HotKeyConfiguration.self, from: data),
-           savedHotKey.modifierCount >= 2
-        {
+        let savedHotKey = UserDefaults.standard.data(forKey: Self.hotKeyDefaultsKey).flatMap {
+            try? JSONDecoder().decode(HotKeyConfiguration.self, from: $0)
+        }
+        if let savedHotKey, savedHotKey.modifierCount >= 2 {
             hotKey = savedHotKey
         } else {
             hotKey = .defaultValue
@@ -66,7 +66,11 @@ final class MicrophoneStatusModel {
     }
 
     func toggleMonitoring() {
-        isMonitoring ? stopMonitoring() : startMonitoring()
+        if isMonitoring {
+            stopMonitoring()
+        } else {
+            startMonitoring()
+        }
     }
 
     func startMonitoring() {
