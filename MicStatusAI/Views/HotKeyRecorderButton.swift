@@ -16,6 +16,7 @@ final class HotKeyRecorderButton: NSButton {
         toolTip = L10n.hotkeyTooltip
         setAccessibilityLabel(L10n.hotkeyAccessibility)
         setAccessibilityValue(configuration.displayName)
+        setAccessibilityHelp(L10n.hotkeyTooltip)
     }
 
     func beginRecording() {
@@ -23,6 +24,7 @@ final class HotKeyRecorderButton: NSButton {
         title = L10n.hotkeyPrompt
         toolTip = L10n.hotkeyCancel
         setAccessibilityValue(L10n.hotkeyRecording)
+        setAccessibilityHelp(L10n.hotkeyCancel)
     }
 
     func finishRecording(with configuration: HotKeyConfiguration) {
