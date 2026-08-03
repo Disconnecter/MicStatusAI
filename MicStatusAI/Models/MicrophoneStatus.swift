@@ -55,13 +55,16 @@ enum MicrophoneStatus: Equatable {
     var menuTitle: String {
         switch self {
         case let .active(volume):
-            L10n.statusOn(Int((volume * 100).rounded()))
+            let percentage = Double(volume).formatted(
+                .percent.precision(.fractionLength(0))
+            )
+            return L10n.statusOn(percentage)
         case .muted:
-            L10n.statusMuted
+            return L10n.statusMuted
         case .stopped:
-            L10n.monitoringOff
+            return L10n.monitoringOff
         case .unavailable:
-            L10n.statusUnavailable
+            return L10n.statusUnavailable
         }
     }
 

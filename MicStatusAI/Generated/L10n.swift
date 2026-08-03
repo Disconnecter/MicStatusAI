@@ -145,8 +145,8 @@ public enum L10n {
     return tr(key: "status.muted")
   }
 
-  /// Microphone On · %d%%
-  public static func statusOn(_ p1: Int) -> String {
+  /// Microphone On · %@
+  public static func statusOn(_ p1: String) -> String {
     return tr(key: "status.on", p1)
   }
 
