@@ -1,5 +1,4 @@
 import CoreAudio
-import Foundation
 
 struct CoreAudioMicrophone: MicrophoneVolumeControlling {
     func inputVolume() throws -> Float32 {

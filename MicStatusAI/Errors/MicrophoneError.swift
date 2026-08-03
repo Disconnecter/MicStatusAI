@@ -1,4 +1,3 @@
-import CoreAudio
 import Foundation
 
 enum MicrophoneError: LocalizedError {
