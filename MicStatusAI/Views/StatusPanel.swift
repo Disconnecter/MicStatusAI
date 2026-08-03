@@ -32,7 +32,7 @@ struct StatusPanel: View {
                     .foregroundStyle(.orange)
             }
 
-            GroupBox(L10n.inputLevel) {
+            GroupBox {
                 HStack(spacing: 10) {
                     Image(systemName: "mic.slash.fill")
                         .foregroundStyle(.secondary)
@@ -58,17 +58,23 @@ struct StatusPanel: View {
                         .frame(width: 38, alignment: .trailing)
                 }
                 .padding(.vertical, 4)
+            } label: {
+                Text(L10n.inputLevel)
             }
 
             HStack {
-                Button(model.isMonitoring ? L10n.stopMonitoring : L10n.startMonitoring) {
+                Button {
                     model.toggleMonitoring()
+                } label: {
+                    Text(model.isMonitoring ? L10n.stopMonitoring : L10n.startMonitoring)
                 }
 
                 Spacer()
 
-                Button(model.isMuted ? L10n.unmute : L10n.mute) {
+                Button {
                     model.toggleMute()
+                } label: {
+                    Text(model.isMuted ? L10n.unmute : L10n.mute)
                 }
                 .disabled(model.status.errorMessage != nil)
             }
@@ -77,13 +83,19 @@ struct StatusPanel: View {
 
             HStack {
                 SettingsLink {
-                    Label(L10n.hotKeySettings, systemImage: "keyboard")
+                    Label {
+                        Text(L10n.hotKeySettings)
+                    } icon: {
+                        Image(systemName: "keyboard")
+                    }
                 }
 
                 Spacer()
 
-                Button(L10n.quit) {
+                Button {
                     NSApplication.shared.terminate(nil)
+                } label: {
+                    Text(L10n.quit)
                 }
                 .keyboardShortcut("q")
             }

@@ -6,12 +6,16 @@ struct HotKeySettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Label(L10n.muteUnmuteHotKey, systemImage: "keyboard")
-                .font(.title2.bold())
+            Label {
+                Text(L10n.muteUnmuteHotKey)
+            } icon: {
+                Image(systemName: "keyboard")
+            }
+            .font(.title2.bold())
 
             Text(L10n.shortcutInstructions)
-            .foregroundStyle(.secondary)
-            .fixedSize(horizontal: false, vertical: true)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
 
             GroupBox {
                 LabeledContent {
@@ -32,12 +36,13 @@ struct HotKeySettingsView: View {
                     .font(.callout)
                     .foregroundStyle(.orange)
             } else {
-                Label(
-                    L10n.hotKeyActive(displayName: model.hotKey.displayName),
-                    systemImage: "checkmark.circle.fill"
-                )
-                    .font(.callout)
-                    .foregroundStyle(.green)
+                Label {
+                    Text(L10n.hotKeyActive(displayName: model.hotKey.displayName))
+                } icon: {
+                    Image(systemName: "checkmark.circle.fill")
+                }
+                .font(.callout)
+                .foregroundStyle(.green)
             }
 
             Divider()
@@ -47,9 +52,11 @@ struct HotKeySettingsView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
-                Button(L10n.restoreDefault) {
+                Button {
                     recordingError = nil
                     model.restoreDefaultHotKey()
+                } label: {
+                    Text(L10n.restoreDefault)
                 }
             }
         }
