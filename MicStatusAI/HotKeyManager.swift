@@ -16,6 +16,10 @@ struct HotKeyConfiguration: Codable, Equatable {
         usesShift: false
     )
 
+    var modifierCount: Int {
+        [usesControl, usesOption, usesCommand, usesShift].filter { $0 }.count
+    }
+
     var carbonModifiers: UInt32 {
         var modifiers = 0
         if usesControl {
@@ -39,10 +43,10 @@ struct HotKeyConfiguration: Codable, Equatable {
             usesOption ? "⌥" : nil,
             usesShift ? "⇧" : nil,
             usesCommand ? "⌘" : nil,
-        ].compactMap { $0 }.joined()
+        ].compactMap { $0 }.joined(separator: " ")
 
         let keyName = KeyChoice.all.first(where: { $0.code == keyCode })?.name ?? "?"
-        return modifiers + keyName
+        return "\(modifiers) \(keyName)"
     }
 }
 
@@ -81,6 +85,16 @@ struct KeyChoice: Identifiable, Hashable {
         KeyChoice(name: "X", code: UInt32(kVK_ANSI_X)),
         KeyChoice(name: "Y", code: UInt32(kVK_ANSI_Y)),
         KeyChoice(name: "Z", code: UInt32(kVK_ANSI_Z)),
+        KeyChoice(name: "0", code: UInt32(kVK_ANSI_0)),
+        KeyChoice(name: "1", code: UInt32(kVK_ANSI_1)),
+        KeyChoice(name: "2", code: UInt32(kVK_ANSI_2)),
+        KeyChoice(name: "3", code: UInt32(kVK_ANSI_3)),
+        KeyChoice(name: "4", code: UInt32(kVK_ANSI_4)),
+        KeyChoice(name: "5", code: UInt32(kVK_ANSI_5)),
+        KeyChoice(name: "6", code: UInt32(kVK_ANSI_6)),
+        KeyChoice(name: "7", code: UInt32(kVK_ANSI_7)),
+        KeyChoice(name: "8", code: UInt32(kVK_ANSI_8)),
+        KeyChoice(name: "9", code: UInt32(kVK_ANSI_9)),
     ]
 }
 
@@ -131,8 +145,8 @@ final class HotKeyManager {
             self.hotKeyReference = nil
         }
 
-        guard configuration.carbonModifiers != 0 else {
-            throw HotKeyError.modifierRequired
+        guard configuration.modifierCount >= 2 else {
+            throw HotKeyError.twoModifiersRequired
         }
 
         var newReference: EventHotKeyRef?
@@ -152,13 +166,13 @@ final class HotKeyManager {
 }
 
 enum HotKeyError: LocalizedError {
-    case modifierRequired
+    case twoModifiersRequired
     case registrationFailed(OSStatus)
 
     var errorDescription: String? {
         switch self {
-        case .modifierRequired:
-            "Select at least one modifier key."
+        case .twoModifiersRequired:
+            "Shortcut needs at least two modifier keys and one letter or number."
         case let .registrationFailed(status):
             "Could not register hotkey (error \(status)). Another app may use it."
         }

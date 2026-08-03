@@ -2,51 +2,53 @@ import SwiftUI
 
 struct HotKeySettingsView: View {
     @Bindable var model: MicrophoneStatusModel
+    @State private var recordingError: String?
 
     var body: some View {
-        Form {
-            Section("Mute / Unmute Hotkey") {
-                LabeledContent("Current shortcut") {
-                    Text(model.hotKey.displayName)
-                        .font(.title2.monospaced())
-                        .accessibilityLabel("Current shortcut: \(model.hotKey.displayName)")
-                }
+        VStack(alignment: .leading, spacing: 18) {
+            Label("Mute / Unmute Hotkey", systemImage: "keyboard")
+                .font(.title2.bold())
 
-                Picker("Key", selection: $model.hotKey.keyCode) {
-                    ForEach(KeyChoice.all) { key in
-                        Text(key.name).tag(key.code)
-                    }
-                }
+            Text("Click shortcut field, then press new combination. Shortcut must contain at least two modifier keys and one letter or number.")
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
 
-                Grid(alignment: .leading, horizontalSpacing: 24, verticalSpacing: 8) {
-                    GridRow {
-                        Toggle("Control (⌃)", isOn: $model.hotKey.usesControl)
-                        Toggle("Option (⌥)", isOn: $model.hotKey.usesOption)
-                    }
-                    GridRow {
-                        Toggle("Shift (⇧)", isOn: $model.hotKey.usesShift)
-                        Toggle("Command (⌘)", isOn: $model.hotKey.usesCommand)
-                    }
+            GroupBox {
+                LabeledContent("Keyboard Shortcut") {
+                    HotKeyRecorderView(
+                        configuration: model.hotKey,
+                        onChange: { model.hotKey = $0 },
+                        onValidationError: { recordingError = $0 }
+                    )
+                    .frame(width: 170, height: 28)
                 }
+                .padding(.vertical, 4)
+            }
 
-                if let error = model.hotKeyRegistrationError {
-                    Label(error, systemImage: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.orange)
-                } else {
-                    Label("Shortcut active system-wide", systemImage: "checkmark.circle.fill")
-                        .foregroundStyle(.green)
-                }
+            if let error = recordingError ?? model.hotKeyRegistrationError {
+                Label(error, systemImage: "exclamationmark.triangle.fill")
+                    .font(.callout)
+                    .foregroundStyle(.orange)
+            } else {
+                Label("\(model.hotKey.displayName) active system-wide", systemImage: "checkmark.circle.fill")
+                    .font(.callout)
+                    .foregroundStyle(.green)
+            }
 
-                HStack {
-                    Spacer()
-                    Button("Restore Default") {
-                        model.restoreDefaultHotKey()
-                    }
+            Divider()
+
+            HStack {
+                Text("Press Escape while recording to cancel.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Spacer()
+                Button("Restore Default") {
+                    recordingError = nil
+                    model.restoreDefaultHotKey()
                 }
             }
         }
-        .formStyle(.grouped)
         .scenePadding()
-        .frame(width: 430, height: 330)
+        .frame(width: 480, height: 280)
     }
 }

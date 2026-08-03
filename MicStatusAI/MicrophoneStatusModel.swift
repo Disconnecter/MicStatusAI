@@ -35,7 +35,8 @@ final class MicrophoneStatusModel {
 
     init() {
         if let data = UserDefaults.standard.data(forKey: Self.hotKeyDefaultsKey),
-           let savedHotKey = try? JSONDecoder().decode(HotKeyConfiguration.self, from: data)
+           let savedHotKey = try? JSONDecoder().decode(HotKeyConfiguration.self, from: data),
+           savedHotKey.modifierCount >= 2
         {
             hotKey = savedHotKey
         } else {
@@ -148,7 +149,7 @@ enum MicrophoneStatus: Equatable {
         case .muted:
             "mic.slash.fill"
         case .stopped, .unavailable:
-            "mic.slash.circle.fill"
+            "mic.slash.fill"
         }
     }
 

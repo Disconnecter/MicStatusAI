@@ -12,6 +12,7 @@
 		A10000000000000000000003 /* CoreAudioMicrophone.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000003 /* CoreAudioMicrophone.swift */; };
 		A10000000000000000000004 /* HotKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000004 /* HotKeyManager.swift */; };
 		A10000000000000000000005 /* HotKeySettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000005 /* HotKeySettingsView.swift */; };
+		A10000000000000000000008 /* HotKeyRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000010 /* HotKeyRecorderView.swift */; };
 		A10000000000000000000006 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20000000000000000000007 /* CoreAudio.framework */; };
 		A10000000000000000000007 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A20000000000000000000008 /* Carbon.framework */; };
 /* End PBXBuildFile section */
@@ -22,6 +23,7 @@
 		A20000000000000000000003 /* CoreAudioMicrophone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreAudioMicrophone.swift; sourceTree = "<group>"; };
 		A20000000000000000000004 /* HotKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyManager.swift; sourceTree = "<group>"; };
 		A20000000000000000000005 /* HotKeySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeySettingsView.swift; sourceTree = "<group>"; };
+		A20000000000000000000010 /* HotKeyRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyRecorderView.swift; sourceTree = "<group>"; };
 		A20000000000000000000006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A20000000000000000000007 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		A20000000000000000000008 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
@@ -58,6 +60,7 @@
 				A20000000000000000000003 /* CoreAudioMicrophone.swift */,
 				A20000000000000000000004 /* HotKeyManager.swift */,
 				A20000000000000000000005 /* HotKeySettingsView.swift */,
+				A20000000000000000000010 /* HotKeyRecorderView.swift */,
 				A20000000000000000000006 /* Info.plist */,
 			);
 			path = MicStatusAI;
@@ -153,6 +156,7 @@
 				A10000000000000000000003 /* CoreAudioMicrophone.swift in Sources */,
 				A10000000000000000000004 /* HotKeyManager.swift in Sources */,
 				A10000000000000000000005 /* HotKeySettingsView.swift in Sources */,
+				A10000000000000000000008 /* HotKeyRecorderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
