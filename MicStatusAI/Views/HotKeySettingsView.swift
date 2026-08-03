@@ -35,6 +35,7 @@ struct HotKeySettingsView: View {
                 Label(error, systemImage: "exclamationmark.triangle.fill")
                     .font(.callout)
                     .foregroundStyle(.orange)
+                    .fixedSize(horizontal: false, vertical: true)
             } else {
                 Label {
                     Text(L10n.hotkeyActive(model.hotKey.displayName))
@@ -61,6 +62,6 @@ struct HotKeySettingsView: View {
             }
         }
         .scenePadding()
-        .frame(width: 480, height: 280)
+        .frame(minWidth: 480, idealWidth: 480, minHeight: 280)
     }
 }
