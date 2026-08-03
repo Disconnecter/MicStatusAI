@@ -1,4 +1,5 @@
 # Xcode
+MicStatusAI.xcodeproj/
 DerivedData/
 build/
 *.xcuserstate
