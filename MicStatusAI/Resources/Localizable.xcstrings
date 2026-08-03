@@ -310,12 +310,12 @@
       }
     },
     "status.on": {
-      "comment": "Primary microphone status. Argument is the current input volume percentage.",
+      "comment": "Primary microphone status. Argument is a locale-formatted input volume percentage.",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Microphone On · %d%%"
+            "value": "Microphone On · %@"
           }
         }
       }
