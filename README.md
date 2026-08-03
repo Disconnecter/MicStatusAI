@@ -1,5 +1,7 @@
 # MicStatusAI
 
+[![Pull Request Build](https://github.com/Disconnecter/MicStatusAI/actions/workflows/pr-build.yml/badge.svg)](https://github.com/Disconnecter/MicStatusAI/actions/workflows/pr-build.yml)
+
 Native macOS 15+ menu-bar utility showing default microphone input-volume state.
 
 - **Green mic:** input volume is greater than zero
@@ -8,6 +10,15 @@ Native macOS 15+ menu-bar utility showing default microphone input-volume state.
 - **Global hotkey:** Control-Option-M by default; configurable in Settings
 
 MicStatusAI reads and changes CoreAudio input-volume properties. It does not capture or record audio and therefore does not request microphone-recording permission.
+
+## Install
+
+```sh
+brew tap Disconnecter/tap
+brew install --cask micstatusai
+```
+
+Automated releases are currently unsigned. macOS Gatekeeper may request confirmation before first launch.
 
 ## Build
 

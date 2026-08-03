@@ -1,0 +1,159 @@
+---
+name: Release
+
+"on":
+  push:
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build Release and Update Homebrew
+    runs-on: macos-15
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Validate version tag
+        id: metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="${GITHUB_REF_NAME#v}"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Tag must use semantic version format vMAJOR.MINOR.PATCH" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "asset=MicStatusAI-$version.zip" >> "$GITHUB_OUTPUT"
+
+      - name: Install build tools
+        run: brew install xcodegen swiftlint
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Build universal release app
+        env:
+          VERSION: ${{ steps.metadata.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project MicStatusAI.xcodeproj \
+            -scheme MicStatusAI \
+            -configuration Release \
+            -destination 'generic/platform=macOS' \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            MARKETING_VERSION="$VERSION" \
+            CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" \
+            ARCHS="arm64 x86_64" \
+            ONLY_ACTIVE_ARCH=NO \
+            clean build
+
+          app="$RUNNER_TEMP/DerivedData/Build/Products/Release/MicStatusAI.app"
+          test -d "$app"
+          lipo -archs "$app/Contents/MacOS/MicStatusAI"
+
+      - name: Package release
+        id: package
+        env:
+          ASSET_NAME: ${{ steps.metadata.outputs.asset }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          app="$RUNNER_TEMP/DerivedData/Build/Products/Release/MicStatusAI.app"
+          asset="$RUNNER_TEMP/$ASSET_NAME"
+          ditto -c -k --sequesterRsrc --keepParent "$app" "$asset"
+          sha256="$(shasum -a 256 "$asset" | awk '{print $1}')"
+          printf '%s  %s\n' \
+            "$sha256" \
+            "$ASSET_NAME" > "$asset.sha256"
+          echo "asset=$asset" >> "$GITHUB_OUTPUT"
+          echo "sha256=$sha256" >> "$GITHUB_OUTPUT"
+
+      - name: Publish GitHub release
+        env:
+          ASSET: ${{ steps.package.outputs.asset }}
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.metadata.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          asset="$ASSET"
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload \
+              "$GITHUB_REF_NAME" \
+              "$asset" \
+              "$asset.sha256" \
+              --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" \
+              "$asset" \
+              "$asset.sha256" \
+              --generate-notes \
+              --title "MicStatusAI $VERSION"
+          fi
+
+      - name: Update Homebrew cask
+        env:
+          HOMEBREW_TAP_DEPLOY_KEY: ${{ secrets.HOMEBREW_TAP_DEPLOY_KEY }}
+          VERSION: ${{ steps.metadata.outputs.version }}
+          SHA256: ${{ steps.package.outputs.sha256 }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          key="$RUNNER_TEMP/homebrew_tap_deploy_key"
+          printf '%s\n' "$HOMEBREW_TAP_DEPLOY_KEY" > "$key"
+          chmod 600 "$key"
+          export GIT_SSH_COMMAND="ssh -i $key -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=accept-new"
+          git clone --depth 1 \
+            git@github.com:Disconnecter/homebrew-tap.git homebrew-tap
+          mkdir -p homebrew-tap/Casks
+          cat > homebrew-tap/Casks/micstatusai.rb <<EOF
+          cask "micstatusai" do
+            version "$VERSION"
+            sha256 "$SHA256"
+
+            url "https://github.com/Disconnecter/MicStatusAI/releases/" \
+                "download/v#{version}/MicStatusAI-#{version}.zip"
+            name "MicStatusAI"
+            desc "Menu bar microphone input volume monitor and control"
+            homepage "https://github.com/Disconnecter/MicStatusAI"
+
+            depends_on macos: ">= :sequoia"
+
+            app "MicStatusAI.app"
+
+            caveats <<~EOS
+              This release is unsigned. macOS Gatekeeper may block it.
+              If you trust this repository, remove quarantine with:
+                xattr -dr com.apple.quarantine "/Applications/MicStatusAI.app"
+            EOS
+
+            zap trash: [
+              "~/Library/Preferences/com.disconnecter.MicStatusAI.plist",
+            ]
+          end
+          EOF
+
+          cd homebrew-tap
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Casks/micstatusai.rb
+          if git diff --cached --quiet; then
+            echo "Homebrew cask already current."
+            exit 0
+          fi
+          git commit -m "Update MicStatusAI to $VERSION"
+          git push origin HEAD:main
