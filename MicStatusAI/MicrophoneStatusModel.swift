@@ -6,6 +6,7 @@ import SwiftUI
 final class MicrophoneStatusModel {
     private(set) var status: MicrophoneStatus = .stopped
     private(set) var isMonitoring = false
+    private(set) var inputLevel = 0.0
     private(set) var hotKeyRegistrationError: String?
 
     var hotKey: HotKeyConfiguration {
@@ -21,6 +22,15 @@ final class MicrophoneStatusModel {
         case .muted:
             true
         case .active, .stopped, .unavailable:
+            false
+        }
+    }
+
+    var canAdjustInputLevel: Bool {
+        switch status {
+        case .active, .muted:
+            true
+        case .stopped, .unavailable:
             false
         }
     }
@@ -45,6 +55,7 @@ final class MicrophoneStatusModel {
 
         let savedVolume = UserDefaults.standard.double(forKey: Self.lastVolumeDefaultsKey)
         lastNonzeroVolume = savedVolume > 0 ? Float32(savedVolume) : 0.5
+        inputLevel = savedVolume > 0 ? savedVolume : Double(lastNonzeroVolume)
 
         hotKeyManager.onPressed = { [weak self] in
             self?.toggleMute()
@@ -79,6 +90,22 @@ final class MicrophoneStatusModel {
         status = .stopped
     }
 
+    func setInputLevel(_ level: Double) {
+        guard canAdjustInputLevel else { return }
+
+        do {
+            let clampedLevel = min(max(level, 0), 1)
+            try microphone.setInputVolume(Float32(clampedLevel))
+            if clampedLevel > 0 {
+                lastNonzeroVolume = Float32(clampedLevel)
+                UserDefaults.standard.set(clampedLevel, forKey: Self.lastVolumeDefaultsKey)
+            }
+            refreshStatus()
+        } catch {
+            status = .unavailable(error.localizedDescription)
+        }
+    }
+
     func toggleMute() {
         do {
             let currentVolume = try microphone.inputVolume()
@@ -109,6 +136,7 @@ final class MicrophoneStatusModel {
 
         do {
             let volume = try microphone.inputVolume()
+            inputLevel = Double(volume)
             if volume > 0 {
                 lastNonzeroVolume = volume
                 UserDefaults.standard.set(Double(volume), forKey: Self.lastVolumeDefaultsKey)
