@@ -33,4 +33,8 @@ Open `MicStatusAI.xcodeproj` in Xcode and run the `MicStatusAI` scheme. SwiftLin
 
 `project.yml` is project source of truth. Generated `MicStatusAI.xcodeproj` is ignored by Git.
 
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and pull request workflow.
+
 Some microphones, including certain digital or virtual devices, do not expose software input-volume controls. MicStatusAI reports those devices as unavailable.
