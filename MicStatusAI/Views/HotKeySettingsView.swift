@@ -6,24 +6,27 @@ struct HotKeySettingsView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
-            Label("Mute / Unmute Hotkey", systemImage: "keyboard")
-                .font(.title2.bold())
+            Label {
+                Text(L10n.muteUnmuteHotKey)
+            } icon: {
+                Image(systemName: "keyboard")
+            }
+            .font(.title2.bold())
 
-            Text(
-                "Click shortcut field, then press new combination. "
-                    + "Shortcut must contain at least two modifier keys and one letter or number."
-            )
-            .foregroundStyle(.secondary)
-            .fixedSize(horizontal: false, vertical: true)
+            Text(L10n.shortcutInstructions)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
 
             GroupBox {
-                LabeledContent("Keyboard Shortcut") {
+                LabeledContent {
                     HotKeyRecorderView(
                         configuration: model.hotKey,
                         onChange: { model.hotKey = $0 },
                         onValidationError: { recordingError = $0 }
                     )
                     .frame(width: 170, height: 28)
+                } label: {
+                    Text(L10n.keyboardShortcut)
                 }
                 .padding(.vertical, 4)
             }
@@ -33,21 +36,27 @@ struct HotKeySettingsView: View {
                     .font(.callout)
                     .foregroundStyle(.orange)
             } else {
-                Label("\(model.hotKey.displayName) active system-wide", systemImage: "checkmark.circle.fill")
-                    .font(.callout)
-                    .foregroundStyle(.green)
+                Label {
+                    Text(L10n.hotKeyActive(displayName: model.hotKey.displayName))
+                } icon: {
+                    Image(systemName: "checkmark.circle.fill")
+                }
+                .font(.callout)
+                .foregroundStyle(.green)
             }
 
             Divider()
 
             HStack {
-                Text("Press Escape while recording to cancel.")
+                Text(L10n.pressEscapeWhileRecording)
                     .font(.caption)
                     .foregroundStyle(.secondary)
                 Spacer()
-                Button("Restore Default") {
+                Button {
                     recordingError = nil
                     model.restoreDefaultHotKey()
+                } label: {
+                    Text(L10n.restoreDefault)
                 }
             }
         }
