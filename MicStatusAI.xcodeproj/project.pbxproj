@@ -75,25 +75,81 @@
 		A40000000000000000000002 /* MicStatusAI */ = {
 			isa = PBXGroup;
 			children = (
-				A20000000000000000000001 /* MicStatusAIApp.swift */,
-				A20000000000000000000002 /* MicrophoneStatusModel.swift */,
-				A20000000000000000000003 /* CoreAudioMicrophone.swift */,
-				A20000000000000000000004 /* HotKeyManager.swift */,
-				A20000000000000000000005 /* HotKeySettingsView.swift */,
-				A20000000000000000000010 /* HotKeyRecorderView.swift */,
-				A20000000000000000000011 /* HotKeyConfiguration.swift */,
-				A20000000000000000000012 /* KeyChoice.swift */,
-				A20000000000000000000013 /* HotKeyError.swift */,
-				A20000000000000000000014 /* MicrophoneError.swift */,
-				A20000000000000000000015 /* MicrophoneVolumeControlling.swift */,
-				A20000000000000000000016 /* HotKeyManaging.swift */,
-				A20000000000000000000017 /* MicrophoneStatus.swift */,
-				A20000000000000000000018 /* StatusPanel.swift */,
-				A20000000000000000000019 /* HotKeyRecorderButton.swift */,
-				A20000000000000000000020 /* HotKeyRecorderCoordinator.swift */,
+				A40000000000000000000005 /* App */,
+				A40000000000000000000006 /* Models */,
+				A40000000000000000000007 /* Views */,
+				A40000000000000000000008 /* Services */,
+				A40000000000000000000009 /* Interfaces */,
+				A40000000000000000000010 /* Errors */,
+				A40000000000000000000011 /* Coordinators */,
 				A20000000000000000000006 /* Info.plist */,
 			);
 			path = MicStatusAI;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000005 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000001 /* MicStatusAIApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000006 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000011 /* HotKeyConfiguration.swift */,
+				A20000000000000000000012 /* KeyChoice.swift */,
+				A20000000000000000000017 /* MicrophoneStatus.swift */,
+				A20000000000000000000002 /* MicrophoneStatusModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000007 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000019 /* HotKeyRecorderButton.swift */,
+				A20000000000000000000010 /* HotKeyRecorderView.swift */,
+				A20000000000000000000005 /* HotKeySettingsView.swift */,
+				A20000000000000000000018 /* StatusPanel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000008 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000003 /* CoreAudioMicrophone.swift */,
+				A20000000000000000000004 /* HotKeyManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000009 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000016 /* HotKeyManaging.swift */,
+				A20000000000000000000015 /* MicrophoneVolumeControlling.swift */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000010 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000013 /* HotKeyError.swift */,
+				A20000000000000000000014 /* MicrophoneError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		A40000000000000000000011 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				A20000000000000000000020 /* HotKeyRecorderCoordinator.swift */,
+			);
+			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		A40000000000000000000003 /* Frameworks */ = {
