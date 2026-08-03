@@ -15,7 +15,11 @@ struct StatusPanel: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(model.status.menuTitle)
                         .font(.headline)
-                    Text(model.isMonitoring ? "Monitoring default microphone" : "Monitoring paused")
+                    Text(
+                        model.isMonitoring
+                            ? L10n.monitoringDefaultMicrophone
+                            : L10n.monitoringPaused
+                    )
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
@@ -28,7 +32,7 @@ struct StatusPanel: View {
                     .foregroundStyle(.orange)
             }
 
-            GroupBox("Input Level") {
+            GroupBox(L10n.inputLevel) {
                 HStack(spacing: 10) {
                     Image(systemName: "mic.slash.fill")
                         .foregroundStyle(.secondary)
@@ -41,7 +45,7 @@ struct StatusPanel: View {
                         ),
                         in: 0 ... 1
                     ) {
-                        Text("Microphone input level")
+                        Text(L10n.microphoneInputLevel)
                     }
                     .tint(model.inputLevel > 0 ? .green : .red)
                     .disabled(!model.canAdjustInputLevel)
@@ -57,13 +61,13 @@ struct StatusPanel: View {
             }
 
             HStack {
-                Button(model.isMonitoring ? "Stop Monitoring" : "Start Monitoring") {
+                Button(model.isMonitoring ? L10n.stopMonitoring : L10n.startMonitoring) {
                     model.toggleMonitoring()
                 }
 
                 Spacer()
 
-                Button(model.isMuted ? "Unmute" : "Mute") {
+                Button(model.isMuted ? L10n.unmute : L10n.mute) {
                     model.toggleMute()
                 }
                 .disabled(model.status.errorMessage != nil)
@@ -73,12 +77,12 @@ struct StatusPanel: View {
 
             HStack {
                 SettingsLink {
-                    Label("Hotkey Settings…", systemImage: "keyboard")
+                    Label(L10n.hotKeySettings, systemImage: "keyboard")
                 }
 
                 Spacer()
 
-                Button("Quit") {
+                Button(L10n.quit) {
                     NSApplication.shared.terminate(nil)
                 }
                 .keyboardShortcut("q")

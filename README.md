@@ -35,6 +35,10 @@ Open `MicStatusAI.xcodeproj` in Xcode and run the `MicStatusAI` scheme. SwiftLin
 
 `project.yml` is project source of truth. Generated `MicStatusAI.xcodeproj` is ignored by Git.
 
+## Localization
+
+User-facing strings live in `MicStatusAI/Models/L10n.swift` as `LocalizedStringResource` values. Add translations through `MicStatusAI/Resources/Localizable.xcstrings`.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and pull request workflow.

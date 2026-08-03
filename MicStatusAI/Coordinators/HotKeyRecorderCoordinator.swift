@@ -35,14 +35,12 @@ final class HotKeyRecorderCoordinator: NSObject {
         )
 
         guard configuration.modifierCount >= 2 else {
-            parent.onValidationError(
-                "Press at least two modifier keys plus one letter or number."
-            )
+            parent.onValidationError(String(localized: L10n.pressTwoModifiers))
             return
         }
 
         guard KeyChoice.all.contains(where: { $0.code == configuration.keyCode }) else {
-            parent.onValidationError("Use a letter or number as shortcut key.")
+            parent.onValidationError(String(localized: L10n.useLetterOrNumber))
             return
         }
 

@@ -4,6 +4,7 @@ name: MicStatusAI
 options:
   minimumXcodeGenVersion: 2.46.0
   createIntermediateGroups: true
+  developmentLanguage: en
   deploymentTarget:
     macOS: "15.0"
 
@@ -27,6 +28,7 @@ targets:
       - path: MicStatusAI
         includes:
           - "**/*.swift"
+      - path: MicStatusAI/Resources/Localizable.xcstrings
     dependencies:
       - sdk: CoreAudio.framework
       - sdk: Carbon.framework
