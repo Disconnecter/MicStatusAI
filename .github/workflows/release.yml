@@ -40,7 +40,7 @@ jobs:
       - name: Generate Xcode project
         run: xcodegen generate
 
-      - name: Build universal release app
+      - name: Build arm64 release app
         env:
           VERSION: ${{ steps.metadata.outputs.version }}
         shell: bash
@@ -55,13 +55,15 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             MARKETING_VERSION="$VERSION" \
             CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" \
-            ARCHS="arm64 x86_64" \
+            ARCHS=arm64 \
             ONLY_ACTIVE_ARCH=NO \
             clean build
 
           app="$RUNNER_TEMP/DerivedData/Build/Products/Release/MicStatusAI.app"
           test -d "$app"
-          lipo -archs "$app/Contents/MacOS/MicStatusAI"
+          architectures="$(lipo -archs "$app/Contents/MacOS/MicStatusAI")"
+          test "$architectures" = "arm64"
+          echo "Architectures: $architectures"
 
       - name: Package release
         id: package
@@ -132,6 +134,7 @@ jobs:
             desc "Menu bar microphone input volume monitor and control"
             homepage "https://github.com/Disconnecter/MicStatusAI"
 
+            depends_on arch: :arm64
             depends_on macos: :sequoia
 
             app "MicStatusAI.app"

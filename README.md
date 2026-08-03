@@ -18,6 +18,8 @@ brew tap Disconnecter/tap
 brew install --cask micstatusai
 ```
 
+MicStatusAI supports Apple silicon Macs only.
+
 Automated releases are currently unsigned. macOS Gatekeeper may request confirmation before first launch.
 
 ## Build
@@ -38,3 +40,7 @@ Open `MicStatusAI.xcodeproj` in Xcode and run the `MicStatusAI` scheme. SwiftLin
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and pull request workflow.
 
 Some microphones, including certain digital or virtual devices, do not expose software input-volume controls. MicStatusAI reports those devices as unavailable.
+
+## License
+
+MicStatusAI is available under the [MIT License](LICENSE).
