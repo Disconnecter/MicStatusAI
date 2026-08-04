@@ -31,25 +31,28 @@ enum MicrophoneStatus: Equatable {
         }
     }
 
-    var statusBarImage: NSImage {
-        let image = NSImage(
-            systemSymbolName: symbolName,
-            accessibilityDescription: accessibilityLabel
-        ) ?? NSImage()
-        let symbolColor: NSColor = switch self {
-        case .active:
-            .systemGreen
-        case .muted:
-            .systemRed
-        case .stopped:
-            .secondaryLabelColor
-        case .unavailable:
-            .systemOrange
+    @MainActor var statusBarImage: NSImage {
+        let iconSize = 18.0
+        let renderer = ImageRenderer(
+            content: Image(systemName: symbolName)
+                .symbolRenderingMode(.monochrome)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(color)
+                .frame(width: iconSize, height: iconSize)
+        )
+        renderer.scale = NSScreen.main?.backingScaleFactor ?? 2
+
+        guard let image = renderer.nsImage else {
+            let fallbackImage = NSImage(
+                systemSymbolName: symbolName,
+                accessibilityDescription: accessibilityLabel
+            ) ?? NSImage()
+            fallbackImage.isTemplate = true
+            return fallbackImage
         }
-        let configuration = NSImage.SymbolConfiguration(paletteColors: [symbolColor])
-        let configuredImage = image.withSymbolConfiguration(configuration) ?? image
-        configuredImage.isTemplate = false
-        return configuredImage
+
+        image.isTemplate = false
+        return image
     }
 
     var menuTitle: String {
