@@ -11,6 +11,28 @@ Native macOS 15+ menu-bar utility showing default microphone input-volume state.
 
 MicStatusAI reads and changes CoreAudio input-volume properties. It does not capture or record audio and therefore does not request microphone-recording permission.
 
+## Screenshots
+
+### Status panel
+
+![MicStatusAI status panel showing microphone input level and controls](ScreenShots/status-panel.png)
+
+### Menu-bar states
+
+| Microphone active | Microphone muted |
+| --- | --- |
+| ![Green active microphone icon in the macOS menu bar](ScreenShots/menu-bar-active.png) | ![Red muted microphone icon in the macOS menu bar](ScreenShots/menu-bar-muted.png) |
+
+### Status overlay
+
+| Microphone active | Microphone muted |
+| --- | --- |
+| ![Status overlay showing microphone on at 80 percent](ScreenShots/status-overlay-active.png) | ![Status overlay showing microphone muted](ScreenShots/status-overlay-muted.png) |
+
+### Settings
+
+![MicStatusAI settings for global hotkey and status overlay](ScreenShots/settings.png)
+
 ## Install
 
 ```sh
