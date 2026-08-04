@@ -112,6 +112,13 @@ final class StatusOverlayPresenter {
         )
     }
 
+    private func fadeOut() {
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = fadeDuration
+            panel?.animator().alphaValue = 0
+        }
+    }
+
     private func scheduleDismissal(after duration: TimeInterval) {
         dismissalTask = Task { @MainActor [weak self] in
             guard let self else { return }
@@ -122,9 +129,12 @@ final class StatusOverlayPresenter {
                 return
             }
 
-            await NSAnimationContext.runAnimationGroup { context in
-                context.duration = fadeDuration
-                panel?.animator().alphaValue = 0
+            fadeOut()
+
+            do {
+                try await Task.sleep(for: .seconds(fadeDuration))
+            } catch {
+                return
             }
 
             guard !Task.isCancelled else { return }
