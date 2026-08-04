@@ -31,26 +31,29 @@ enum MicrophoneStatus: Equatable {
         }
     }
 
-    @MainActor var statusBarImage: NSImage {
-        let iconSize = 18.0
-        let renderer = ImageRenderer(
-            content: Image(systemName: symbolName)
-                .symbolRenderingMode(.monochrome)
-                .font(.system(size: 14, weight: .semibold))
-                .foregroundStyle(color)
-                .frame(width: iconSize, height: iconSize)
-        )
-        renderer.scale = NSScreen.main?.backingScaleFactor ?? 2
+    private var statusBarAssetName: String {
+        switch self {
+        case .active:
+            "StatusBarActive"
+        case .muted:
+            "StatusBarMuted"
+        case .stopped:
+            "StatusBarStopped"
+        case .unavailable:
+            "StatusBarUnavailable"
+        }
+    }
 
-        guard let image = renderer.nsImage else {
-            let fallbackImage = NSImage(
-                systemSymbolName: symbolName,
-                accessibilityDescription: accessibilityLabel
-            ) ?? NSImage()
-            fallbackImage.isTemplate = true
-            return fallbackImage
+    @MainActor var statusBarImage: NSImage {
+        let assetName = NSImage.Name(statusBarAssetName)
+        guard let sourceImage = NSImage(named: assetName),
+              let image = sourceImage.copy() as? NSImage
+        else {
+            assertionFailure("Missing status bar image asset: \(statusBarAssetName)")
+            return NSImage()
         }
 
+        image.size = NSSize(width: 18, height: 18)
         image.isTemplate = false
         return image
     }
