@@ -1,479 +1,522 @@
 {
-  "sourceLanguage": "en",
-  "strings": {
-    "action.mute": {
-      "comment": "Button that sets microphone input volume to zero.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mute"
+  "sourceLanguage" : "en",
+  "strings" : {
+    "action.mute" : {
+      "comment" : "Button that sets microphone input volume to zero.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mute"
           }
         }
       }
     },
-    "action.quit": {
-      "comment": "Button that quits the application.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quit"
+    "action.quit" : {
+      "comment" : "Button that quits the application.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quit"
           }
         }
       }
     },
-    "action.restoreHotkey": {
-      "comment": "Button that restores the default global hotkey.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Restore Default"
+    "action.restoreHotkey" : {
+      "comment" : "Button that restores the default global hotkey.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restore Default"
           }
         }
       }
     },
-    "action.start": {
-      "comment": "Button that starts microphone input monitoring.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Start Monitoring"
+    "action.start" : {
+      "comment" : "Button that starts microphone input monitoring.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start Monitoring"
           }
         }
       }
     },
-    "action.stop": {
-      "comment": "Button that stops microphone input monitoring.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Stop Monitoring"
+    "action.stop" : {
+      "comment" : "Button that stops microphone input monitoring.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop Monitoring"
           }
         }
       }
     },
-    "action.unmute": {
-      "comment": "Button that restores microphone input volume.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Unmute"
+    "action.unmute" : {
+      "comment" : "Button that restores microphone input volume.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unmute"
           }
         }
       }
     },
-    "error.coreAudio": {
-      "comment": "Microphone error. Argument is a CoreAudio status code.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "CoreAudio error %d."
+    "error.coreAudio" : {
+      "comment" : "Microphone error. Argument is a CoreAudio status code.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CoreAudio error %d."
           }
         }
       }
     },
-    "error.hotkeyRegistration": {
-      "comment": "Global hotkey error. Argument is a Carbon status code.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Could not register hotkey (error %d). Another app may use it."
+    "error.hotkeyRegistration" : {
+      "comment" : "Global hotkey error. Argument is a Carbon status code.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not register hotkey (error %d). Another app may use it."
           }
         }
       }
     },
-    "error.invalidHotkey": {
-      "comment": "Error shown when a global hotkey does not have enough modifier keys.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Shortcut needs at least two modifier keys and one letter or number."
+    "error.invalidHotkey" : {
+      "comment" : "Error shown when a global hotkey does not have enough modifier keys.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shortcut needs at least two modifier keys and one letter or number."
           }
         }
       }
     },
-    "error.noMicrophone": {
-      "comment": "Error shown when macOS has no default microphone.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No default microphone found."
+    "error.noMicrophone" : {
+      "comment" : "Error shown when macOS has no default microphone.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No default microphone found."
           }
         }
       }
     },
-    "error.volumeUnavailable": {
-      "comment": "Error shown when the default microphone has no software volume control.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Default microphone does not expose input volume control."
+    "error.volumeUnavailable" : {
+      "comment" : "Error shown when the default microphone has no software volume control.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default microphone does not expose input volume control."
           }
         }
       }
     },
-    "hotkey.accessibility": {
-      "comment": "Accessibility label for the global hotkey recorder.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mute and unmute shortcut"
+    "hotkey.accessibility" : {
+      "comment" : "Accessibility label for the global hotkey recorder.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mute and unmute shortcut"
           }
         }
       }
     },
-    "hotkey.active": {
-      "comment": "Global hotkey status. Argument is the configured keyboard shortcut.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ active system-wide"
+    "hotkey.active" : {
+      "comment" : "Global hotkey status. Argument is the configured keyboard shortcut.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ active system-wide"
           }
         }
       }
     },
-    "hotkey.cancel": {
-      "comment": "Tooltip shown while recording a global hotkey.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Press Escape to cancel"
+    "hotkey.cancel" : {
+      "comment" : "Tooltip shown while recording a global hotkey.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press Escape to cancel"
           }
         }
       }
     },
-    "hotkey.cancelHelp": {
-      "comment": "Help text below the global hotkey recorder.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Press Escape while recording to cancel."
+    "hotkey.cancelHelp" : {
+      "comment" : "Help text below the global hotkey recorder.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press Escape while recording to cancel."
           }
         }
       }
     },
-    "hotkey.instructions": {
-      "comment": "Instructions for configuring the global hotkey.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Click shortcut field, then press new combination. Shortcut must contain at least two modifier keys and one letter or number."
+    "hotkey.instructions" : {
+      "comment" : "Instructions for configuring the global hotkey.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click shortcut field, then press new combination. Shortcut must contain at least two modifier keys and one letter or number."
           }
         }
       }
     },
-    "hotkey.label": {
-      "comment": "Label for the configured global hotkey.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Keyboard Shortcut"
+    "hotkey.label" : {
+      "comment" : "Label for the configured global hotkey.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keyboard Shortcut"
           }
         }
       }
     },
-    "hotkey.prompt": {
-      "comment": "Global hotkey recorder title while waiting for keyboard input.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Press shortcut…"
+    "hotkey.prompt" : {
+      "comment" : "Global hotkey recorder title while waiting for keyboard input.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press shortcut…"
           }
         }
       }
     },
-    "hotkey.recording": {
-      "comment": "Accessibility value announced while recording a global hotkey.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recording. Press at least two modifiers and one letter or number."
+    "hotkey.recording" : {
+      "comment" : "Accessibility value announced while recording a global hotkey.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording. Press at least two modifiers and one letter or number."
           }
         }
       }
     },
-    "hotkey.title": {
-      "comment": "Heading for global hotkey settings.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mute / Unmute Hotkey"
+    "hotkey.title" : {
+      "comment" : "Heading for global hotkey settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mute / Unmute Hotkey"
           }
         }
       }
     },
-    "hotkey.tooltip": {
-      "comment": "Tooltip for the global hotkey recorder.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Click, then press a new shortcut"
+    "hotkey.tooltip" : {
+      "comment" : "Tooltip for the global hotkey recorder.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Click, then press a new shortcut"
           }
         }
       }
     },
-    "input.accessibility": {
-      "comment": "Accessibility label for the microphone input volume slider.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Microphone input level"
+    "input.accessibility" : {
+      "comment" : "Accessibility label for the microphone input volume slider.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone input level"
           }
         }
       }
     },
-    "input.title": {
-      "comment": "Heading for microphone input volume controls.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Input Level"
+    "input.title" : {
+      "comment" : "Heading for microphone input volume controls.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Input Level"
           }
         }
       }
     },
-    "monitoring.active": {
-      "comment": "Status shown while monitoring the default microphone.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Monitoring default microphone"
+    "monitoring.active" : {
+      "comment" : "Status shown while monitoring the default microphone.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoring default microphone"
           }
         }
       }
     },
-    "monitoring.off": {
-      "comment": "Primary status shown when microphone monitoring is disabled.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Monitoring Off"
+    "monitoring.off" : {
+      "comment" : "Primary status shown when microphone monitoring is disabled.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoring Off"
           }
         }
       }
     },
-    "monitoring.paused": {
-      "comment": "Status shown when microphone monitoring is paused.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Monitoring paused"
+    "monitoring.paused" : {
+      "comment" : "Status shown when microphone monitoring is paused.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitoring paused"
           }
         }
       }
     },
-    "overlay.duration": {
-      "comment": "Label for choosing how long the microphone status overlay remains visible.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Display Duration"
+    "overlay.duration" : {
+      "comment" : "Label for choosing how long the microphone status overlay remains visible.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Display Duration"
           }
         }
       }
     },
-    "overlay.enabled": {
-      "comment": "Toggle that enables or disables the microphone status overlay.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Show Status Overlay"
+    "overlay.enabled" : {
+      "comment" : "Toggle that enables or disables the microphone status overlay.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Status Overlay"
           }
         }
       }
     },
-    "overlay.help": {
-      "comment": "Help text explaining when the microphone status overlay appears.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Shown when microphone is muted or unmuted."
+    "overlay.help" : {
+      "comment" : "Help text explaining when the microphone status overlay appears.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shown when microphone is muted or unmuted."
           }
         }
       }
     },
-    "overlay.placement": {
-      "comment": "Label for choosing where the microphone status overlay appears.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Placement"
+    "overlay.placement" : {
+      "comment" : "Label for choosing where the microphone status overlay appears.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Placement"
           }
         }
       }
     },
-    "overlay.placement.bottom": {
-      "comment": "Microphone status overlay placement at the bottom center of the screen.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bottom"
+    "overlay.placement.bottom" : {
+      "comment" : "Microphone status overlay placement at the bottom center of the screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bottom"
           }
         }
       }
     },
-    "overlay.placement.bottomLeft": {
-      "comment": "Microphone status overlay placement at the bottom-left of the screen.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bottom Left"
+    "overlay.placement.bottomLeft" : {
+      "comment" : "Microphone status overlay placement at the bottom-left of the screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bottom Left"
           }
         }
       }
     },
-    "overlay.placement.bottomRight": {
-      "comment": "Microphone status overlay placement at the bottom-right of the screen.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Bottom Right"
+    "overlay.placement.bottomRight" : {
+      "comment" : "Microphone status overlay placement at the bottom-right of the screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bottom Right"
           }
         }
       }
     },
-    "overlay.placement.center": {
-      "comment": "Microphone status overlay placement at the center of the screen.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Center"
+    "overlay.placement.center" : {
+      "comment" : "Microphone status overlay placement at the center of the screen.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Center"
           }
         }
       }
     },
-    "overlay.title": {
-      "comment": "Heading for microphone status overlay settings.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Status Overlay"
+    "overlay.title" : {
+      "comment" : "Heading for microphone status overlay settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Status Overlay"
           }
         }
       }
     },
-    "overlay.transparency": {
-      "comment": "Label for adjusting microphone status overlay background transparency.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Transparency"
+    "overlay.transparency" : {
+      "comment" : "Label for adjusting microphone status overlay background transparency.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transparency"
           }
         }
       }
     },
-    "settings.open": {
-      "comment": "Button that opens application settings.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Settings…"
+    "settings.open" : {
+      "comment" : "Button that opens application settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings…"
           }
         }
       }
     },
-    "settings.title": {
-      "comment": "Heading for the application settings window.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "MicStatusAI Settings"
+    "settings.title" : {
+      "comment" : "Heading for the application settings window.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MicStatusAI Settings"
           }
         }
       }
     },
-    "status.muted": {
-      "comment": "Primary status shown when microphone input volume is zero.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Microphone Muted"
+    "status.muted" : {
+      "comment" : "Primary status shown when microphone input volume is zero.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone Muted"
           }
         }
       }
     },
-    "status.on": {
-      "comment": "Primary microphone status. Argument is a locale-formatted input volume percentage.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Microphone On · %@"
+    "status.on" : {
+      "comment" : "Primary microphone status. Argument is a locale-formatted input volume percentage.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone On · %@"
           }
         }
       }
     },
-    "status.unavailable": {
-      "comment": "Primary status shown when microphone input cannot be accessed.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Microphone Unavailable"
+    "status.unavailable" : {
+      "comment" : "Primary status shown when microphone input cannot be accessed.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Microphone Unavailable"
           }
         }
       }
     },
-    "validation.key": {
-      "comment": "Validation error shown when a global hotkey uses an unsupported key.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Use a letter or number as shortcut key."
+    "validation.key" : {
+      "comment" : "Validation error shown when a global hotkey uses an unsupported key.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use a letter or number as shortcut key."
           }
         }
       }
     },
-    "validation.modifiers": {
-      "comment": "Validation error shown while recording an incomplete global hotkey.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Press at least two modifier keys plus one letter or number."
+    "validation.modifiers" : {
+      "comment" : "Validation error shown while recording an incomplete global hotkey.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press at least two modifier keys plus one letter or number."
           }
         }
       }
     }
   },
-  "version": "1.0"
+  "version" : "1.0"
 }
