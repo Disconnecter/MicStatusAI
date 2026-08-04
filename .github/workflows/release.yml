@@ -36,6 +36,9 @@ jobs:
 
       - name: Install build tools
         run: |
+          if brew tap | grep -qx "aws/tap"; then
+            brew untap aws/tap
+          fi
           brew install \
             xcodegen \
             swiftlint \
