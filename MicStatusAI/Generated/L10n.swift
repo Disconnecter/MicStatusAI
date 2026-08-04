@@ -100,11 +100,6 @@ public enum L10n {
     return tr(key: "hotkey.recording")
   }
 
-  /// Hotkey Settings…
-  public static var hotkeySettings: String {
-    return tr(key: "hotkey.settings")
-  }
-
   /// Mute / Unmute Hotkey
   public static var hotkeyTitle: String {
     return tr(key: "hotkey.title")
@@ -138,6 +133,66 @@ public enum L10n {
   /// Monitoring paused
   public static var monitoringPaused: String {
     return tr(key: "monitoring.paused")
+  }
+
+  /// Display Duration
+  public static var overlayDuration: String {
+    return tr(key: "overlay.duration")
+  }
+
+  /// Show Status Overlay
+  public static var overlayEnabled: String {
+    return tr(key: "overlay.enabled")
+  }
+
+  /// Shown when microphone is muted or unmuted.
+  public static var overlayHelp: String {
+    return tr(key: "overlay.help")
+  }
+
+  /// Placement
+  public static var overlayPlacement: String {
+    return tr(key: "overlay.placement")
+  }
+
+  /// Bottom
+  public static var overlayPlacementBottom: String {
+    return tr(key: "overlay.placement.bottom")
+  }
+
+  /// Bottom Left
+  public static var overlayPlacementBottomLeft: String {
+    return tr(key: "overlay.placement.bottomLeft")
+  }
+
+  /// Bottom Right
+  public static var overlayPlacementBottomRight: String {
+    return tr(key: "overlay.placement.bottomRight")
+  }
+
+  /// Center
+  public static var overlayPlacementCenter: String {
+    return tr(key: "overlay.placement.center")
+  }
+
+  /// Status Overlay
+  public static var overlayTitle: String {
+    return tr(key: "overlay.title")
+  }
+
+  /// Transparency
+  public static var overlayTransparency: String {
+    return tr(key: "overlay.transparency")
+  }
+
+  /// Settings…
+  public static var settingsOpen: String {
+    return tr(key: "settings.open")
+  }
+
+  /// MicStatusAI Settings
+  public static var settingsTitle: String {
+    return tr(key: "settings.title")
   }
 
   /// Microphone Muted

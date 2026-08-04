@@ -2,27 +2,30 @@ import AppKit
 import SwiftUI
 
 struct StatusPanelFooter: View {
+    @Environment(\.openSettings)
+    private var openSettings
+
     var body: some View {
         ViewThatFits(in: .horizontal) {
             HStack {
-                settingsLink
+                settingsButton
                 Spacer(minLength: 8)
                 quitButton
             }
 
             VStack(alignment: .leading, spacing: 8) {
-                settingsLink
+                settingsButton
                 quitButton
             }
         }
     }
 
-    private var settingsLink: some View {
-        SettingsLink {
+    private var settingsButton: some View {
+        Button(action: showSettings) {
             Label {
-                Text(L10n.hotkeySettings)
+                Text(L10n.settingsOpen)
             } icon: {
-                Image(systemName: "keyboard")
+                Image(systemName: "gearshape")
             }
         }
     }
@@ -34,5 +37,10 @@ struct StatusPanelFooter: View {
             Text(L10n.actionQuit)
         }
         .keyboardShortcut("q")
+    }
+
+    private func showSettings() {
+        NSApplication.shared.activate()
+        openSettings()
     }
 }

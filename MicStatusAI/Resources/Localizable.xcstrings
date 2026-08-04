@@ -210,17 +210,6 @@
         }
       }
     },
-    "hotkey.settings": {
-      "comment": "Button that opens global hotkey settings.",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hotkey Settings…"
-          }
-        }
-      }
-    },
     "hotkey.title": {
       "comment": "Heading for global hotkey settings.",
       "localizations": {
@@ -294,6 +283,138 @@
           "stringUnit": {
             "state": "translated",
             "value": "Monitoring paused"
+          }
+        }
+      }
+    },
+    "overlay.duration": {
+      "comment": "Label for choosing how long the microphone status overlay remains visible.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Display Duration"
+          }
+        }
+      }
+    },
+    "overlay.enabled": {
+      "comment": "Toggle that enables or disables the microphone status overlay.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show Status Overlay"
+          }
+        }
+      }
+    },
+    "overlay.help": {
+      "comment": "Help text explaining when the microphone status overlay appears.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Shown when microphone is muted or unmuted."
+          }
+        }
+      }
+    },
+    "overlay.placement": {
+      "comment": "Label for choosing where the microphone status overlay appears.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Placement"
+          }
+        }
+      }
+    },
+    "overlay.placement.bottom": {
+      "comment": "Microphone status overlay placement at the bottom center of the screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bottom"
+          }
+        }
+      }
+    },
+    "overlay.placement.bottomLeft": {
+      "comment": "Microphone status overlay placement at the bottom-left of the screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bottom Left"
+          }
+        }
+      }
+    },
+    "overlay.placement.bottomRight": {
+      "comment": "Microphone status overlay placement at the bottom-right of the screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bottom Right"
+          }
+        }
+      }
+    },
+    "overlay.placement.center": {
+      "comment": "Microphone status overlay placement at the center of the screen.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Center"
+          }
+        }
+      }
+    },
+    "overlay.title": {
+      "comment": "Heading for microphone status overlay settings.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Status Overlay"
+          }
+        }
+      }
+    },
+    "overlay.transparency": {
+      "comment": "Label for adjusting microphone status overlay background transparency.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Transparency"
+          }
+        }
+      }
+    },
+    "settings.open": {
+      "comment": "Button that opens application settings.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Settings…"
+          }
+        }
+      }
+    },
+    "settings.title": {
+      "comment": "Heading for the application settings window.",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "MicStatusAI Settings"
           }
         }
       }
