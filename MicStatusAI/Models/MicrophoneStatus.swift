@@ -72,6 +72,17 @@ enum MicrophoneStatus: Equatable {
         menuTitle
     }
 
+    var muteState: MicrophoneMuteState {
+        switch self {
+        case .active:
+            .active
+        case .muted:
+            .muted
+        case .stopped, .unavailable:
+            .indeterminate
+        }
+    }
+
     var errorMessage: String? {
         guard case let .unavailable(message) = self else { return nil }
         return message

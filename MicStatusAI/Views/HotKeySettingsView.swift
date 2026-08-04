@@ -2,14 +2,18 @@ import SwiftUI
 
 struct HotKeySettingsView: View {
     @Bindable var model: MicrophoneStatusModel
+    @Binding var statusOverlayEnabled: Bool
+    @Binding var statusOverlayDuration: StatusOverlayDuration
+    @Binding var statusOverlayPlacement: StatusOverlayPlacement
+    @Binding var statusOverlayTransparency: Double
     @State private var recordingError: String?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             Label {
-                Text(L10n.hotkeyTitle)
+                Text(L10n.settingsTitle)
             } icon: {
-                Image(systemName: "keyboard")
+                Image(systemName: "gearshape")
             }
             .font(.title2.bold())
 
@@ -29,6 +33,8 @@ struct HotKeySettingsView: View {
                     Text(L10n.hotkeyLabel)
                 }
                 .padding(.vertical, 4)
+            } label: {
+                Text(L10n.hotkeyTitle)
             }
 
             if let error = recordingError ?? model.hotKeyRegistrationError {
@@ -46,6 +52,13 @@ struct HotKeySettingsView: View {
                 .foregroundStyle(.green)
             }
 
+            StatusOverlaySettingsView(
+                isEnabled: $statusOverlayEnabled,
+                duration: $statusOverlayDuration,
+                placement: $statusOverlayPlacement,
+                transparency: $statusOverlayTransparency
+            )
+
             Divider()
 
             HStack {
@@ -62,6 +75,6 @@ struct HotKeySettingsView: View {
             }
         }
         .scenePadding()
-        .frame(minWidth: 480, idealWidth: 480, minHeight: 280)
+        .frame(minWidth: 480, idealWidth: 480, minHeight: 450)
     }
 }
