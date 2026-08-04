@@ -23,9 +23,29 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          fetch-depth: 0
           persist-credentials: false
 
+      - name: Detect app changes
+        id: changes
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          changed_files="$RUNNER_TEMP/changed-files.txt"
+          git diff --name-only "$BASE_SHA" "$HEAD_SHA" | tee "$changed_files"
+
+          if grep -Eq \
+            '^(MicStatusAI/|Scripts/generate-l10n\.sh$)' \
+            "$changed_files" || \
+            grep -Eq '^(project\.yml$|\.swiftlint\.yml$)' "$changed_files"; then
+            echo "app_changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "app_changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Install build tools
+        if: steps.changes.outputs.app_changed == 'true'
         run: |
           brew install \
             xcodegen \
@@ -33,9 +53,11 @@ jobs:
             disconnecter/l10n/l10n_xcstrings
 
       - name: Generate Xcode project
+        if: steps.changes.outputs.app_changed == 'true'
         run: xcodegen generate
 
       - name: Build
+        if: steps.changes.outputs.app_changed == 'true'
         run: |
           xcodebuild \
             -project MicStatusAI.xcodeproj \
@@ -45,3 +67,9 @@ jobs:
             -derivedDataPath "$RUNNER_TEMP/DerivedData" \
             CODE_SIGNING_ALLOWED=NO \
             clean build
+
+      - name: Report skipped build
+        if: steps.changes.outputs.app_changed != 'true'
+        run: |
+          echo "No app changes detected; macOS build skipped." \
+            >> "$GITHUB_STEP_SUMMARY"
