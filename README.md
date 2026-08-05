@@ -42,18 +42,16 @@ brew install --cask micstatusai
 
 MicStatusAI supports Apple silicon Macs only.
 
-Automated releases are currently unsigned. macOS Gatekeeper may report the app as damaged after installation.
+> **If macOS blocks the app on first launch remove the quarantine attribute:**
+>
+> ```
+> xattr -dr com.apple.quarantine /Applications/MicStatusAI.app
+> open /Applications/MicStatusAI.app
+> ```
 
-### Temporary local workaround
+### Direct download
 
-Only continue if you trust the downloaded MicStatusAI release. Remove the quarantine attribute, then open the app:
-
-```sh
-xattr -dr com.apple.quarantine /Applications/MicStatusAI.app
-open /Applications/MicStatusAI.app
-```
-
-If removing the attribute fails with a permission error, rerun the `xattr` command with `sudo`.
+Alternatively, download the app directly from the [Releases](../../releases) page.
 
 ## Build
 
