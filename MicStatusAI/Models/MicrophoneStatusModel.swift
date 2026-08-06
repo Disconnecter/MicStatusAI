@@ -39,6 +39,8 @@ final class MicrophoneStatusModel {
     @ObservationIgnored private let hotKeyManager: any HotKeyManaging
     @ObservationIgnored private var pollingTimer: Timer?
     @ObservationIgnored private var lastNonzeroVolume: Float32
+    @ObservationIgnored private var currentInputDeviceID: UInt32?
+    @ObservationIgnored private var desiredMuteState: MicrophoneMuteState = .indeterminate
 
     private static let hotKeyDefaultsKey = "muteHotKey"
     private static let lastVolumeDefaultsKey = "lastNonzeroInputVolume"
@@ -104,12 +106,20 @@ final class MicrophoneStatusModel {
         guard canAdjustInputLevel else { return }
 
         do {
+            let deviceID = try microphone.defaultInputDeviceID()
             let clampedLevel = min(max(level, 0), 1)
-            try microphone.setInputVolume(Float32(clampedLevel))
+            try microphone.setInputVolume(Float32(clampedLevel), for: deviceID)
             if clampedLevel > 0 {
                 lastNonzeroVolume = Float32(clampedLevel)
                 UserDefaults.standard.set(clampedLevel, forKey: Self.lastVolumeDefaultsKey)
             }
+
+            let shouldMute = clampedLevel == 0
+            if try microphone.isMuted(for: deviceID) != shouldMute {
+                try microphone.setMuted(shouldMute, for: deviceID)
+            }
+            currentInputDeviceID = deviceID
+            desiredMuteState = shouldMute ? .muted : .active
             refreshStatus()
         } catch {
             status = .unavailable(error.localizedDescription)
@@ -118,14 +128,16 @@ final class MicrophoneStatusModel {
 
     func toggleMute() {
         do {
-            let currentVolume = try microphone.inputVolume()
-            if currentVolume > 0 {
-                lastNonzeroVolume = currentVolume
-                UserDefaults.standard.set(Double(currentVolume), forKey: Self.lastVolumeDefaultsKey)
-                try microphone.setInputVolume(0)
-            } else {
-                try microphone.setInputVolume(max(lastNonzeroVolume, 0.01))
+            let deviceID = try microphone.defaultInputDeviceID()
+            let currentlyMuted = try intendedMuteState(for: deviceID)
+            if currentlyMuted, try microphone.inputVolume(for: deviceID) == 0 {
+                try microphone.setInputVolume(max(lastNonzeroVolume, 0.01), for: deviceID)
             }
+
+            let targetMuteState = !currentlyMuted
+            try microphone.setMuted(targetMuteState, for: deviceID)
+            currentInputDeviceID = deviceID
+            desiredMuteState = targetMuteState ? .muted : .active
 
             if isMonitoring {
                 refreshStatus()
@@ -145,17 +157,46 @@ final class MicrophoneStatusModel {
         guard isMonitoring else { return }
 
         do {
-            let volume = try microphone.inputVolume()
+            let deviceID = try microphone.defaultInputDeviceID()
+            let deviceChanged = currentInputDeviceID.map { $0 != deviceID } ?? false
+            if deviceChanged {
+                try applyDesiredMuteState(to: deviceID)
+            }
+
+            let volume = try microphone.inputVolume(for: deviceID)
+            let muted = try microphone.isMuted(for: deviceID)
+            currentInputDeviceID = deviceID
+            desiredMuteState = muted ? .muted : .active
             inputLevel = Double(volume)
             if volume > 0 {
                 lastNonzeroVolume = volume
                 UserDefaults.standard.set(Double(volume), forKey: Self.lastVolumeDefaultsKey)
-                status = .active(volume)
-            } else {
-                status = .muted
             }
+            status = muted ? .muted : .active(volume)
         } catch {
             status = .unavailable(error.localizedDescription)
+        }
+    }
+
+    private func intendedMuteState(for deviceID: UInt32) throws -> Bool {
+        switch desiredMuteState {
+        case .active:
+            false
+        case .muted:
+            true
+        case .indeterminate:
+            try microphone.isMuted(for: deviceID)
+        }
+    }
+
+    private func applyDesiredMuteState(to deviceID: UInt32) throws {
+        switch desiredMuteState {
+        case .active:
+            try microphone.setMuted(false, for: deviceID)
+        case .muted:
+            try microphone.setMuted(true, for: deviceID)
+        case .indeterminate:
+            break
         }
     }
 

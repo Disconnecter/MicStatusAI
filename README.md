@@ -2,14 +2,15 @@
 
 [![Pull Request Build](https://github.com/Disconnecter/MicStatusAI/actions/workflows/pr-build.yml/badge.svg)](https://github.com/Disconnecter/MicStatusAI/actions/workflows/pr-build.yml)
 
-Native macOS 15+ menu-bar utility showing default microphone input-volume state.
+Native macOS 15+ menu-bar utility showing default microphone mute state and input volume.
 
-- **Green mic:** input volume is greater than zero
-- **Red muted mic:** input volume is zero
+- **Green mic:** CoreAudio input mute is disabled
+- **Red muted mic:** CoreAudio input mute is enabled and verified
 - **Gray off mic:** monitoring is stopped
 - **Global hotkey:** Control-Option-M by default; configurable in Settings
+- **Device switching:** current mute state follows newly selected default microphone
 
-MicStatusAI reads and changes CoreAudio input-volume properties. It does not capture or record audio and therefore does not request microphone-recording permission.
+MicStatusAI reads and changes CoreAudio input-mute and input-volume properties. Mute writes are read back for verification. It does not capture or record audio and therefore does not request microphone-recording permission.
 
 ## Screenshots
 
@@ -75,7 +76,7 @@ Add short keys and translations to `MicStatusAI/Resources/Localizable.xcstrings`
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup and pull request workflow.
 
-Some microphones, including certain digital or virtual devices, do not expose software input-volume controls. MicStatusAI reports those devices as unavailable.
+Some microphones, including certain digital or virtual devices, do not expose software input-mute or input-volume controls. MicStatusAI reports those devices as unavailable.
 
 ## License
 
