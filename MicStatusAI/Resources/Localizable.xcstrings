@@ -2,7 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "action.mute" : {
-      "comment" : "Button that sets microphone input volume to zero.",
+      "comment" : "Button that enables the default microphone's CoreAudio input mute property.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -62,7 +62,7 @@
       }
     },
     "action.unmute" : {
-      "comment" : "Button that restores microphone input volume.",
+      "comment" : "Button that disables the default microphone's CoreAudio input mute property.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
@@ -105,6 +105,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Shortcut needs at least two modifier keys and one letter or number."
+          }
+        }
+      }
+    },
+    "error.muteUnavailable" : {
+      "comment" : "Error shown when the default microphone has no writable CoreAudio input mute property.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default microphone does not expose input mute control."
+          }
+        }
+      }
+    },
+    "error.muteVerificationFailed" : {
+      "comment" : "Error shown when the default microphone does not confirm a requested mute state.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Default microphone did not confirm the requested mute state."
           }
         }
       }
@@ -458,7 +482,7 @@
       }
     },
     "status.muted" : {
-      "comment" : "Primary status shown when microphone input volume is zero.",
+      "comment" : "Primary status shown when the CoreAudio input mute property is enabled.",
       "extractionState" : "manual",
       "localizations" : {
         "en" : {

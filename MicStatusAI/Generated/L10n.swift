@@ -50,6 +50,16 @@ public enum L10n {
     return tr(key: "error.invalidHotkey")
   }
 
+  /// Default microphone does not expose input mute control.
+  public static var errorMuteUnavailable: String {
+    return tr(key: "error.muteUnavailable")
+  }
+
+  /// Default microphone did not confirm the requested mute state.
+  public static var errorMuteVerificationFailed: String {
+    return tr(key: "error.muteVerificationFailed")
+  }
+
   /// No default microphone found.
   public static var errorNoMicrophone: String {
     return tr(key: "error.noMicrophone")
