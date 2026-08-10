@@ -5,6 +5,11 @@
 import Foundation
 
 public enum L10n {
+  /// Cancel
+  public static var actionCancel: String {
+    return tr(key: "action.cancel")
+  }
+
   /// Mute
   public static var actionMute: String {
     return tr(key: "action.mute")
@@ -108,6 +113,11 @@ public enum L10n {
   /// Recording. Press at least two modifiers and one letter or number.
   public static var hotkeyRecording: String {
     return tr(key: "hotkey.recording")
+  }
+
+  /// Recording…
+  public static var hotkeyRecordingStatus: String {
+    return tr(key: "hotkey.recordingStatus")
   }
 
   /// Mute / Unmute Hotkey

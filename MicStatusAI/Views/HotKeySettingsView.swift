@@ -9,6 +9,7 @@ struct HotKeySettingsView: View {
     let onShowOverlayPreview: () -> Void
 
     @State private var recordingError: String?
+    @State private var isRecordingHotKey = false
 
     private static let appVersion = Bundle.main.object(
         forInfoDictionaryKey: "CFBundleShortVersionString"
@@ -76,6 +77,7 @@ struct HotKeySettingsView: View {
     private var hotKeyRecorder: some View {
         HotKeyRecorderView(
             configuration: model.hotKey,
+            isRecording: $isRecordingHotKey,
             onChange: { model.hotKey = $0 },
             onValidationError: { recordingError = $0 }
         )
@@ -83,7 +85,16 @@ struct HotKeySettingsView: View {
     }
 
     @ViewBuilder private var hotKeyStatus: some View {
-        if let error = recordingError ?? model.hotKeyRegistrationError {
+        if isRecordingHotKey {
+            Label {
+                Text(L10n.hotkeyRecordingStatus)
+            } icon: {
+                Image(systemName: "record.circle.fill")
+            }
+            .font(.callout)
+            .foregroundStyle(.red)
+            .accessibilityLabel(L10n.hotkeyRecording)
+        } else if let error = recordingError ?? model.hotKeyRegistrationError {
             Label(error, systemImage: "exclamationmark.triangle.fill")
                 .font(.callout)
                 .foregroundStyle(.orange)
@@ -99,18 +110,22 @@ struct HotKeySettingsView: View {
         }
     }
 
-    private var shortcutActions: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack {
-                cancelHelp
-                Spacer()
-                restoreHotKeyButton
-            }
+    @ViewBuilder private var shortcutActions: some View {
+        if isRecordingHotKey {
+            ViewThatFits(in: .horizontal) {
+                HStack {
+                    cancelHelp
+                    Spacer()
+                    cancelRecordingButton
+                }
 
-            VStack(alignment: .leading, spacing: 8) {
-                cancelHelp
-                restoreHotKeyButton
+                VStack(alignment: .leading, spacing: 8) {
+                    cancelHelp
+                    cancelRecordingButton
+                }
             }
+        } else {
+            restoreHotKeyButton
         }
     }
 
@@ -118,6 +133,15 @@ struct HotKeySettingsView: View {
         Text(L10n.hotkeyCancelHelp)
             .font(.caption)
             .foregroundStyle(.secondary)
+    }
+
+    private var cancelRecordingButton: some View {
+        Button {
+            recordingError = nil
+            isRecordingHotKey = false
+        } label: {
+            Text(L10n.actionCancel)
+        }
     }
 
     private var restoreHotKeyButton: some View {

@@ -3,6 +3,8 @@ import AppKit
 @MainActor
 final class HotKeyRecorderButton: NSButton {
     var onKeyEvent: ((NSEvent) -> Void)?
+    var onRecordingChange: ((Bool) -> Void)?
+
     private(set) var isRecording = false
     private var currentConfiguration = HotKeyConfiguration.defaultValue
 
@@ -14,22 +16,26 @@ final class HotKeyRecorderButton: NSButton {
         currentConfiguration = configuration
         title = configuration.displayName
         toolTip = L10n.hotkeyTooltip
+        contentTintColor = nil
         setAccessibilityLabel(L10n.hotkeyAccessibility)
         setAccessibilityValue(configuration.displayName)
         setAccessibilityHelp(L10n.hotkeyTooltip)
     }
 
     func beginRecording() {
-        isRecording = true
+        setRecording(true)
         title = L10n.hotkeyPrompt
         toolTip = L10n.hotkeyCancel
+        contentTintColor = .systemRed
         setAccessibilityValue(L10n.hotkeyRecording)
         setAccessibilityHelp(L10n.hotkeyCancel)
+        NSAccessibility.post(element: self, notification: .valueChanged)
     }
 
     func finishRecording(with configuration: HotKeyConfiguration) {
-        isRecording = false
+        setRecording(false)
         show(configuration)
+        NSAccessibility.post(element: self, notification: .valueChanged)
     }
 
     override func keyDown(with event: NSEvent) {
@@ -42,9 +48,14 @@ final class HotKeyRecorderButton: NSButton {
 
     override func resignFirstResponder() -> Bool {
         if isRecording {
-            isRecording = false
-            show(currentConfiguration)
+            finishRecording(with: currentConfiguration)
         }
         return super.resignFirstResponder()
+    }
+
+    private func setRecording(_ newValue: Bool) {
+        guard isRecording != newValue else { return }
+        isRecording = newValue
+        onRecordingChange?(newValue)
     }
 }

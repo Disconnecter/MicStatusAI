@@ -16,6 +16,10 @@ final class HotKeyRecorderCoordinator: NSObject {
         button.window?.makeFirstResponder(button)
     }
 
+    func recordingDidChange(_ isRecording: Bool) {
+        parent.isRecording = isRecording
+    }
+
     func record(_ event: NSEvent, in button: HotKeyRecorderButton) {
         guard !event.isARepeat else { return }
 

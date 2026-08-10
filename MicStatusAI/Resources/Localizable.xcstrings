@@ -1,6 +1,18 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "action.cancel" : {
+      "comment" : "Button that cancels global hotkey recording.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
     "action.mute" : {
       "comment" : "Button that enables the default microphone's CoreAudio input mute property.",
       "extractionState" : "manual",
@@ -249,6 +261,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Recording. Press at least two modifiers and one letter or number."
+          }
+        }
+      }
+    },
+    "hotkey.recordingStatus" : {
+      "comment" : "Visible status shown while recording a global hotkey.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording…"
           }
         }
       }
