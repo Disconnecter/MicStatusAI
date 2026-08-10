@@ -433,6 +433,18 @@
         }
       }
     },
+    "overlay.preview" : {
+      "comment" : "Button that displays a preview of the configured microphone status overlay.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Preview"
+          }
+        }
+      }
+    },
     "overlay.title" : {
       "comment" : "Heading for microphone status overlay settings.",
       "extractionState" : "manual",

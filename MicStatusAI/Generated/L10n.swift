@@ -185,6 +185,11 @@ public enum L10n {
     return tr(key: "overlay.placement.center")
   }
 
+  /// Show Preview
+  public static var overlayPreview: String {
+    return tr(key: "overlay.preview")
+  }
+
   /// Status Overlay
   public static var overlayTitle: String {
     return tr(key: "overlay.title")

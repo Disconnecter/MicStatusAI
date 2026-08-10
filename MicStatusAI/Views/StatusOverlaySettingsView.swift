@@ -5,52 +5,55 @@ struct StatusOverlaySettingsView: View {
     @Binding var duration: StatusOverlayDuration
     @Binding var placement: StatusOverlayPlacement
     @Binding var transparency: Double
+    let onShowPreview: () -> Void
 
     var body: some View {
-        GroupBox {
-            VStack(alignment: .leading, spacing: 8) {
-                Toggle(L10n.overlayEnabled, isOn: $isEnabled)
+        Section {
+            Toggle(L10n.overlayEnabled, isOn: $isEnabled)
 
-                Picker(L10n.overlayDuration, selection: $duration) {
-                    ForEach(StatusOverlayDuration.allCases) { option in
-                        Text(option.displayName)
-                            .tag(option)
-                    }
+            Picker(L10n.overlayDuration, selection: $duration) {
+                ForEach(StatusOverlayDuration.allCases) { option in
+                    Text(option.displayName)
+                        .tag(option)
                 }
-                .pickerStyle(.menu)
-                .disabled(!isEnabled)
-
-                Picker(L10n.overlayPlacement, selection: $placement) {
-                    ForEach(StatusOverlayPlacement.allCases) { option in
-                        Text(option.displayName)
-                            .tag(option)
-                    }
-                }
-                .pickerStyle(.menu)
-                .disabled(!isEnabled)
-
-                ViewThatFits(in: .horizontal) {
-                    LabeledContent {
-                        transparencyControl
-                    } label: {
-                        Text(L10n.overlayTransparency)
-                    }
-
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text(L10n.overlayTransparency)
-                        transparencyControl
-                    }
-                }
-                .disabled(!isEnabled)
-
-                Text(L10n.overlayHelp)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(.vertical, 4)
-        } label: {
+            .pickerStyle(.menu)
+            .disabled(!isEnabled)
+
+            Picker(L10n.overlayPlacement, selection: $placement) {
+                ForEach(StatusOverlayPlacement.allCases) { option in
+                    Text(option.displayName)
+                        .tag(option)
+                }
+            }
+            .pickerStyle(.menu)
+            .disabled(!isEnabled)
+
+            ViewThatFits(in: .horizontal) {
+                LabeledContent {
+                    transparencyControl
+                } label: {
+                    Text(L10n.overlayTransparency)
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(L10n.overlayTransparency)
+                    transparencyControl
+                }
+            }
+            .disabled(!isEnabled)
+
+            Button(action: onShowPreview) {
+                Label {
+                    Text(L10n.overlayPreview)
+                } icon: {
+                    Image(systemName: "play.display")
+                }
+            }
+        } header: {
             Text(L10n.overlayTitle)
+        } footer: {
+            Text(L10n.overlayHelp)
         }
     }
 

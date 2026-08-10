@@ -46,9 +46,19 @@ struct MicStatusAIApp: App {
                 statusOverlayEnabled: $statusOverlayEnabled,
                 statusOverlayDuration: $statusOverlayDuration,
                 statusOverlayPlacement: $statusOverlayPlacement,
-                statusOverlayTransparency: $statusOverlayTransparency
+                statusOverlayTransparency: $statusOverlayTransparency,
+                onShowOverlayPreview: showOverlayPreview
             )
         }
         .windowResizability(.contentSize)
+    }
+
+    private func showOverlayPreview() {
+        statusOverlayPresenter.show(
+            status: model.status,
+            duration: statusOverlayDuration.seconds,
+            placement: statusOverlayPlacement,
+            transparency: statusOverlayTransparency
+        )
     }
 }
