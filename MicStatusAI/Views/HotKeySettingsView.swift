@@ -73,7 +73,7 @@ struct HotKeySettingsView: View {
             .formStyle(.grouped)
         }
         .scenePadding()
-        .frame(minWidth: 320, idealWidth: 340, maxWidth: 360)
+        .frame(minWidth: 400, idealWidth: 420, maxWidth: 500)
         .onAppear {
             analytics.track(.settingsOpened)
         }
