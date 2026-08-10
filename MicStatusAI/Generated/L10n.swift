@@ -40,6 +40,21 @@ public enum L10n {
     return tr(key: "action.unmute")
   }
 
+  /// Share Anonymous Analytics
+  public static var analyticsEnabled: String {
+    return tr(key: "analytics.enabled")
+  }
+
+  /// Anonymous usage events are sent through Aptabase. Audio, microphone names, and shortcut keys are never collected.
+  public static var analyticsHelp: String {
+    return tr(key: "analytics.help")
+  }
+
+  /// Privacy
+  public static var analyticsTitle: String {
+    return tr(key: "analytics.title")
+  }
+
   /// CoreAudio error %d.
   public static func errorCoreAudio(_ p1: Int) -> String {
     return tr(key: "error.coreAudio", p1)

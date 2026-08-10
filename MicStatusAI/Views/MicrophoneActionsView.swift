@@ -8,7 +8,9 @@ struct MicrophoneActionsView: View {
             Toggle(L10n.monitoringEnabled, isOn: monitoringBinding)
                 .toggleStyle(.switch)
 
-            Button(action: model.toggleMute) {
+            Button {
+                model.toggleMute(source: .button)
+            } label: {
                 Label {
                     Text(model.isMuted ? L10n.actionUnmute : L10n.actionMute)
                 } icon: {

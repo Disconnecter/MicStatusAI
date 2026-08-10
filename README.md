@@ -75,6 +75,10 @@ Analytics stay inactive when no valid key is configured.
 
 `project.yml` is project source of truth. Generated `MicStatusAI.xcodeproj` is ignored by Git.
 
+## Anonymous Analytics
+
+When configured, Aptabase analytics are enabled by default and can be disabled under Settings → Privacy. Events cover feature usage and sanitized error categories. MicStatusAI never sends audio, microphone names, shortcut keys, or raw error descriptions.
+
 ## Localization
 
 Add short keys and translations to `MicStatusAI/Resources/Localizable.xcstrings`, then run `Scripts/generate-l10n.sh`. [L10nXcstrings](https://github.com/Disconnecter/L10nXcstrings) generates `MicStatusAI/Generated/L10n.swift`; never edit generated code manually.

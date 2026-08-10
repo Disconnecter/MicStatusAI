@@ -1,6 +1,42 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "analytics.enabled" : {
+      "comment" : "Toggle that enables or disables anonymous product analytics.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share Anonymous Analytics"
+          }
+        }
+      }
+    },
+    "analytics.help" : {
+      "comment" : "Privacy explanation shown below the anonymous analytics setting.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anonymous usage events are sent through Aptabase. Audio, microphone names, and shortcut keys are never collected."
+          }
+        }
+      }
+    },
+    "analytics.title" : {
+      "comment" : "Heading for the analytics privacy setting.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        }
+      }
+    },
     "action.cancel" : {
       "comment" : "Button that cancels global hotkey recording.",
       "extractionState" : "manual",

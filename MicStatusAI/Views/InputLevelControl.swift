@@ -16,10 +16,16 @@ struct InputLevelControl: View {
                             get: { model.inputLevel },
                             set: { model.setInputLevel($0) }
                         ),
-                        in: 0 ... 1
-                    ) {
-                        Text(L10n.inputAccessibility)
-                    }
+                        in: 0 ... 1,
+                        onEditingChanged: { isEditing in
+                            if !isEditing {
+                                model.trackInputLevelCommit()
+                            }
+                        },
+                        label: {
+                            Text(L10n.inputAccessibility)
+                        }
+                    )
                     .disabled(!model.canAdjustInputLevel)
                     .accessibilityValue(
                         Text(model.inputLevel, format: .percent.precision(.fractionLength(0)))

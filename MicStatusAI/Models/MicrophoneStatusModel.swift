@@ -13,7 +13,8 @@ final class MicrophoneStatusModel {
         didSet {
             guard hotKey != oldValue else { return }
             saveHotKey()
-            registerHotKey()
+            let didRegister = registerHotKey()
+            analytics.track(.hotKeyChanged(success: didRegister))
         }
     }
 
@@ -37,9 +38,11 @@ final class MicrophoneStatusModel {
 
     @ObservationIgnored private let microphone: any MicrophoneVolumeControlling
     @ObservationIgnored private let hotKeyManager: any HotKeyManaging
+    @ObservationIgnored private let analytics: any AnalyticsTracking
     @ObservationIgnored private var pollingTimer: Timer?
     @ObservationIgnored private var lastNonzeroVolume: Float32
     @ObservationIgnored private var currentInputDeviceID: UInt32?
+    @ObservationIgnored private var lastTrackedErrorSignature: String?
     @ObservationIgnored private var desiredMuteState: MicrophoneMuteState = .indeterminate
 
     private static let hotKeyDefaultsKey = "muteHotKey"
@@ -47,10 +50,12 @@ final class MicrophoneStatusModel {
 
     init(
         microphone: any MicrophoneVolumeControlling = CoreAudioMicrophone(),
-        hotKeyManager: any HotKeyManaging = HotKeyManager()
+        hotKeyManager: any HotKeyManaging = HotKeyManager(),
+        analytics: any AnalyticsTracking = NoopAnalytics()
     ) {
         self.microphone = microphone
         self.hotKeyManager = hotKeyManager
+        self.analytics = analytics
 
         let savedHotKey = UserDefaults.standard.data(forKey: Self.hotKeyDefaultsKey).flatMap {
             try? JSONDecoder().decode(HotKeyConfiguration.self, from: $0)
@@ -66,11 +71,11 @@ final class MicrophoneStatusModel {
         inputLevel = savedVolume > 0 ? savedVolume : Double(lastNonzeroVolume)
 
         self.hotKeyManager.onPressed = { [weak self] in
-            self?.toggleMute()
+            self?.toggleMute(source: .hotKey)
         }
 
-        registerHotKey()
-        startMonitoring()
+        _ = registerHotKey()
+        startMonitoring(shouldTrack: false)
     }
 
     func toggleMonitoring() {
@@ -82,24 +87,16 @@ final class MicrophoneStatusModel {
     }
 
     func startMonitoring() {
-        guard !isMonitoring else { return }
-        isMonitoring = true
-        refreshStatus()
-
-        let timer = Timer(timeInterval: 0.5, repeats: true) { [weak self] _ in
-            Task { @MainActor in
-                self?.refreshStatus()
-            }
-        }
-        pollingTimer = timer
-        RunLoop.main.add(timer, forMode: .common)
+        startMonitoring(shouldTrack: true)
     }
 
     func stopMonitoring() {
+        guard isMonitoring else { return }
         pollingTimer?.invalidate()
         pollingTimer = nil
         isMonitoring = false
         status = .stopped
+        analytics.track(.monitoringChanged(enabled: false))
     }
 
     func setInputLevel(_ level: Double) {
@@ -123,10 +120,16 @@ final class MicrophoneStatusModel {
             refreshStatus()
         } catch {
             status = .unavailable(error.localizedDescription)
+            trackMicrophoneError(error, operation: .inputLevel)
         }
     }
 
-    func toggleMute() {
+    func trackInputLevelCommit() {
+        let bucket = Int((inputLevel * 4).rounded()) * 25
+        analytics.track(.inputLevelChanged(percentBucket: bucket))
+    }
+
+    func toggleMute(source: AnalyticsEvent.MuteSource = .button) {
         do {
             let deviceID = try microphone.defaultInputDeviceID()
             let currentlyMuted = try intendedMuteState(for: deviceID)
@@ -138,6 +141,8 @@ final class MicrophoneStatusModel {
             try microphone.setMuted(targetMuteState, for: deviceID)
             currentInputDeviceID = deviceID
             desiredMuteState = targetMuteState ? .muted : .active
+            lastTrackedErrorSignature = nil
+            analytics.track(.muteChanged(isMuted: targetMuteState, source: source))
 
             if isMonitoring {
                 refreshStatus()
@@ -146,6 +151,7 @@ final class MicrophoneStatusModel {
             if isMonitoring {
                 status = .unavailable(error.localizedDescription)
             }
+            trackMicrophoneError(error, operation: .mute)
         }
     }
 
@@ -181,9 +187,41 @@ final class MicrophoneStatusModel {
                 UserDefaults.standard.set(Double(volume), forKey: Self.lastVolumeDefaultsKey)
             }
             status = muted ? .muted : .active(volume)
+            lastTrackedErrorSignature = nil
         } catch {
             status = .unavailable(error.localizedDescription)
+            trackMicrophoneError(error, operation: .monitoring)
         }
+    }
+
+    private func startMonitoring(shouldTrack: Bool) {
+        guard !isMonitoring else { return }
+        isMonitoring = true
+        lastTrackedErrorSignature = nil
+        if shouldTrack {
+            analytics.track(.monitoringChanged(enabled: true))
+        }
+        refreshStatus()
+
+        let timer = Timer(timeInterval: 0.5, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                self?.refreshStatus()
+            }
+        }
+        pollingTimer = timer
+        RunLoop.main.add(timer, forMode: .common)
+    }
+
+    private func trackMicrophoneError(
+        _ error: Error,
+        operation: AnalyticsEvent.MicrophoneOperation
+    ) {
+        let category = (error as? MicrophoneError)?.analyticsCategory ?? "unknown"
+        let signature = "\(operation.rawValue):\(category)"
+        guard signature != lastTrackedErrorSignature else { return }
+
+        lastTrackedErrorSignature = signature
+        analytics.track(.microphoneError(operation: operation, category: category))
     }
 
     private func intendedMuteState(for deviceID: UInt32) throws -> Bool {
@@ -213,12 +251,14 @@ final class MicrophoneStatusModel {
         UserDefaults.standard.set(data, forKey: Self.hotKeyDefaultsKey)
     }
 
-    private func registerHotKey() {
+    private func registerHotKey() -> Bool {
         do {
             try hotKeyManager.register(hotKey)
             hotKeyRegistrationError = nil
+            return true
         } catch {
             hotKeyRegistrationError = error.localizedDescription
+            return false
         }
     }
 }

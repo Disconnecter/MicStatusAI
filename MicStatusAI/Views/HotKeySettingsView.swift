@@ -6,6 +6,8 @@ struct HotKeySettingsView: View {
     @Binding var statusOverlayDuration: StatusOverlayDuration
     @Binding var statusOverlayPlacement: StatusOverlayPlacement
     @Binding var statusOverlayTransparency: Double
+    @Binding var analyticsEnabled: Bool
+    let analytics: any AnalyticsTracking
     let onShowOverlayPreview: () -> Void
 
     @State private var recordingError: String?
@@ -44,8 +46,23 @@ struct HotKeySettingsView: View {
                     duration: $statusOverlayDuration,
                     placement: $statusOverlayPlacement,
                     transparency: $statusOverlayTransparency,
+                    analytics: analytics,
                     onShowPreview: onShowOverlayPreview
                 )
+
+                Section {
+                    Toggle(L10n.analyticsEnabled, isOn: $analyticsEnabled)
+                        .onChange(of: analyticsEnabled) { _, isEnabled in
+                            analytics.setEnabled(isEnabled)
+                            if isEnabled {
+                                analytics.track(.analyticsEnabled)
+                            }
+                        }
+                } header: {
+                    Text(L10n.analyticsTitle)
+                } footer: {
+                    Text(L10n.analyticsHelp)
+                }
 
                 Section {
                     aboutContent
@@ -57,6 +74,9 @@ struct HotKeySettingsView: View {
         }
         .scenePadding()
         .frame(minWidth: 320, idealWidth: 340, maxWidth: 360)
+        .onAppear {
+            analytics.track(.settingsOpened)
+        }
     }
 
     private var shortcutControl: some View {

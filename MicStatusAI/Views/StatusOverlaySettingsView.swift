@@ -5,6 +5,7 @@ struct StatusOverlaySettingsView: View {
     @Binding var duration: StatusOverlayDuration
     @Binding var placement: StatusOverlayPlacement
     @Binding var transparency: Double
+    let analytics: any AnalyticsTracking
     let onShowPreview: () -> Void
 
     var body: some View {
@@ -55,6 +56,15 @@ struct StatusOverlaySettingsView: View {
         } footer: {
             Text(L10n.overlayHelp)
         }
+        .onChange(of: isEnabled) { _, newValue in
+            analytics.track(.overlayEnabledChanged(enabled: newValue))
+        }
+        .onChange(of: duration) { _, newValue in
+            analytics.track(.overlayDurationChanged(seconds: newValue.rawValue))
+        }
+        .onChange(of: placement) { _, newValue in
+            analytics.track(.overlayPlacementChanged(placement: newValue.rawValue))
+        }
     }
 
     private var transparencyControl: some View {
@@ -62,10 +72,18 @@ struct StatusOverlaySettingsView: View {
             Slider(
                 value: $transparency,
                 in: StatusOverlayTransparency.range,
-                step: StatusOverlayTransparency.step
-            ) {
-                Text(L10n.overlayTransparency)
-            }
+                step: StatusOverlayTransparency.step,
+                onEditingChanged: { isEditing in
+                    guard !isEditing else { return }
+                    let percentBucket = Int((transparency * 4).rounded()) * 25
+                    analytics.track(
+                        .overlayTransparencyChanged(percentBucket: percentBucket)
+                    )
+                },
+                label: {
+                    Text(L10n.overlayTransparency)
+                }
+            )
             .labelsHidden()
             .frame(minWidth: 100, idealWidth: 140, maxWidth: 160)
             .accessibilityLabel(L10n.overlayTransparency)
@@ -98,7 +116,8 @@ struct StatusOverlaySettingsView: View {
             isEnabled: $isEnabled,
             duration: $duration,
             placement: $placement,
-            transparency: $transparency
+            transparency: $transparency,
+            analytics: NoopAnalytics()
         ) {
             // Preview action
         }
