@@ -49,10 +49,16 @@ jobs:
 
       - name: Build arm64 release app
         env:
+          APTABASE_APP_KEY: ${{ secrets.APTABASE_APP_KEY }}
           VERSION: ${{ steps.metadata.outputs.version }}
         shell: bash
         run: |
           set -euo pipefail
+          if [[ -z "${APTABASE_APP_KEY:-}" ]]; then
+            echo "APTABASE_APP_KEY secret is required for release builds." >&2
+            exit 1
+          fi
+
           xcodebuild \
             -project MicStatusAI.xcodeproj \
             -scheme MicStatusAI \
@@ -62,12 +68,19 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             MARKETING_VERSION="$VERSION" \
             CURRENT_PROJECT_VERSION="$GITHUB_RUN_NUMBER" \
+            APTABASE_APP_KEY="$APTABASE_APP_KEY" \
             ARCHS=arm64 \
             ONLY_ACTIVE_ARCH=NO \
             clean build
 
           app="$RUNNER_TEMP/DerivedData/Build/Products/Release/MicStatusAI.app"
           test -d "$app"
+          embedded_key="$(/usr/libexec/PlistBuddy \
+            -c 'Print :AptabaseAppKey' \
+            "$app/Contents/Info.plist")"
+          test "$embedded_key" = "$APTABASE_APP_KEY"
+          unset embedded_key
+
           architectures="$(lipo -archs "$app/Contents/MacOS/MicStatusAI")"
           test "$architectures" = "arm64"
           echo "Architectures: $architectures"
