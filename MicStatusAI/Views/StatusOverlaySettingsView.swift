@@ -85,7 +85,6 @@ struct StatusOverlaySettingsView: View {
                 }
             )
             .labelsHidden()
-            .frame(minWidth: 100, idealWidth: 140, maxWidth: 160)
             .accessibilityLabel(L10n.overlayTransparency)
             .accessibilityValue(
                 Text(
