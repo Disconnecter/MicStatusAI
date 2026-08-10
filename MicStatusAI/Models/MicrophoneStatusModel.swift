@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import PostHog
 
 @MainActor
 @Observable
@@ -79,6 +80,11 @@ final class MicrophoneStatusModel {
         } else {
             startMonitoring()
         }
+
+        PostHogSDK.shared.capture(
+            "microphone_monitoring_toggled",
+            properties: ["is_monitoring": isMonitoring]
+        )
     }
 
     func startMonitoring() {
@@ -142,6 +148,11 @@ final class MicrophoneStatusModel {
             if isMonitoring {
                 refreshStatus()
             }
+
+            PostHogSDK.shared.capture(
+                "microphone_mute_toggled",
+                properties: ["is_muted": targetMuteState]
+            )
         } catch {
             if isMonitoring {
                 status = .unavailable(error.localizedDescription)

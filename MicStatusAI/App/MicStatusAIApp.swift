@@ -1,7 +1,35 @@
+import PostHog
 import SwiftUI
 
 @main
 struct MicStatusAIApp: App {
+    init() {
+        let environment = ProcessInfo.processInfo.environment
+        let projectToken = environment["POSTHOG_PROJECT_TOKEN"]
+            ?? Bundle.main.object(forInfoDictionaryKey: "POSTHOG_PROJECT_TOKEN") as? String
+        guard let projectToken, !projectToken.isEmpty else {
+            #if DEBUG
+            fatalError("POSTHOG_PROJECT_TOKEN variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once POSTHOG_PROJECT_TOKEN is configured")
+            #else
+            return
+            #endif
+        }
+
+        let host = environment["POSTHOG_HOST"]
+            ?? Bundle.main.object(forInfoDictionaryKey: "POSTHOG_HOST") as? String
+        guard let host, !host.isEmpty else {
+            #if DEBUG
+            fatalError("POSTHOG_HOST variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once POSTHOG_HOST is configured")
+            #else
+            return
+            #endif
+        }
+
+        let config = PostHogConfig(apiKey: projectToken, host: host)
+        config.errorTrackingConfig.autoCapture = true
+        PostHogSDK.shared.setup(config)
+    }
+
     @AppStorage("statusOverlayEnabled")
     private var statusOverlayEnabled = true
     @AppStorage("statusOverlayDuration")

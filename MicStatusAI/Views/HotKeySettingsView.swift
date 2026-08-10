@@ -1,3 +1,4 @@
+import PostHog
 import SwiftUI
 
 struct HotKeySettingsView: View {
@@ -69,6 +70,7 @@ struct HotKeySettingsView: View {
                 Button {
                     recordingError = nil
                     model.restoreDefaultHotKey()
+                    PostHogSDK.shared.capture("hotkey_restored")
                 } label: {
                     Text(L10n.actionRestoreHotkey)
                 }

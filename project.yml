@@ -12,6 +12,15 @@ configs:
   Debug: debug
   Release: release
 
+configFiles:
+  Debug: .env.xcconfig
+  Release: .env.xcconfig
+
+packages:
+  PostHog:
+    url: https://github.com/PostHog/posthog-ios.git
+    from: 3.59.3
+
 settings:
   base:
     CLANG_ENABLE_MODULES: "YES"
@@ -33,6 +42,7 @@ targets:
     dependencies:
       - sdk: CoreAudio.framework
       - sdk: Carbon.framework
+      - package: PostHog
     settings:
       base:
         ARCHS: arm64

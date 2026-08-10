@@ -1,3 +1,4 @@
+import PostHog
 import SwiftUI
 
 struct InputLevelControl: View {
@@ -15,7 +16,14 @@ struct InputLevelControl: View {
                         get: { model.inputLevel },
                         set: { model.setInputLevel($0) }
                     ),
-                    in: 0 ... 1
+                    in: 0 ... 1,
+                    onEditingChanged: { isEditing in
+                        guard !isEditing else { return }
+                        PostHogSDK.shared.capture(
+                            "input_level_adjusted",
+                            properties: ["input_level": model.inputLevel]
+                        )
+                    }
                 ) {
                     Text(L10n.inputAccessibility)
                 }

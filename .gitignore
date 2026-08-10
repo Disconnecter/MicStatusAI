@@ -1,3 +1,7 @@
+# Environment
+.env
+.env.xcconfig
+
 # Xcode
 MicStatusAI.xcodeproj/
 DerivedData/

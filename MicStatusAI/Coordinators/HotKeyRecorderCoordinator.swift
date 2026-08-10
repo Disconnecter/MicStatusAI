@@ -1,5 +1,6 @@
 import AppKit
 import Carbon.HIToolbox
+import PostHog
 
 @MainActor
 final class HotKeyRecorderCoordinator: NSObject {
@@ -47,6 +48,10 @@ final class HotKeyRecorderCoordinator: NSObject {
 
         parent.onValidationError(nil)
         parent.onChange(configuration)
+        PostHogSDK.shared.capture(
+            "hotkey_configured",
+            properties: ["modifier_count": configuration.modifierCount]
+        )
         button.finishRecording(with: configuration)
         button.window?.makeFirstResponder(nil)
     }

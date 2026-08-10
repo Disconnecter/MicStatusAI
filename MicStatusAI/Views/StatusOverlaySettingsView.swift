@@ -1,3 +1,4 @@
+import PostHog
 import SwiftUI
 
 struct StatusOverlaySettingsView: View {
@@ -10,6 +11,9 @@ struct StatusOverlaySettingsView: View {
         GroupBox {
             VStack(alignment: .leading, spacing: 8) {
                 Toggle(L10n.overlayEnabled, isOn: $isEnabled)
+                    .onChange(of: isEnabled) { _, isEnabled in
+                        captureSettingChange("enabled", value: isEnabled)
+                    }
 
                 Picker(L10n.overlayDuration, selection: $duration) {
                     ForEach(StatusOverlayDuration.allCases) { option in
@@ -19,6 +23,9 @@ struct StatusOverlaySettingsView: View {
                 }
                 .pickerStyle(.menu)
                 .disabled(!isEnabled)
+                .onChange(of: duration) { _, duration in
+                    captureSettingChange("duration_seconds", value: duration.rawValue)
+                }
 
                 Picker(L10n.overlayPlacement, selection: $placement) {
                     ForEach(StatusOverlayPlacement.allCases) { option in
@@ -28,13 +35,20 @@ struct StatusOverlaySettingsView: View {
                 }
                 .pickerStyle(.menu)
                 .disabled(!isEnabled)
+                .onChange(of: placement) { _, placement in
+                    captureSettingChange("placement", value: placement.rawValue)
+                }
 
                 LabeledContent {
                     HStack(spacing: 8) {
                         Slider(
                             value: $transparency,
                             in: StatusOverlayTransparency.range,
-                            step: StatusOverlayTransparency.step
+                            step: StatusOverlayTransparency.step,
+                            onEditingChanged: { isEditing in
+                                guard !isEditing else { return }
+                                captureSettingChange("transparency", value: transparency)
+                            }
                         ) {
                             Text(L10n.overlayTransparency)
                         }
@@ -69,5 +83,12 @@ struct StatusOverlaySettingsView: View {
         } label: {
             Text(L10n.overlayTitle)
         }
+    }
+
+    private func captureSettingChange(_ setting: String, value: Any) {
+        PostHogSDK.shared.capture(
+            "status_overlay_setting_changed",
+            properties: ["setting": setting, "value": value]
+        )
     }
 }
