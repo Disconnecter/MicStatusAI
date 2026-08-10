@@ -36,10 +36,7 @@ final class StatusOverlayPresenter {
         currentPanel.alphaValue = 0
         currentPanel.orderFrontRegardless()
 
-        NSAnimationContext.runAnimationGroup { context in
-            context.duration = fadeDuration
-            currentPanel.animator().alphaValue = visibleAlpha
-        }
+        animateAlpha(visibleAlpha, for: currentPanel)
 
         announce(status.accessibilityLabel)
         scheduleDismissal(after: duration)
@@ -112,11 +109,26 @@ final class StatusOverlayPresenter {
         )
     }
 
-    private func fadeOut() {
-        NSAnimationContext.runAnimationGroup { context in
-            context.duration = fadeDuration
-            panel?.animator().alphaValue = 0
+    private func animateAlpha(_ alpha: CGFloat, for panel: NSPanel) {
+        let duration = animationDuration
+        guard duration > 0 else {
+            panel.alphaValue = alpha
+            return
         }
+
+        NSAnimationContext.runAnimationGroup { context in
+            context.duration = duration
+            panel.animator().alphaValue = alpha
+        }
+    }
+
+    private func fadeOut() {
+        guard let panel else { return }
+        animateAlpha(0, for: panel)
+    }
+
+    private var animationDuration: TimeInterval {
+        NSWorkspace.shared.accessibilityDisplayShouldReduceMotion ? 0 : fadeDuration
     }
 
     private func scheduleDismissal(after duration: TimeInterval) {
@@ -129,12 +141,15 @@ final class StatusOverlayPresenter {
                 return
             }
 
+            let fadeOutDuration = animationDuration
             fadeOut()
 
-            do {
-                try await Task.sleep(for: .seconds(fadeDuration))
-            } catch {
-                return
+            if fadeOutDuration > 0 {
+                do {
+                    try await Task.sleep(for: .seconds(fadeOutDuration))
+                } catch {
+                    return
+                }
             }
 
             guard !Task.isCancelled else { return }

@@ -86,3 +86,22 @@ struct StatusOverlaySettingsView: View {
         }
     }
 }
+
+#Preview("Narrow Overlay Settings", traits: .fixedLayout(width: 340, height: 360)) {
+    @Previewable @State var isEnabled = true
+    @Previewable @State var duration = StatusOverlayDuration.oneSecond
+    @Previewable @State var placement = StatusOverlayPlacement.center
+    @Previewable @State var transparency = StatusOverlayTransparency.defaultValue
+
+    Form {
+        StatusOverlaySettingsView(
+            isEnabled: $isEnabled,
+            duration: $duration,
+            placement: $placement,
+            transparency: $transparency
+        ) {
+            // Preview action
+        }
+    }
+    .formStyle(.grouped)
+}

@@ -30,3 +30,11 @@ struct MicrophoneErrorView: View {
         .accessibilityElement(children: .contain)
     }
 }
+
+#Preview("Microphone Error") {
+    MicrophoneErrorView(message: "No default microphone found.") {
+        // Preview action
+    }
+    .padding()
+    .frame(width: 330)
+}
