@@ -45,7 +45,7 @@ MicStatusAI supports Apple silicon Macs only.
 
 > **If macOS blocks the app on first launch remove the quarantine attribute:**
 >
-> ```
+> ```sh
 > xattr -dr com.apple.quarantine /Applications/MicStatusAI.app
 > open /Applications/MicStatusAI.app
 > ```
@@ -66,7 +66,18 @@ xcodegen generate
 
 Open `MicStatusAI.xcodeproj` in Xcode and run the `MicStatusAI` scheme. SwiftLint runs automatically during builds.
 
+Anonymous analytics use Aptabase. Supply its client app key without committing it:
+
+- Local Xcode runs: add `APTABASE_APP_KEY` to scheme environment variables.
+- Archives or command-line builds: pass `APTABASE_APP_KEY=A-REGION-ID` to `xcodebuild`.
+
+Analytics stay inactive when no valid key is configured.
+
 `project.yml` is project source of truth. Generated `MicStatusAI.xcodeproj` is ignored by Git.
+
+## Anonymous Analytics
+
+When configured, Aptabase analytics are enabled by default and can be disabled under Settings → Privacy. Events cover feature usage and sanitized error categories. MicStatusAI never sends audio, microphone names, shortcut keys, or raw error descriptions.
 
 ## Localization
 

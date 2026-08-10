@@ -28,3 +28,13 @@ struct StatusOverlayView: View {
         .accessibilityElement(children: .combine)
     }
 }
+
+#Preview("Muted Overlay") {
+    StatusOverlayView(status: .muted)
+        .padding()
+}
+
+#Preview("Active Overlay") {
+    StatusOverlayView(status: .active(0.72))
+        .padding()
+}

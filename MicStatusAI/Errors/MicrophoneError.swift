@@ -7,6 +7,21 @@ enum MicrophoneError: LocalizedError {
     case muteStateVerificationFailed
     case coreAudio(OSStatus)
 
+    var analyticsCategory: String {
+        switch self {
+        case .noDefaultInputDevice:
+            "no_default_input"
+        case .volumeControlUnavailable:
+            "volume_control_unavailable"
+        case .muteControlUnavailable:
+            "mute_control_unavailable"
+        case .muteStateVerificationFailed:
+            "mute_verification_failed"
+        case .coreAudio:
+            "core_audio"
+        }
+    }
+
     var errorDescription: String? {
         switch self {
         case .noDefaultInputDevice:

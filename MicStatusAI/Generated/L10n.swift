@@ -5,9 +5,19 @@
 import Foundation
 
 public enum L10n {
+  /// Cancel
+  public static var actionCancel: String {
+    return tr(key: "action.cancel")
+  }
+
   /// Mute
   public static var actionMute: String {
     return tr(key: "action.mute")
+  }
+
+  /// Mute or unmute the default microphone. Monitoring must be on.
+  public static var actionMuteHelp: String {
+    return tr(key: "action.muteHelp")
   }
 
   /// Quit
@@ -20,19 +30,29 @@ public enum L10n {
     return tr(key: "action.restoreHotkey")
   }
 
-  /// Start Monitoring
-  public static var actionStart: String {
-    return tr(key: "action.start")
-  }
-
-  /// Stop Monitoring
-  public static var actionStop: String {
-    return tr(key: "action.stop")
+  /// Retry
+  public static var actionRetry: String {
+    return tr(key: "action.retry")
   }
 
   /// Unmute
   public static var actionUnmute: String {
     return tr(key: "action.unmute")
+  }
+
+  /// Share Anonymous Analytics
+  public static var analyticsEnabled: String {
+    return tr(key: "analytics.enabled")
+  }
+
+  /// Anonymous usage events are sent through Aptabase. Audio, microphone names, and shortcut keys are never collected.
+  public static var analyticsHelp: String {
+    return tr(key: "analytics.help")
+  }
+
+  /// Privacy
+  public static var analyticsTitle: String {
+    return tr(key: "analytics.title")
   }
 
   /// CoreAudio error %d.
@@ -110,6 +130,11 @@ public enum L10n {
     return tr(key: "hotkey.recording")
   }
 
+  /// Recording…
+  public static var hotkeyRecordingStatus: String {
+    return tr(key: "hotkey.recordingStatus")
+  }
+
   /// Mute / Unmute Hotkey
   public static var hotkeyTitle: String {
     return tr(key: "hotkey.title")
@@ -135,6 +160,11 @@ public enum L10n {
     return tr(key: "monitoring.active")
   }
 
+  /// Monitor Microphone
+  public static var monitoringEnabled: String {
+    return tr(key: "monitoring.enabled")
+  }
+
   /// Monitoring Off
   public static var monitoringOff: String {
     return tr(key: "monitoring.off")
@@ -143,6 +173,11 @@ public enum L10n {
   /// Monitoring paused
   public static var monitoringPaused: String {
     return tr(key: "monitoring.paused")
+  }
+
+  /// Start monitoring to use microphone controls.
+  public static var monitoringRequired: String {
+    return tr(key: "monitoring.required")
   }
 
   /// Display Duration
@@ -185,6 +220,11 @@ public enum L10n {
     return tr(key: "overlay.placement.center")
   }
 
+  /// Show Preview
+  public static var overlayPreview: String {
+    return tr(key: "overlay.preview")
+  }
+
   /// Status Overlay
   public static var overlayTitle: String {
     return tr(key: "overlay.title")
@@ -195,6 +235,16 @@ public enum L10n {
     return tr(key: "overlay.transparency")
   }
 
+  /// About
+  public static var settingsAbout: String {
+    return tr(key: "settings.about")
+  }
+
+  /// GitHub
+  public static var settingsGithub: String {
+    return tr(key: "settings.github")
+  }
+
   /// Settings…
   public static var settingsOpen: String {
     return tr(key: "settings.open")
@@ -203,6 +253,16 @@ public enum L10n {
   /// MicStatusAI Settings
   public static var settingsTitle: String {
     return tr(key: "settings.title")
+  }
+
+  /// Version %@
+  public static func settingsVersion(_ p1: String) -> String {
+    return tr(key: "settings.version", p1)
+  }
+
+  /// X
+  public static var settingsXProfile: String {
+    return tr(key: "settings.xProfile")
   }
 
   /// Microphone Muted

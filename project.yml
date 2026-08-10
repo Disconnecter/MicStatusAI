@@ -12,6 +12,11 @@ configs:
   Debug: debug
   Release: release
 
+packages:
+  Aptabase:
+    url: https://github.com/aptabase/aptabase-swift.git
+    from: 0.3.11
+
 settings:
   base:
     CLANG_ENABLE_MODULES: "YES"
@@ -31,6 +36,7 @@ targets:
       - path: MicStatusAI/Resources/Localizable.xcstrings
       - path: MicStatusAI/Resources/Assets.xcassets
     dependencies:
+      - package: Aptabase
       - sdk: CoreAudio.framework
       - sdk: Carbon.framework
     settings:

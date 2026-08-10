@@ -11,10 +11,10 @@ struct StatusPanel: View {
             )
 
             if let message = model.status.errorMessage {
-                Label(message, systemImage: "exclamationmark.triangle.fill")
-                    .font(.callout)
-                    .foregroundStyle(.orange)
-                    .fixedSize(horizontal: false, vertical: true)
+                MicrophoneErrorView(
+                    message: message,
+                    onRetry: model.retryMonitoring
+                )
             }
 
             InputLevelControl(model: model)
@@ -25,6 +25,6 @@ struct StatusPanel: View {
             StatusPanelFooter()
         }
         .padding(14)
-        .frame(width: 330)
+        .frame(minWidth: 300, idealWidth: 330, maxWidth: 360)
     }
 }

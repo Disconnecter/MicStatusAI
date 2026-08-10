@@ -1,6 +1,54 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "analytics.enabled" : {
+      "comment" : "Toggle that enables or disables anonymous product analytics.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Share Anonymous Analytics"
+          }
+        }
+      }
+    },
+    "analytics.help" : {
+      "comment" : "Privacy explanation shown below the anonymous analytics setting.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anonymous usage events are sent through Aptabase. Audio, microphone names, and shortcut keys are never collected."
+          }
+        }
+      }
+    },
+    "analytics.title" : {
+      "comment" : "Heading for the analytics privacy setting.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privacy"
+          }
+        }
+      }
+    },
+    "action.cancel" : {
+      "comment" : "Button that cancels global hotkey recording.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        }
+      }
+    },
     "action.mute" : {
       "comment" : "Button that enables the default microphone's CoreAudio input mute property.",
       "extractionState" : "manual",
@@ -9,6 +57,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mute"
+          }
+        }
+      }
+    },
+    "action.muteHelp" : {
+      "comment" : "Help text for the microphone mute and unmute button.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mute or unmute the default microphone. Monitoring must be on."
           }
         }
       }
@@ -25,6 +85,18 @@
         }
       }
     },
+    "action.retry" : {
+      "comment" : "Button that retries reading microphone status after an error.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        }
+      }
+    },
     "action.restoreHotkey" : {
       "comment" : "Button that restores the default global hotkey.",
       "extractionState" : "manual",
@@ -33,30 +105,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restore Default"
-          }
-        }
-      }
-    },
-    "action.start" : {
-      "comment" : "Button that starts microphone input monitoring.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start Monitoring"
-          }
-        }
-      }
-    },
-    "action.stop" : {
-      "comment" : "Button that stops microphone input monitoring.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stop Monitoring"
           }
         }
       }
@@ -253,6 +301,18 @@
         }
       }
     },
+    "hotkey.recordingStatus" : {
+      "comment" : "Visible status shown while recording a global hotkey.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recording…"
+          }
+        }
+      }
+    },
     "hotkey.title" : {
       "comment" : "Heading for global hotkey settings.",
       "extractionState" : "manual",
@@ -313,6 +373,18 @@
         }
       }
     },
+    "monitoring.enabled" : {
+      "comment" : "Toggle that enables or disables microphone monitoring.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitor Microphone"
+          }
+        }
+      }
+    },
     "monitoring.off" : {
       "comment" : "Primary status shown when microphone monitoring is disabled.",
       "extractionState" : "manual",
@@ -333,6 +405,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Monitoring paused"
+          }
+        }
+      }
+    },
+    "monitoring.required" : {
+      "comment" : "Help text shown when microphone controls require monitoring to be enabled.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start monitoring to use microphone controls."
           }
         }
       }
@@ -433,6 +517,18 @@
         }
       }
     },
+    "overlay.preview" : {
+      "comment" : "Button that displays a preview of the configured microphone status overlay.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Preview"
+          }
+        }
+      }
+    },
     "overlay.title" : {
       "comment" : "Heading for microphone status overlay settings.",
       "extractionState" : "manual",
@@ -457,6 +553,30 @@
         }
       }
     },
+    "settings.about" : {
+      "comment" : "Heading for application version and project links in settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        }
+      }
+    },
+    "settings.github" : {
+      "comment" : "Button that opens the application's GitHub repository.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub"
+          }
+        }
+      }
+    },
     "settings.open" : {
       "comment" : "Button that opens application settings.",
       "extractionState" : "manual",
@@ -477,6 +597,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "MicStatusAI Settings"
+          }
+        }
+      }
+    },
+    "settings.version" : {
+      "comment" : "Application version label. Argument is the short version number.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version %@"
+          }
+        }
+      }
+    },
+    "settings.xProfile" : {
+      "comment" : "Button that opens the developer's X profile.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X"
           }
         }
       }
