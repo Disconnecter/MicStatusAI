@@ -10,6 +10,11 @@ public enum L10n {
     return tr(key: "action.mute")
   }
 
+  /// Mute or unmute the default microphone. Monitoring must be on.
+  public static var actionMuteHelp: String {
+    return tr(key: "action.muteHelp")
+  }
+
   /// Quit
   public static var actionQuit: String {
     return tr(key: "action.quit")
@@ -20,14 +25,9 @@ public enum L10n {
     return tr(key: "action.restoreHotkey")
   }
 
-  /// Start Monitoring
-  public static var actionStart: String {
-    return tr(key: "action.start")
-  }
-
-  /// Stop Monitoring
-  public static var actionStop: String {
-    return tr(key: "action.stop")
+  /// Retry
+  public static var actionRetry: String {
+    return tr(key: "action.retry")
   }
 
   /// Unmute
@@ -135,6 +135,11 @@ public enum L10n {
     return tr(key: "monitoring.active")
   }
 
+  /// Monitor Microphone
+  public static var monitoringEnabled: String {
+    return tr(key: "monitoring.enabled")
+  }
+
   /// Monitoring Off
   public static var monitoringOff: String {
     return tr(key: "monitoring.off")
@@ -143,6 +148,11 @@ public enum L10n {
   /// Monitoring paused
   public static var monitoringPaused: String {
     return tr(key: "monitoring.paused")
+  }
+
+  /// Start monitoring to use microphone controls.
+  public static var monitoringRequired: String {
+    return tr(key: "monitoring.required")
   }
 
   /// Display Duration

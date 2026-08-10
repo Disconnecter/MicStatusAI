@@ -4,34 +4,31 @@ struct MicrophoneActionsView: View {
     let model: MicrophoneStatusModel
 
     var body: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack {
-                monitoringButton
-                Spacer(minLength: 8)
-                muteButton
-            }
+        VStack(alignment: .leading, spacing: 10) {
+            Toggle(L10n.monitoringEnabled, isOn: monitoringBinding)
+                .toggleStyle(.switch)
 
-            VStack(alignment: .leading, spacing: 8) {
-                monitoringButton
-                muteButton
+            Button(action: model.toggleMute) {
+                Label {
+                    Text(model.isMuted ? L10n.actionUnmute : L10n.actionMute)
+                } icon: {
+                    Image(systemName: model.isMuted ? "mic.fill" : "mic.slash.fill")
+                }
+                .frame(maxWidth: .infinity)
             }
+            .buttonStyle(.borderedProminent)
+            .disabled(!model.isMonitoring || model.status.errorMessage != nil)
+            .help(L10n.actionMuteHelp)
         }
     }
 
-    private var monitoringButton: some View {
-        Button {
-            model.toggleMonitoring()
-        } label: {
-            Text(model.isMonitoring ? L10n.actionStop : L10n.actionStart)
-        }
-    }
-
-    private var muteButton: some View {
-        Button {
-            model.toggleMute()
-        } label: {
-            Text(model.isMuted ? L10n.actionUnmute : L10n.actionMute)
-        }
-        .disabled(model.status.errorMessage != nil)
+    private var monitoringBinding: Binding<Bool> {
+        Binding(
+            get: { model.isMonitoring },
+            set: { shouldMonitor in
+                guard shouldMonitor != model.isMonitoring else { return }
+                model.toggleMonitoring()
+            }
+        )
     }
 }

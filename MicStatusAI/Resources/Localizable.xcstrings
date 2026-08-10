@@ -13,6 +13,18 @@
         }
       }
     },
+    "action.muteHelp" : {
+      "comment" : "Help text for the microphone mute and unmute button.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mute or unmute the default microphone. Monitoring must be on."
+          }
+        }
+      }
+    },
     "action.quit" : {
       "comment" : "Button that quits the application.",
       "extractionState" : "manual",
@@ -25,6 +37,18 @@
         }
       }
     },
+    "action.retry" : {
+      "comment" : "Button that retries reading microphone status after an error.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retry"
+          }
+        }
+      }
+    },
     "action.restoreHotkey" : {
       "comment" : "Button that restores the default global hotkey.",
       "extractionState" : "manual",
@@ -33,30 +57,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Restore Default"
-          }
-        }
-      }
-    },
-    "action.start" : {
-      "comment" : "Button that starts microphone input monitoring.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Start Monitoring"
-          }
-        }
-      }
-    },
-    "action.stop" : {
-      "comment" : "Button that stops microphone input monitoring.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stop Monitoring"
           }
         }
       }
@@ -313,6 +313,18 @@
         }
       }
     },
+    "monitoring.enabled" : {
+      "comment" : "Toggle that enables or disables microphone monitoring.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monitor Microphone"
+          }
+        }
+      }
+    },
     "monitoring.off" : {
       "comment" : "Primary status shown when microphone monitoring is disabled.",
       "extractionState" : "manual",
@@ -333,6 +345,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Monitoring paused"
+          }
+        }
+      }
+    },
+    "monitoring.required" : {
+      "comment" : "Help text shown when microphone controls require monitoring to be enabled.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start monitoring to use microphone controls."
           }
         }
       }

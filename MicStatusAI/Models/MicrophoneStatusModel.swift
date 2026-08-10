@@ -149,6 +149,14 @@ final class MicrophoneStatusModel {
         }
     }
 
+    func retryMonitoring() {
+        if isMonitoring {
+            refreshStatus()
+        } else {
+            startMonitoring()
+        }
+    }
+
     func restoreDefaultHotKey() {
         hotKey = .defaultValue
     }
