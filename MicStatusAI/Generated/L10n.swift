@@ -195,6 +195,16 @@ public enum L10n {
     return tr(key: "overlay.transparency")
   }
 
+  /// About
+  public static var settingsAbout: String {
+    return tr(key: "settings.about")
+  }
+
+  /// GitHub
+  public static var settingsGithub: String {
+    return tr(key: "settings.github")
+  }
+
   /// Settings…
   public static var settingsOpen: String {
     return tr(key: "settings.open")
@@ -203,6 +213,16 @@ public enum L10n {
   /// MicStatusAI Settings
   public static var settingsTitle: String {
     return tr(key: "settings.title")
+  }
+
+  /// Version %@
+  public static func settingsVersion(_ p1: String) -> String {
+    return tr(key: "settings.version", p1)
+  }
+
+  /// X
+  public static var settingsXProfile: String {
+    return tr(key: "settings.xProfile")
   }
 
   /// Microphone Muted

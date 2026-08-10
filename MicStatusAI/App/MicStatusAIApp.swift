@@ -49,5 +49,6 @@ struct MicStatusAIApp: App {
                 statusOverlayTransparency: $statusOverlayTransparency
             )
         }
+        .windowResizability(.contentSize)
     }
 }

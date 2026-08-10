@@ -8,6 +8,12 @@ struct HotKeySettingsView: View {
     @Binding var statusOverlayTransparency: Double
     @State private var recordingError: String?
 
+    private static let appVersion = Bundle.main.object(
+        forInfoDictionaryKey: "CFBundleShortVersionString"
+    ) as? String ?? "—"
+    private static let xProfileURL = URL(string: "https://x.com/disconnecter")!
+    private static let gitHubURL = URL(string: "https://github.com/Disconnecter/MicStatusAI")!
+
     var body: some View {
         VStack(alignment: .leading, spacing: 18) {
             Label {
@@ -22,15 +28,17 @@ struct HotKeySettingsView: View {
                 .fixedSize(horizontal: false, vertical: true)
 
             GroupBox {
-                LabeledContent {
-                    HotKeyRecorderView(
-                        configuration: model.hotKey,
-                        onChange: { model.hotKey = $0 },
-                        onValidationError: { recordingError = $0 }
-                    )
-                    .frame(width: 170, height: 28)
-                } label: {
-                    Text(L10n.hotkeyLabel)
+                ViewThatFits(in: .horizontal) {
+                    LabeledContent {
+                        hotKeyRecorder
+                    } label: {
+                        Text(L10n.hotkeyLabel)
+                    }
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(L10n.hotkeyLabel)
+                        hotKeyRecorder
+                    }
                 }
                 .padding(.vertical, 4)
             } label: {
@@ -59,22 +67,91 @@ struct HotKeySettingsView: View {
                 transparency: $statusOverlayTransparency
             )
 
+            GroupBox {
+                ViewThatFits(in: .horizontal) {
+                    HStack {
+                        versionLabel
+                        Spacer()
+                        projectLinks
+                    }
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        versionLabel
+                        projectLinks
+                    }
+                }
+                .padding(.vertical, 4)
+            } label: {
+                Text(L10n.settingsAbout)
+            }
+
             Divider()
 
-            HStack {
-                Text(L10n.hotkeyCancelHelp)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                Spacer()
-                Button {
-                    recordingError = nil
-                    model.restoreDefaultHotKey()
-                } label: {
-                    Text(L10n.actionRestoreHotkey)
+            ViewThatFits(in: .horizontal) {
+                HStack {
+                    cancelHelp
+                    Spacer()
+                    restoreHotKeyButton
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    cancelHelp
+                    restoreHotKeyButton
                 }
             }
         }
         .scenePadding()
-        .frame(minWidth: 480, idealWidth: 480, minHeight: 450)
+        .frame(minWidth: 320, idealWidth: 340, maxWidth: 360)
+    }
+
+    private var hotKeyRecorder: some View {
+        HotKeyRecorderView(
+            configuration: model.hotKey,
+            onChange: { model.hotKey = $0 },
+            onValidationError: { recordingError = $0 }
+        )
+        .frame(width: 170, height: 28)
+    }
+
+    private var versionLabel: some View {
+        Text(L10n.settingsVersion(Self.appVersion))
+            .foregroundStyle(.secondary)
+    }
+
+    private var projectLinks: some View {
+        HStack {
+            Link(destination: Self.xProfileURL) {
+                Label {
+                    Text(L10n.settingsXProfile)
+                } icon: {
+                    Image(systemName: "at")
+                }
+            }
+            .buttonStyle(.bordered)
+
+            Link(destination: Self.gitHubURL) {
+                Label {
+                    Text(L10n.settingsGithub)
+                } icon: {
+                    Image(systemName: "chevron.left.forwardslash.chevron.right")
+                }
+            }
+            .buttonStyle(.bordered)
+        }
+    }
+
+    private var cancelHelp: some View {
+        Text(L10n.hotkeyCancelHelp)
+            .font(.caption)
+            .foregroundStyle(.secondary)
+    }
+
+    private var restoreHotKeyButton: some View {
+        Button {
+            recordingError = nil
+            model.restoreDefaultHotKey()
+        } label: {
+            Text(L10n.actionRestoreHotkey)
+        }
     }
 }

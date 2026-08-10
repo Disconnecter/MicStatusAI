@@ -29,34 +29,17 @@ struct StatusOverlaySettingsView: View {
                 .pickerStyle(.menu)
                 .disabled(!isEnabled)
 
-                LabeledContent {
-                    HStack(spacing: 8) {
-                        Slider(
-                            value: $transparency,
-                            in: StatusOverlayTransparency.range,
-                            step: StatusOverlayTransparency.step
-                        ) {
-                            Text(L10n.overlayTransparency)
-                        }
-                        .labelsHidden()
-                        .accessibilityLabel(L10n.overlayTransparency)
-                        .accessibilityValue(
-                            Text(
-                                transparency,
-                                format: .percent.precision(.fractionLength(0))
-                            )
-                        )
-
-                        Text(
-                            transparency,
-                            format: .percent.precision(.fractionLength(0))
-                        )
-                        .monospacedDigit()
-                        .frame(minWidth: 42, alignment: .trailing)
-                        .accessibilityHidden(true)
+                ViewThatFits(in: .horizontal) {
+                    LabeledContent {
+                        transparencyControl
+                    } label: {
+                        Text(L10n.overlayTransparency)
                     }
-                } label: {
-                    Text(L10n.overlayTransparency)
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text(L10n.overlayTransparency)
+                        transparencyControl
+                    }
                 }
                 .disabled(!isEnabled)
 
@@ -68,6 +51,35 @@ struct StatusOverlaySettingsView: View {
             .padding(.vertical, 4)
         } label: {
             Text(L10n.overlayTitle)
+        }
+    }
+
+    private var transparencyControl: some View {
+        HStack(spacing: 8) {
+            Slider(
+                value: $transparency,
+                in: StatusOverlayTransparency.range,
+                step: StatusOverlayTransparency.step
+            ) {
+                Text(L10n.overlayTransparency)
+            }
+            .labelsHidden()
+            .frame(minWidth: 100, idealWidth: 140, maxWidth: 160)
+            .accessibilityLabel(L10n.overlayTransparency)
+            .accessibilityValue(
+                Text(
+                    transparency,
+                    format: .percent.precision(.fractionLength(0))
+                )
+            )
+
+            Text(
+                transparency,
+                format: .percent.precision(.fractionLength(0))
+            )
+            .monospacedDigit()
+            .frame(minWidth: 42, alignment: .trailing)
+            .accessibilityHidden(true)
         }
     }
 }

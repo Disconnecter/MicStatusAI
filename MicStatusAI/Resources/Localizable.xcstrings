@@ -457,6 +457,30 @@
         }
       }
     },
+    "settings.about" : {
+      "comment" : "Heading for application version and project links in settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        }
+      }
+    },
+    "settings.github" : {
+      "comment" : "Button that opens the application's GitHub repository.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub"
+          }
+        }
+      }
+    },
     "settings.open" : {
       "comment" : "Button that opens application settings.",
       "extractionState" : "manual",
@@ -477,6 +501,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "MicStatusAI Settings"
+          }
+        }
+      }
+    },
+    "settings.version" : {
+      "comment" : "Application version label. Argument is the short version number.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version %@"
+          }
+        }
+      }
+    },
+    "settings.xProfile" : {
+      "comment" : "Button that opens the developer's X profile.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "X"
           }
         }
       }
