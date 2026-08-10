@@ -48,10 +48,11 @@ struct StatusOverlaySettingsView: View {
                             onEditingChanged: { isEditing in
                                 guard !isEditing else { return }
                                 captureSettingChange("transparency", value: transparency)
+                            },
+                            label: {
+                                Text(L10n.overlayTransparency)
                             }
-                        ) {
-                            Text(L10n.overlayTransparency)
-                        }
+                        )
                         .labelsHidden()
                         .accessibilityLabel(L10n.overlayTransparency)
                         .accessibilityValue(

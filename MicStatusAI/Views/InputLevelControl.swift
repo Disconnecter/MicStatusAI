@@ -23,10 +23,11 @@ struct InputLevelControl: View {
                             "input_level_adjusted",
                             properties: ["input_level": model.inputLevel]
                         )
+                    },
+                    label: {
+                        Text(L10n.inputAccessibility)
                     }
-                ) {
-                    Text(L10n.inputAccessibility)
-                }
+                )
                 .tint(model.inputLevel > 0 ? .green : .red)
                 .disabled(!model.canAdjustInputLevel)
                 .accessibilityValue(

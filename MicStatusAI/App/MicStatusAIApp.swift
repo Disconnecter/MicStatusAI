@@ -9,7 +9,11 @@ struct MicStatusAIApp: App {
             ?? Bundle.main.object(forInfoDictionaryKey: "POSTHOG_PROJECT_TOKEN") as? String
         guard let projectToken, !projectToken.isEmpty else {
             #if DEBUG
-            fatalError("POSTHOG_PROJECT_TOKEN variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once POSTHOG_PROJECT_TOKEN is configured")
+            fatalError(
+                "POSTHOG_PROJECT_TOKEN variable required by PostHog is missing or un-configured, "
+                    + "this causes events to be silently missed. This error stops appearing once "
+                    + "POSTHOG_PROJECT_TOKEN is configured"
+            )
             #else
             return
             #endif
@@ -19,7 +23,10 @@ struct MicStatusAIApp: App {
             ?? Bundle.main.object(forInfoDictionaryKey: "POSTHOG_HOST") as? String
         guard let host, !host.isEmpty else {
             #if DEBUG
-            fatalError("POSTHOG_HOST variable required by PostHog is missing or un-configured, this causes events to be silently missed. This error stops appearing once POSTHOG_HOST is configured")
+            fatalError(
+                "POSTHOG_HOST variable required by PostHog is missing or un-configured, this causes "
+                    + "events to be silently missed. This error stops appearing once POSTHOG_HOST is configured"
+            )
             #else
             return
             #endif
