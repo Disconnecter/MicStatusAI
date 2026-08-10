@@ -13,8 +13,8 @@ configs:
   Release: release
 
 configFiles:
-  Debug: .env.xcconfig
-  Release: .env.xcconfig
+  Debug: PostHog.xcconfig
+  Release: PostHog.xcconfig
 
 packages:
   PostHog:

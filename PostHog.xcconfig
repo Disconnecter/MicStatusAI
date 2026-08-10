@@ -1,0 +1,8 @@
+// Default PostHog configuration.
+// Real values are supplied via the gitignored .env.xcconfig for local builds,
+// or injected before this file is read for CI/release builds. This file must
+// stay tracked so xcodegen can always find a config file to load.
+POSTHOG_PROJECT_TOKEN =
+POSTHOG_HOST =
+
+#include? ".env.xcconfig"
