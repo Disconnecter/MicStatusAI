@@ -24,7 +24,7 @@ struct StatusPanel: View {
 
             StatusPanelFooter()
         }
-        .padding(14)
-        .frame(minWidth: 300, idealWidth: 330, maxWidth: 360)
+        .padding()
+        .frame(width: 350)
     }
 }
