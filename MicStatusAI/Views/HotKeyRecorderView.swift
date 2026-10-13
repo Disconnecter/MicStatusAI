@@ -3,6 +3,7 @@ import SwiftUI
 
 struct HotKeyRecorderView: NSViewRepresentable {
     let configuration: HotKeyConfiguration
+    let accessibilityLabel: String
     @Binding var isRecording: Bool
     let onChange: (HotKeyConfiguration) -> Void
     let onValidationError: (String?) -> Void
@@ -26,7 +27,7 @@ struct HotKeyRecorderView: NSViewRepresentable {
         button.onRecordingChange = { [weak coordinator = context.coordinator] isRecording in
             coordinator?.recordingDidChange(isRecording)
         }
-        button.show(configuration)
+        button.show(configuration, accessibilityLabel: accessibilityLabel)
         return button
     }
 
@@ -40,6 +41,6 @@ struct HotKeyRecorderView: NSViewRepresentable {
         }
 
         guard !button.isRecording else { return }
-        button.show(configuration)
+        button.show(configuration, accessibilityLabel: accessibilityLabel)
     }
 }

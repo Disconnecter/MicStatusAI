@@ -290,6 +290,36 @@ public enum L10n {
     return tr(key: "validation.modifiers")
   }
 
+  /// Walkie-talkie hold-to-talk shortcut
+  public static var walkieTalkieAccessibility: String {
+    return tr(key: "walkieTalkie.accessibility")
+  }
+
+  /// Walkie-Talkie Mode
+  public static var walkieTalkieEnabled: String {
+    return tr(key: "walkieTalkie.enabled")
+  }
+
+  /// Hold this shortcut to unmute. Releasing it mutes the microphone again. This shortcut works system-wide.
+  public static var walkieTalkieInstructions: String {
+    return tr(key: "walkieTalkie.instructions")
+  }
+
+  /// %@. Walkie-talkie mode enabled.
+  public static func walkieTalkieMenuBarStatus(_ p1: String) -> String {
+    return tr(key: "walkieTalkie.menuBarStatus", p1)
+  }
+
+  /// Mute controls are disabled while walkie-talkie mode is on.
+  public static var walkieTalkieMuteHelp: String {
+    return tr(key: "walkieTalkie.muteHelp")
+  }
+
+  /// Walkie-Talkie Hotkey
+  public static var walkieTalkieTitle: String {
+    return tr(key: "walkieTalkie.title")
+  }
+
   private static func tr(key: String, _ args: CVarArg...) -> String {
     let format = NSLocalizedString(
       key,

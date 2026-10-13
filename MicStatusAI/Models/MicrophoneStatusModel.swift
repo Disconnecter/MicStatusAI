@@ -1,6 +1,8 @@
 import Foundation
 import Observation
 
+// swiftlint:disable file_length
+
 @MainActor
 @Observable
 final class MicrophoneStatusModel {
@@ -8,6 +10,8 @@ final class MicrophoneStatusModel {
     private(set) var isMonitoring = false
     private(set) var inputLevel = 0.0
     private(set) var hotKeyRegistrationError: String?
+    private(set) var walkieTalkieHotKeyRegistrationError: String?
+    private(set) var isWalkieTalkieEnabled = false
 
     var hotKey: HotKeyConfiguration {
         didSet {
@@ -15,6 +19,18 @@ final class MicrophoneStatusModel {
             saveHotKey()
             let didRegister = registerHotKey()
             analytics.track(.hotKeyChanged(success: didRegister))
+        }
+    }
+
+    var walkieTalkieHotKey: HotKeyConfiguration {
+        didSet {
+            guard walkieTalkieHotKey != oldValue else { return }
+            saveWalkieTalkieHotKey()
+            let didRegister = registerWalkieTalkieHotKey()
+            analytics.track(.walkieTalkieHotKeyChanged(success: didRegister))
+            if !didRegister, isWalkieTalkieEnabled {
+                setWalkieTalkieEnabled(false)
+            }
         }
     }
 
@@ -38,23 +54,30 @@ final class MicrophoneStatusModel {
 
     @ObservationIgnored private let microphone: any MicrophoneVolumeControlling
     @ObservationIgnored private let hotKeyManager: any HotKeyManaging
+    @ObservationIgnored private let walkieTalkieHotKeyManager: any HotKeyManaging
     @ObservationIgnored private let analytics: any AnalyticsTracking
     @ObservationIgnored private var pollingTimer: Timer?
     @ObservationIgnored private var lastNonzeroVolume: Float32
     @ObservationIgnored private var currentInputDeviceID: UInt32?
     @ObservationIgnored private var lastTrackedErrorSignature: String?
     @ObservationIgnored private var desiredMuteState: MicrophoneMuteState = .indeterminate
+    @ObservationIgnored private var isWalkieTalkiePressed = false
+    @ObservationIgnored private var muteStateBeforeWalkieTalkie: MicrophoneMuteState = .indeterminate
 
     private static let hotKeyDefaultsKey = "muteHotKey"
+    private static let walkieTalkieHotKeyDefaultsKey = "walkieTalkieHotKey"
+    private static let walkieTalkieEnabledDefaultsKey = "walkieTalkieEnabled"
     private static let lastVolumeDefaultsKey = "lastNonzeroInputVolume"
 
     init(
         microphone: any MicrophoneVolumeControlling = CoreAudioMicrophone(),
         hotKeyManager: any HotKeyManaging = HotKeyManager(),
+        walkieTalkieHotKeyManager: any HotKeyManaging = HotKeyManager(id: 2),
         analytics: any AnalyticsTracking = NoopAnalytics()
     ) {
         self.microphone = microphone
         self.hotKeyManager = hotKeyManager
+        self.walkieTalkieHotKeyManager = walkieTalkieHotKeyManager
         self.analytics = analytics
 
         let savedHotKey = UserDefaults.standard.data(forKey: Self.hotKeyDefaultsKey).flatMap {
@@ -66,6 +89,15 @@ final class MicrophoneStatusModel {
             hotKey = .defaultValue
         }
 
+        let savedWalkieTalkieHotKey = UserDefaults.standard
+            .data(forKey: Self.walkieTalkieHotKeyDefaultsKey)
+            .flatMap { try? JSONDecoder().decode(HotKeyConfiguration.self, from: $0) }
+        if let savedWalkieTalkieHotKey, savedWalkieTalkieHotKey.modifierCount >= 2 {
+            walkieTalkieHotKey = savedWalkieTalkieHotKey
+        } else {
+            walkieTalkieHotKey = .walkieTalkieDefaultValue
+        }
+
         let savedVolume = UserDefaults.standard.double(forKey: Self.lastVolumeDefaultsKey)
         lastNonzeroVolume = savedVolume > 0 ? Float32(savedVolume) : 0.5
         inputLevel = savedVolume > 0 ? savedVolume : Double(lastNonzeroVolume)
@@ -73,9 +105,20 @@ final class MicrophoneStatusModel {
         self.hotKeyManager.onPressed = { [weak self] in
             self?.toggleMute(source: .hotKey)
         }
+        self.walkieTalkieHotKeyManager.onPressed = { [weak self] in
+            self?.beginWalkieTalkieTransmission()
+        }
+        self.walkieTalkieHotKeyManager.onReleased = { [weak self] in
+            self?.endWalkieTalkieTransmission()
+        }
 
         _ = registerHotKey()
+        _ = registerWalkieTalkieHotKey()
         startMonitoring(shouldTrack: false)
+
+        if UserDefaults.standard.bool(forKey: Self.walkieTalkieEnabledDefaultsKey) {
+            setWalkieTalkieEnabled(true, shouldTrack: false)
+        }
     }
 
     func toggleMonitoring() {
@@ -111,7 +154,9 @@ final class MicrophoneStatusModel {
                 UserDefaults.standard.set(clampedLevel, forKey: Self.lastVolumeDefaultsKey)
             }
 
-            let shouldMute = clampedLevel == 0
+            let shouldMute = isWalkieTalkieEnabled
+                ? !isWalkieTalkiePressed
+                : clampedLevel == 0
             if try microphone.isMuted(for: deviceID) != shouldMute {
                 try microphone.setMuted(shouldMute, for: deviceID)
             }
@@ -130,17 +175,12 @@ final class MicrophoneStatusModel {
     }
 
     func toggleMute(source: AnalyticsEvent.MuteSource = .button) {
+        guard !isWalkieTalkieEnabled else { return }
+
         do {
             let deviceID = try microphone.defaultInputDeviceID()
-            let currentlyMuted = try intendedMuteState(for: deviceID)
-            if currentlyMuted, try microphone.inputVolume(for: deviceID) == 0 {
-                try microphone.setInputVolume(max(lastNonzeroVolume, 0.01), for: deviceID)
-            }
-
-            let targetMuteState = !currentlyMuted
-            try microphone.setMuted(targetMuteState, for: deviceID)
-            currentInputDeviceID = deviceID
-            desiredMuteState = targetMuteState ? .muted : .active
+            let targetMuteState = try !intendedMuteState(for: deviceID)
+            try setMicrophoneMuted(targetMuteState, for: deviceID)
             lastTrackedErrorSignature = nil
             analytics.track(.muteChanged(isMuted: targetMuteState, source: source))
 
@@ -167,6 +207,99 @@ final class MicrophoneStatusModel {
         hotKey = .defaultValue
     }
 
+    func restoreDefaultWalkieTalkieHotKey() {
+        walkieTalkieHotKey = .walkieTalkieDefaultValue
+    }
+
+    func setWalkieTalkieEnabled(_ isEnabled: Bool) {
+        setWalkieTalkieEnabled(isEnabled, shouldTrack: true)
+    }
+
+    private func setWalkieTalkieEnabled(_ isEnabled: Bool, shouldTrack: Bool) {
+        guard isEnabled != isWalkieTalkieEnabled else { return }
+        guard !isEnabled || walkieTalkieHotKeyRegistrationError == nil else {
+            UserDefaults.standard.set(false, forKey: Self.walkieTalkieEnabledDefaultsKey)
+            return
+        }
+
+        if isEnabled {
+            do {
+                let deviceID = try microphone.defaultInputDeviceID()
+                let wasMuted = try microphone.isMuted(for: deviceID)
+                muteStateBeforeWalkieTalkie = wasMuted ? .muted : .active
+                try setMicrophoneMuted(true, for: deviceID)
+                isWalkieTalkieEnabled = true
+                refreshStatus()
+            } catch {
+                muteStateBeforeWalkieTalkie = .indeterminate
+                UserDefaults.standard.set(false, forKey: Self.walkieTalkieEnabledDefaultsKey)
+                handleWalkieTalkieError(error)
+                return
+            }
+        } else {
+            isWalkieTalkieEnabled = false
+            isWalkieTalkiePressed = false
+            restoreMuteStateAfterWalkieTalkie()
+        }
+
+        UserDefaults.standard.set(isEnabled, forKey: Self.walkieTalkieEnabledDefaultsKey)
+        if shouldTrack {
+            analytics.track(.walkieTalkieChanged(enabled: isEnabled))
+        }
+    }
+
+    private func beginWalkieTalkieTransmission() {
+        guard isWalkieTalkieEnabled, !isWalkieTalkiePressed else { return }
+        isWalkieTalkiePressed = true
+        setWalkieTalkieMuted(false)
+    }
+
+    private func endWalkieTalkieTransmission() {
+        guard isWalkieTalkieEnabled else { return }
+        isWalkieTalkiePressed = false
+        setWalkieTalkieMuted(true)
+    }
+
+    private func setWalkieTalkieMuted(_ muted: Bool) {
+        do {
+            let deviceID = try microphone.defaultInputDeviceID()
+            try setMicrophoneMuted(muted, for: deviceID)
+            lastTrackedErrorSignature = nil
+            refreshStatus()
+        } catch {
+            handleWalkieTalkieError(error)
+        }
+    }
+
+    private func restoreMuteStateAfterWalkieTalkie() {
+        let shouldMute: Bool
+        switch muteStateBeforeWalkieTalkie {
+        case .active:
+            shouldMute = false
+        case .muted:
+            shouldMute = true
+        case .indeterminate:
+            return
+        }
+        muteStateBeforeWalkieTalkie = .indeterminate
+
+        do {
+            let deviceID = try microphone.defaultInputDeviceID()
+            try setMicrophoneMuted(shouldMute, for: deviceID)
+            lastTrackedErrorSignature = nil
+            refreshStatus()
+        } catch {
+            handleWalkieTalkieError(error)
+        }
+    }
+
+    private func handleWalkieTalkieError(_ error: Error) {
+        if isMonitoring {
+            status = .unavailable(error.localizedDescription)
+        }
+        trackMicrophoneError(error, operation: .walkieTalkie)
+    }
+
     private func refreshStatus() {
         guard isMonitoring else { return }
 
@@ -177,8 +310,16 @@ final class MicrophoneStatusModel {
                 try applyDesiredMuteState(to: deviceID)
             }
 
+            var muted = try microphone.isMuted(for: deviceID)
+            if isWalkieTalkieEnabled {
+                let shouldMute = !isWalkieTalkiePressed
+                if muted != shouldMute {
+                    try setMicrophoneMuted(shouldMute, for: deviceID)
+                    muted = shouldMute
+                }
+            }
+
             let volume = try microphone.inputVolume(for: deviceID)
-            let muted = try microphone.isMuted(for: deviceID)
             currentInputDeviceID = deviceID
             desiredMuteState = muted ? .muted : .active
             inputLevel = Double(volume)
@@ -236,19 +377,39 @@ final class MicrophoneStatusModel {
     }
 
     private func applyDesiredMuteState(to deviceID: UInt32) throws {
+        if isWalkieTalkieEnabled {
+            try setMicrophoneMuted(!isWalkieTalkiePressed, for: deviceID)
+            return
+        }
+
         switch desiredMuteState {
         case .active:
-            try microphone.setMuted(false, for: deviceID)
+            try setMicrophoneMuted(false, for: deviceID)
         case .muted:
-            try microphone.setMuted(true, for: deviceID)
+            try setMicrophoneMuted(true, for: deviceID)
         case .indeterminate:
             break
         }
     }
 
+    private func setMicrophoneMuted(_ muted: Bool, for deviceID: UInt32) throws {
+        if !muted, try microphone.inputVolume(for: deviceID) == 0 {
+            try microphone.setInputVolume(max(lastNonzeroVolume, 0.01), for: deviceID)
+        }
+
+        try microphone.setMuted(muted, for: deviceID)
+        currentInputDeviceID = deviceID
+        desiredMuteState = muted ? .muted : .active
+    }
+
     private func saveHotKey() {
         guard let data = try? JSONEncoder().encode(hotKey) else { return }
         UserDefaults.standard.set(data, forKey: Self.hotKeyDefaultsKey)
+    }
+
+    private func saveWalkieTalkieHotKey() {
+        guard let data = try? JSONEncoder().encode(walkieTalkieHotKey) else { return }
+        UserDefaults.standard.set(data, forKey: Self.walkieTalkieHotKeyDefaultsKey)
     }
 
     private func registerHotKey() -> Bool {
@@ -258,6 +419,17 @@ final class MicrophoneStatusModel {
             return true
         } catch {
             hotKeyRegistrationError = error.localizedDescription
+            return false
+        }
+    }
+
+    private func registerWalkieTalkieHotKey() -> Bool {
+        do {
+            try walkieTalkieHotKeyManager.register(walkieTalkieHotKey)
+            walkieTalkieHotKeyRegistrationError = nil
+            return true
+        } catch {
+            walkieTalkieHotKeyRegistrationError = error.localizedDescription
             return false
         }
     }
