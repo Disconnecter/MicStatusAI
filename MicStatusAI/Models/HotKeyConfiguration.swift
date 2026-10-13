@@ -15,6 +15,14 @@ struct HotKeyConfiguration: Codable, Equatable {
         usesShift: false
     )
 
+    static let walkieTalkieDefaultValue = Self(
+        keyCode: UInt32(kVK_ANSI_W),
+        usesControl: true,
+        usesOption: true,
+        usesCommand: false,
+        usesShift: false
+    )
+
     var modifierCount: Int {
         [usesControl, usesOption, usesCommand, usesShift].filter(\.self).count
     }

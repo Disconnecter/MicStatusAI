@@ -37,27 +37,35 @@ struct MicStatusAIApp: App {
         MenuBarExtra {
             StatusPanel(model: model)
         } label: {
-            Image(nsImage: model.status.statusBarImage)
-                .renderingMode(.original)
-                .accessibilityLabel(model.status.accessibilityLabel)
-                .onChange(of: model.status.muteState) { previousState, currentState in
-                    guard statusOverlayEnabled,
-                          previousState != .indeterminate,
-                          currentState != .indeterminate,
-                          previousState != currentState else { return }
-                    statusOverlayPresenter.show(
-                        status: model.status,
-                        duration: statusOverlayDuration.seconds,
-                        placement: statusOverlayPlacement,
-                        transparency: statusOverlayTransparency
-                    )
-                    analytics.track(.overlayShown)
+            HStack(spacing: 3) {
+                Image(nsImage: model.status.statusBarImage)
+                    .renderingMode(.original)
+
+                if model.isWalkieTalkieEnabled {
+                    Image(systemName: "walkie.talkie.fill")
+                        .imageScale(.small)
                 }
-                .onChange(of: statusOverlayEnabled) { _, isEnabled in
-                    if !isEnabled {
-                        statusOverlayPresenter.dismiss()
-                    }
+            }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(menuBarAccessibilityLabel)
+            .onChange(of: model.status.muteState) { previousState, currentState in
+                guard statusOverlayEnabled,
+                      previousState != .indeterminate,
+                      currentState != .indeterminate,
+                      previousState != currentState else { return }
+                statusOverlayPresenter.show(
+                    status: model.status,
+                    duration: statusOverlayDuration.seconds,
+                    placement: statusOverlayPlacement,
+                    transparency: statusOverlayTransparency
+                )
+                analytics.track(.overlayShown)
+            }
+            .onChange(of: statusOverlayEnabled) { _, isEnabled in
+                if !isEnabled {
+                    statusOverlayPresenter.dismiss()
                 }
+            }
         }
         .menuBarExtraStyle(.window)
 
@@ -74,6 +82,13 @@ struct MicStatusAIApp: App {
             )
         }
         .windowResizability(.contentSize)
+    }
+
+    private var menuBarAccessibilityLabel: String {
+        guard model.isWalkieTalkieEnabled else {
+            return model.status.accessibilityLabel
+        }
+        return L10n.walkieTalkieMenuBarStatus(model.status.accessibilityLabel)
     }
 
     private func showOverlayPreview() {

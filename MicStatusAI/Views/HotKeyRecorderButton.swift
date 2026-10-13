@@ -7,17 +7,19 @@ final class HotKeyRecorderButton: NSButton {
 
     private(set) var isRecording = false
     private var currentConfiguration = HotKeyConfiguration.defaultValue
+    private var currentAccessibilityLabel = ""
 
     override var acceptsFirstResponder: Bool {
         true
     }
 
-    func show(_ configuration: HotKeyConfiguration) {
+    func show(_ configuration: HotKeyConfiguration, accessibilityLabel: String) {
         currentConfiguration = configuration
+        currentAccessibilityLabel = accessibilityLabel
         title = configuration.displayName
         toolTip = L10n.hotkeyTooltip
         contentTintColor = nil
-        setAccessibilityLabel(L10n.hotkeyAccessibility)
+        setAccessibilityLabel(accessibilityLabel)
         setAccessibilityValue(configuration.displayName)
         setAccessibilityHelp(L10n.hotkeyTooltip)
     }
@@ -34,7 +36,7 @@ final class HotKeyRecorderButton: NSButton {
 
     func finishRecording(with configuration: HotKeyConfiguration) {
         setRecording(false)
-        show(configuration)
+        show(configuration, accessibilityLabel: currentAccessibilityLabel)
         NSAccessibility.post(element: self, notification: .valueChanged)
     }
 

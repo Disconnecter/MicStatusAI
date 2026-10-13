@@ -11,7 +11,9 @@ struct HotKeySettingsView: View {
     let onShowOverlayPreview: () -> Void
 
     @State private var recordingError: String?
+    @State private var walkieTalkieRecordingError: String?
     @State private var isRecordingHotKey = false
+    @State private var isRecordingWalkieTalkieHotKey = false
 
     private static let appVersion = Bundle.main.object(
         forInfoDictionaryKey: "CFBundleShortVersionString"
@@ -29,17 +31,29 @@ struct HotKeySettingsView: View {
             .font(.title2.bold())
 
             Form {
-                Section {
-                    Text(L10n.hotkeyInstructions)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                HotKeyConfigurationSection(
+                    title: L10n.hotkeyTitle,
+                    instructions: L10n.hotkeyInstructions,
+                    accessibilityLabel: L10n.hotkeyAccessibility,
+                    configuration: model.hotKey,
+                    registrationError: model.hotKeyRegistrationError,
+                    isRecording: $isRecordingHotKey,
+                    recordingError: $recordingError,
+                    onChange: { model.hotKey = $0 },
+                    onRestore: model.restoreDefaultHotKey
+                )
 
-                    shortcutControl
-                    hotKeyStatus
-                    shortcutActions
-                } header: {
-                    Text(L10n.hotkeyTitle)
-                }
+                HotKeyConfigurationSection(
+                    title: L10n.walkieTalkieTitle,
+                    instructions: L10n.walkieTalkieInstructions,
+                    accessibilityLabel: L10n.walkieTalkieAccessibility,
+                    configuration: model.walkieTalkieHotKey,
+                    registrationError: model.walkieTalkieHotKeyRegistrationError,
+                    isRecording: $isRecordingWalkieTalkieHotKey,
+                    recordingError: $walkieTalkieRecordingError,
+                    onChange: { model.walkieTalkieHotKey = $0 },
+                    onRestore: model.restoreDefaultWalkieTalkieHotKey
+                )
 
                 StatusOverlaySettingsView(
                     isEnabled: $statusOverlayEnabled,
@@ -76,100 +90,6 @@ struct HotKeySettingsView: View {
         .frame(minWidth: 400, idealWidth: 420, maxWidth: 500)
         .onAppear {
             analytics.track(.settingsOpened)
-        }
-    }
-
-    private var shortcutControl: some View {
-        ViewThatFits(in: .horizontal) {
-            LabeledContent {
-                hotKeyRecorder
-            } label: {
-                Text(L10n.hotkeyLabel)
-            }
-
-            VStack(alignment: .leading, spacing: 8) {
-                Text(L10n.hotkeyLabel)
-                hotKeyRecorder
-            }
-        }
-    }
-
-    private var hotKeyRecorder: some View {
-        HotKeyRecorderView(
-            configuration: model.hotKey,
-            isRecording: $isRecordingHotKey,
-            onChange: { model.hotKey = $0 },
-            onValidationError: { recordingError = $0 }
-        )
-        .frame(width: 170, height: 28)
-    }
-
-    @ViewBuilder private var hotKeyStatus: some View {
-        if isRecordingHotKey {
-            Label {
-                Text(L10n.hotkeyRecordingStatus)
-            } icon: {
-                Image(systemName: "record.circle.fill")
-            }
-            .font(.callout)
-            .foregroundStyle(.red)
-            .accessibilityLabel(L10n.hotkeyRecording)
-        } else if let error = recordingError ?? model.hotKeyRegistrationError {
-            Label(error, systemImage: "exclamationmark.triangle.fill")
-                .font(.callout)
-                .foregroundStyle(.orange)
-                .fixedSize(horizontal: false, vertical: true)
-        } else {
-            Label {
-                Text(L10n.hotkeyActive(model.hotKey.displayName))
-            } icon: {
-                Image(systemName: "checkmark.circle.fill")
-            }
-            .font(.callout)
-            .foregroundStyle(.green)
-        }
-    }
-
-    @ViewBuilder private var shortcutActions: some View {
-        if isRecordingHotKey {
-            ViewThatFits(in: .horizontal) {
-                HStack {
-                    cancelHelp
-                    Spacer()
-                    cancelRecordingButton
-                }
-
-                VStack(alignment: .leading, spacing: 8) {
-                    cancelHelp
-                    cancelRecordingButton
-                }
-            }
-        } else {
-            restoreHotKeyButton
-        }
-    }
-
-    private var cancelHelp: some View {
-        Text(L10n.hotkeyCancelHelp)
-            .font(.caption)
-            .foregroundStyle(.secondary)
-    }
-
-    private var cancelRecordingButton: some View {
-        Button {
-            recordingError = nil
-            isRecordingHotKey = false
-        } label: {
-            Text(L10n.actionCancel)
-        }
-    }
-
-    private var restoreHotKeyButton: some View {
-        Button {
-            recordingError = nil
-            model.restoreDefaultHotKey()
-        } label: {
-            Text(L10n.actionRestoreHotkey)
         }
     }
 

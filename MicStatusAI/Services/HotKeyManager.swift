@@ -3,30 +3,63 @@ import Carbon.HIToolbox
 @MainActor
 final class HotKeyManager: HotKeyManaging {
     var onPressed: (() -> Void)?
+    var onReleased: (() -> Void)?
 
     private let registration = CarbonHotKeyRegistration()
-    private let hotKeyID = EventHotKeyID(signature: OSType(0x4D53_4149), id: 1)
+    nonisolated private let hotKeyID: EventHotKeyID
 
-    init() {
-        var eventType = EventTypeSpec(
-            eventClass: OSType(kEventClassKeyboard),
-            eventKind: UInt32(kEventHotKeyPressed)
-        )
+    init(id: UInt32 = 1) {
+        hotKeyID = EventHotKeyID(signature: OSType(0x4D53_4149), id: id)
+
+        var eventTypes = [
+            EventTypeSpec(
+                eventClass: OSType(kEventClassKeyboard),
+                eventKind: UInt32(kEventHotKeyPressed)
+            ),
+            EventTypeSpec(
+                eventClass: OSType(kEventClassKeyboard),
+                eventKind: UInt32(kEventHotKeyReleased)
+            ),
+        ]
         var eventHandlerReference: EventHandlerRef?
 
         let context = Unmanaged.passUnretained(self).toOpaque()
         let status = InstallEventHandler(
             GetApplicationEventTarget(),
-            { _, _, context in
-                guard let context else { return OSStatus(eventNotHandledErr) }
+            { _, event, context in
+                guard let event, let context else { return OSStatus(eventNotHandledErr) }
                 let manager = Unmanaged<HotKeyManager>.fromOpaque(context).takeUnretainedValue()
+                var receivedHotKeyID = EventHotKeyID()
+                let parameterStatus = GetEventParameter(
+                    event,
+                    EventParamName(kEventParamDirectObject),
+                    EventParamType(typeEventHotKeyID),
+                    nil,
+                    MemoryLayout<EventHotKeyID>.size,
+                    nil,
+                    &receivedHotKeyID
+                )
+                guard parameterStatus == noErr else { return parameterStatus }
+                guard receivedHotKeyID.signature == manager.hotKeyID.signature,
+                      receivedHotKeyID.id == manager.hotKeyID.id else {
+                    return OSStatus(eventNotHandledErr)
+                }
+
+                let eventKind = GetEventKind(event)
                 Task { @MainActor in
-                    manager.onPressed?()
+                    switch eventKind {
+                    case UInt32(kEventHotKeyPressed):
+                        manager.onPressed?()
+                    case UInt32(kEventHotKeyReleased):
+                        manager.onReleased?()
+                    default:
+                        break
+                    }
                 }
                 return noErr
             },
-            1,
-            &eventType,
+            eventTypes.count,
+            &eventTypes,
             context,
             &eventHandlerReference
         )

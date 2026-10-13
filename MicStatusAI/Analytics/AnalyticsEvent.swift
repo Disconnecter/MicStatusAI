@@ -14,6 +14,7 @@ struct AnalyticsEvent {
         case monitoring
         case mute
         case inputLevel = "input_level"
+        case walkieTalkie = "walkie_talkie"
     }
 
     let name: String
@@ -81,6 +82,20 @@ struct AnalyticsEvent {
         Self(
             name: "hotkey_changed",
             properties: ["success": .bool(success)]
+        )
+    }
+
+    static func walkieTalkieHotKeyChanged(success: Bool) -> Self {
+        Self(
+            name: "walkie_talkie_hotkey_changed",
+            properties: ["success": .bool(success)]
+        )
+    }
+
+    static func walkieTalkieChanged(enabled: Bool) -> Self {
+        Self(
+            name: "walkie_talkie_changed",
+            properties: ["enabled": .bool(enabled)]
         )
     }
 

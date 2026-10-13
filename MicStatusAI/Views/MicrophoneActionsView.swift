@@ -8,6 +8,13 @@ struct MicrophoneActionsView: View {
             Toggle(L10n.monitoringEnabled, isOn: monitoringBinding)
                 .toggleStyle(.switch)
 
+            Toggle(isOn: walkieTalkieBinding) {
+                Label(L10n.walkieTalkieEnabled, systemImage: "walkie.talkie")
+            }
+            .toggleStyle(.switch)
+            .disabled(model.walkieTalkieHotKeyRegistrationError != nil)
+            .help(model.walkieTalkieHotKeyRegistrationError ?? L10n.walkieTalkieInstructions)
+
             Button {
                 model.toggleMute(source: .button)
             } label: {
@@ -19,9 +26,24 @@ struct MicrophoneActionsView: View {
                 .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
-            .disabled(!model.isMonitoring || model.status.errorMessage != nil)
-            .help(L10n.actionMuteHelp)
+            .disabled(
+                !model.isMonitoring
+                    || model.status.errorMessage != nil
+                    || model.isWalkieTalkieEnabled
+            )
+            .help(
+                model.isWalkieTalkieEnabled
+                    ? L10n.walkieTalkieMuteHelp
+                    : L10n.actionMuteHelp
+            )
         }
+    }
+
+    private var walkieTalkieBinding: Binding<Bool> {
+        Binding(
+            get: { model.isWalkieTalkieEnabled },
+            set: { model.setWalkieTalkieEnabled($0) }
+        )
     }
 
     private var monitoringBinding: Binding<Bool> {

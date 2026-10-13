@@ -337,6 +337,78 @@
         }
       }
     },
+    "walkieTalkie.accessibility" : {
+      "comment" : "Accessibility label for the walkie-talkie hotkey recorder.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walkie-talkie hold-to-talk shortcut"
+          }
+        }
+      }
+    },
+    "walkieTalkie.enabled" : {
+      "comment" : "Toggle that enables hold-to-talk walkie-talkie mode.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walkie-Talkie Mode"
+          }
+        }
+      }
+    },
+    "walkieTalkie.instructions" : {
+      "comment" : "Instructions for using the walkie-talkie hotkey.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hold this shortcut to unmute. Releasing it mutes the microphone again. This shortcut works system-wide."
+          }
+        }
+      }
+    },
+    "walkieTalkie.menuBarStatus" : {
+      "comment" : "Menu bar accessibility status. Argument is the current microphone status.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@. Walkie-talkie mode enabled."
+          }
+        }
+      }
+    },
+    "walkieTalkie.muteHelp" : {
+      "comment" : "Help shown on disabled mute controls while walkie-talkie mode is enabled.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mute controls are disabled while walkie-talkie mode is on."
+          }
+        }
+      }
+    },
+    "walkieTalkie.title" : {
+      "comment" : "Heading for walkie-talkie hotkey settings.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Walkie-Talkie Hotkey"
+          }
+        }
+      }
+    },
     "input.accessibility" : {
       "comment" : "Accessibility label for the microphone input volume slider.",
       "extractionState" : "manual",
