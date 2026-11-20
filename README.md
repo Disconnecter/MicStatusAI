@@ -1,5 +1,12 @@
 # MicStatusAI
 
+<a href="https://wall.sololemonx.com/en/microphone-guard-u03f?utm_source=wall-badge"
+   target="_blank" rel="nofollow noopener">
+  <img src="https://wall.sololemonx.com/wall-badges/en-light.png"
+       alt="We’re on wall. A showcase for founder projects by solo lemon."
+       width="288" height="72">
+</a>
+
 [![Pull Request Build](https://github.com/Disconnecter/MicStatusAI/actions/workflows/pr-build.yml/badge.svg)](https://github.com/Disconnecter/MicStatusAI/actions/workflows/pr-build.yml)
 
 Native macOS 15+ menu-bar utility showing default microphone mute state and input volume.
